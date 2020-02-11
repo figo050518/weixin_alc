@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                             http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<artifactId>weixin-parent</artifactId>
+		<groupId>com.fcgo.weixin</groupId>
+		<version>SNAPSHOT-0.0.1</version>
+	</parent>
+
+	<artifactId>weixin-common</artifactId>
+
+	<name>fcgo微信公共模块</name>
+
+	<packaging>jar</packaging>
+
+	<dependencies>
+		<!--SPRING -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+		</dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-oxm</artifactId>
+        </dependency>
+
+		<!-- ehcache -->
+		<dependency>
+			<groupId>com.googlecode.ehcache-spring-annotations</groupId>
+			<artifactId>ehcache-spring-annotations</artifactId>
+		</dependency>
+
+		<!-- APACHE COMMONS -->
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>2.5</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>1.3.2</version>
+		</dependency>
+
+		<!-- CODEC -->
+		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.jasypt</groupId>
+			<artifactId>jasypt</artifactId>
+		</dependency>
+		
+
+		<!-- VELOCITY -->
+		<dependency>
+			<groupId>org.apache.velocity</groupId>
+			<artifactId>velocity</artifactId>
+			<version>1.7</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.velocity</groupId>
+			<artifactId>velocity-tools</artifactId>
+			<version>2.0</version>
+		</dependency>
+
+		<!-- QUARTS -->
+		<dependency>
+			<groupId>org.quartz-scheduler</groupId>
+			<artifactId>quartz</artifactId>
+			<version>1.8.4</version>
+		</dependency>
+
+		<!-- xstream -->
+		<dependency>
+			<groupId>org.apache.camel</groupId>
+			<artifactId>camel-xstream</artifactId>
+			<version>2.9.2</version>
+		</dependency>
+
+		<!-- jmagick -->
+		<dependency>
+            <groupId>jmagick</groupId>
+            <artifactId>jmagick</artifactId>
+            <version>6.2.4</version>
+        </dependency>
+		<!--apache poi需要3.8以上版本支持用流的方式导出excel，目前官方稳定版是3.9，maven库中未找到稳定版，所以用了beta版-->
+        <dependency>
+        	<groupId>org.apache.poi</groupId>
+        	<artifactId>poi</artifactId>
+        	<version>3.8-beta5</version>
+        </dependency>
+        <dependency>
+        	<groupId>org.apache.poi</groupId>
+        	<artifactId>poi-ooxml</artifactId>
+        	<version>3.8-beta5</version>
+        </dependency>
+        <dependency>
+        	<groupId>org.apache.poi</groupId>
+        	<artifactId>poi-ooxml-schemas</artifactId>
+        	<version>3.8-beta5</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.inject</groupId>
+            <artifactId>javax.inject</artifactId>
+            <version>1</version>
+        </dependency>
+		<dependency>
+			<groupId>org.jsoup</groupId>
+			<artifactId>jsoup</artifactId>
+			<version>1.7.2</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-httpclient</groupId>
+			<artifactId>commons-httpclient</artifactId>
+			<version>3.1</version>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/org.codehaus.jackson/jackson-xc -->
+			<dependency>
+			    <groupId>org.codehaus.jackson</groupId>
+			    <artifactId>jackson-xc</artifactId>
+			    <version>1.9.2</version>
+			</dependency>
+			
+			<!-- https://mvnrepository.com/artifact/org.codehaus.jackson/jackson-xc -->
+				
+				<dependency>
+				    <groupId>org.codehaus.jackson</groupId>
+				    <artifactId>jackson-jaxrs</artifactId>
+				    <version>1.9.2</version>
+				</dependency>
+				
+				<dependency>
+				    <groupId>org.codehaus.jackson</groupId>
+				    <artifactId>jackson-mapper-asl</artifactId>
+				    <version>1.9.2</version>
+				</dependency>
+				
+				
+				<dependency>
+				    <groupId>org.codehaus.jackson</groupId>
+				    <artifactId>jackson-core-asl</artifactId>
+				    <version>1.9.2</version>
+				</dependency>
+				
+		
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>aspectj-maven-plugin</artifactId>
+				<version>1.4</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.aspectj</groupId>
+                        <artifactId>aspectjtools</artifactId>
+                        <version>${aspectj.version}</version>
+                    </dependency>
+                </dependencies>
+				<configuration>
+					<encoding>${project.build.sourceEncoding}</encoding>
+					<aspectLibraries>
+						<aspectLibrary>
+							<groupId>org.springframework</groupId>
+							<artifactId>spring-aspects</artifactId>
+						</aspectLibrary>
+					</aspectLibraries>
+					<complianceLevel>1.6</complianceLevel>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>compile</goal>
+							<goal>test-compile</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+</project>

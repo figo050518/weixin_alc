@@ -1,0 +1,16 @@
+package com.fcgo.weixin.convert;
+
+import java.util.Collection;
+
+public interface Convert<DOMAIN,CLIENT> {
+    
+    public CLIENT convertToDTO(DOMAIN domain);
+
+    public DOMAIN convertToDomain(CLIENT client);
+
+
+    public Collection<CLIENT> convertCollectionToDTO(Collection<DOMAIN> domains,Collection<CLIENT> client);
+
+
+    public Collection<DOMAIN> convertCollectionToDomain(Collection<CLIENT> clients,Collection<DOMAIN> domains);
+}

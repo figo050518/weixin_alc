@@ -1,0 +1,87 @@
+package com.fcgo.weixin.application.impl.user;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.fcgo.weixin.application.user.OperInfoService;
+import com.fcgo.weixin.common.dto.Page;
+import com.fcgo.weixin.persist.dao.IOperInfoDAO;
+import com.fcgo.weixin.persist.generate.criteria.OperInfoCriteria;
+import com.fcgo.weixin.persist.po.OperInfoPO;
+
+@Service
+@Transactional
+public class OperInfoServiceImpl implements OperInfoService {
+	@Autowired
+	private IOperInfoDAO operInfoDAO;
+	
+	@Override
+	public OperInfoPO queryOperInfoById(String userId) {
+		// TODO Auto-generated method stub
+		OperInfoCriteria operInfoCriteria = new OperInfoCriteria();
+		operInfoCriteria.createCriteria().andOperIdEqualTo(userId);
+		List<OperInfoPO> operInfoPOs = operInfoDAO.selectByCriteria(operInfoCriteria);
+		if(CollectionUtils.isEmpty(operInfoPOs)){
+			return null;
+		}
+		return operInfoPOs.get(0);
+	}
+	@Override
+	public OperInfoPO queryValidOperInfoById(String userId) {
+		// TODO Auto-generated method stub
+		OperInfoCriteria operInfoCriteria = new OperInfoCriteria();
+		operInfoCriteria.createCriteria().andOperIdEqualTo(userId)
+		.andIsDeleteEqualTo(0);
+		List<OperInfoPO> operInfoPOs = operInfoDAO.selectByCriteria(operInfoCriteria);
+		if(CollectionUtils.isEmpty(operInfoPOs)){
+			return null;
+		}
+		return operInfoPOs.get(0);
+	}
+	@Override
+	public Page queryOperInfoListPage(OperInfoPO operInfoPO,
+			int pageIndex) {
+		
+			//查询记录
+		    Page page = new Page();
+	        // 更新当前页码
+	        if (pageIndex >= 1) {
+	            page.setPageIndex(pageIndex);
+	        }
+	        
+	        Map parm = new HashMap();
+			if(StringUtils.isNotEmpty(operInfoPO.getOperName())){
+				parm.put("operName", "%"+operInfoPO.getOperName()+"%");
+			}
+	        parm.put("startPage", (page.getPageIndex() - 1) * page.getPageSize());
+	        parm.put("pageSize", page.getPageSize());
+	        // 获取主编分页数据
+	        List<OperInfoPO> operInfoPOs = operInfoDAO.getOperInfoListPage(parm);
+	        // 查询总数
+	        OperInfoCriteria operInfoCriteria = new OperInfoCriteria();
+	        if(StringUtils.isNotEmpty(operInfoPO.getOperName())){
+	        	operInfoCriteria.createCriteria().andOperNameLessThanOrEqualTo("%"+operInfoPO.getOperName()+"%");
+	        }
+	        int count = operInfoDAO.countByCriteria(operInfoCriteria);
+	        // 组装数据
+	        // 返回数据集合
+	        page.setRow(operInfoPOs);
+	        page.setRecords(count);
+	        return page;
+	}
+
+	@Override
+	public boolean operInfoctive(OperInfoPO operInfoPO) {
+		// TODO Auto-generated method stub
+		 int cnt = operInfoDAO.updateByPrimaryKey(operInfoPO);
+	     return cnt > 0;
+	}
+
+}

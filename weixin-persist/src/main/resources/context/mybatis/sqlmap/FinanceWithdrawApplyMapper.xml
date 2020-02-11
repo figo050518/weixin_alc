@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fcgo.weixin.persist.dao.IFinanceWithdrawApplyDAO" >
+ <resultMap id="withdrawResultMap" type="com.fcgo.weixin.persist.po.FinanceWithdrawApplyPO" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="IS_DELETE" property="isDelete" jdbcType="INTEGER" />
+    <result column="SELLER_ID" property="sellerId" jdbcType="INTEGER" />
+    <result column="WITHDRAW_NUM" property="withdrawNum" jdbcType="VARCHAR" />
+    <result column="SHOP_ID" property="shopId" jdbcType="INTEGER" />
+    <result column="CARD_TYPE" property="cardType" jdbcType="VARCHAR" />
+    <result column="CARD_NUM" property="cardNum" jdbcType="VARCHAR" />
+    <result column="CARD_OWNER_NAME" property="cardOwnerName" jdbcType="VARCHAR" />
+    <result column="WITHDRAW_AMOUNT" property="withdrawAmount" jdbcType="DECIMAL" />
+    <result column="AUDIT_TIME" property="auditTime" jdbcType="TIMESTAMP" />
+    <result column="AUDIT_STATE" property="auditState" jdbcType="INTEGER" />
+    <result column="AUDIT_RES" property="auditRes" jdbcType="VARCHAR" />
+    <result column="CREATE_NAME" property="createName" jdbcType="VARCHAR" />
+    <result column="UPDATE_NAME" property="updateName" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <select id="getWithDrawApplyAmount" resultType="java.math.BigDecimal" parameterType="int">
+ 		 select sum(WITHDRAW_AMOUNT)  from  finance_withdraw_apply where AUDIT_STATE=3 and SELLER_ID=#{sellerId,jdbcType=DECIMAL}
+  </select>
+  
+   <select id="getWithDrawApplyList" parameterType="map" resultMap="withdrawResultMap">
+  
+  		select id,WITHDRAW_NUM,CARD_TYPE,CARD_NUM,CARD_OWNER_NAME,WITHDRAW_AMOUNT,AUDIT_STATE,CREATE_TIME from finance_withdraw_apply 
+  		
+  		 where SELLER_ID=#{sellerId, jdbcType=DECIMAL}  order by update_time desc
+  		 
+  		 limit #{startPage, jdbcType=DECIMAL},#{pageSize, jdbcType=DECIMAL} 
+  
+  </select>
+  
+   <select id="countWithDrawApplyList" parameterType="map" resultType="int">
+  		select count(1) from finance_withdraw_apply   where SELLER_ID=#{sellerId, jdbcType=DECIMAL} 
+  </select>
+</mapper>

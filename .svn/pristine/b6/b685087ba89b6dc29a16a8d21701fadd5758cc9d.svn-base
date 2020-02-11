@@ -1,0 +1,88 @@
+package com.fcgo.weixin.application.product;
+
+import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
+
+import com.fcgo.weixin.common.dto.Page;
+import com.fcgo.weixin.persist.po.ProductPO;
+import com.fcgo.weixin.persist.po.ProductSpecPO;
+
+/**
+ * @author Ww
+ */
+public interface IProductService {
+    /**
+     * @param productId
+     * @return
+     */
+    ProductPO getById(int productId);
+
+    /**
+     * 分页查询商品列表
+     * @param productPO
+     * @param page
+     * @return
+     */
+    public List<ProductPO> pdtProductList(ProductPO productPO,Page page);
+    /**
+     * 上下架
+     * @param productPO
+     * @return
+     */
+    public boolean productActive(ProductPO productPO);
+
+   
+
+    /**
+    * @Title: addProduct 
+    * @Description:上传商品
+    * @param  pro 商品信息
+    * @param  pic1File  pic1File2 图片信息
+    * @param  sepcList 规格信息
+    * @param @return    参数
+    * @return  int  返回类型
+    * @throws
+    **/ 
+    int addProduct(ProductPO pro, MultipartFile pic1File, MultipartFile pic1File2, List<ProductSpecPO> spList);
+
+    /**
+    * @Description: 编辑商品 
+    * @param @param pro
+    * @param @param pic1File
+    * @param @param pic1File2
+    * @param @param spList
+    * @param @return    参数
+    * @return  int  返回类型
+    * @throws
+     */
+    int updateSelfProduct(ProductPO pro, MultipartFile pic1File, MultipartFile pic1File2, List<ProductSpecPO> spList);
+
+    /**
+     * 更新上下架状态
+    * @Title: upStateUpdate 
+    * @param @param product    参数
+    * @return  void  返回类型
+    * @throws
+     */
+    int upStateUpdate(ProductPO product);
+
+    /**
+    * @param @param product 商品
+    * @param @param page 分页
+    * @param @return    参数
+    * @return  List<ProductPO>  返回类型
+    * @throws
+     */
+    List<ProductPO> findProductList(ProductPO product, Page page);
+
+    /**
+    * @param @param product 
+    * @param @return    参数
+    * @return  Object  返回类型
+    * @throws
+     */
+    int countProductList(ProductPO product);
+
+    
+}

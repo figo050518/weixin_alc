@@ -1,0 +1,32 @@
+package com.fcgo.weixin.application.impl.product;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.fcgo.weixin.application.product.ProductFavService;
+import com.fcgo.weixin.common.dto.Page;
+import com.fcgo.weixin.persist.dao.IUserProductFavDAO;
+import com.fcgo.weixin.persist.po.UserProductFavPO;
+
+@Service
+@Transactional
+public class ProductFavServiceImpl implements ProductFavService {
+
+    @Autowired
+    private IUserProductFavDAO userProductFavDAO;
+
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    @Override
+    public List<UserProductFavPO> listUserProductFav(int userId, Page page) {
+        Map parm = new HashMap();
+        parm.put("userId", userId);
+        parm.put("startPage", (page.getPageIndex() - 1) * page.getPageSize());
+        parm.put("pageSize", page.getPageSize());
+        return userProductFavDAO.listUserProductFav(parm);
+    }
+}

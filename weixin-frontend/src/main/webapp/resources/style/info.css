@@ -1,0 +1,28 @@
+.p_view {
+	text-align: center;
+	position: fixed;
+	top: 45%;
+	z-index:99999;
+}
+
+.p_view>span {
+	background-color: #000;
+	color: #fff;
+	word-wrap: break-word;
+	padding: 5px 10px;
+	z-index: 377777;
+	border-radius: 5px;
+	display: block;
+	font-size:16px;
+}
+input {
+	-webkit-appearance:none;
+}
+select {
+	-webkit-appearance:none;
+}
+a{ 
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);    
+    outline: none;
+    box-shadow: none;
+}

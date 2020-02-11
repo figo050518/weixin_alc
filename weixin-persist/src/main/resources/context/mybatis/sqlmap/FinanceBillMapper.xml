@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fcgo.weixin.persist.dao.IFinanceBillDAO" >
+  <resultMap id="BillResultMap" type="com.fcgo.weixin.persist.po.FinanceBillPO" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="IS_DELETE" property="isDelete" jdbcType="INTEGER" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="CURRENT_BALANCE" property="currentBalance" jdbcType="DECIMAL" />
+    <result column="GEN_AMOUNT" property="genAmount" jdbcType="DECIMAL" />
+    <result column="GEN_EVENT" property="genEvent" jdbcType="INTEGER" />
+    <result column="SHOP_ID" property="shopId" jdbcType="INTEGER" />
+    <result column="SELLER_ID" property="sellerId" jdbcType="INTEGER" />
+    <result column="CREATE_NAME" property="createName" jdbcType="VARCHAR" />
+    <result column="UPDATE_NAME" property="updateName" jdbcType="VARCHAR" />
+    <result column="BUSS_ORDER_NUM" property="bussOrderNum" jdbcType="VARCHAR" />
+    <result column="BUSS_ORDER_TYPE" property="bussOrderType" jdbcType="INTEGER" />
+    <result column="ORDER_ID" property="orderId" jdbcType="INTEGER" />
+  </resultMap>
+  
+   <select id="getTranctaionList" parameterType="map" resultMap="BillResultMap">
+  
+  		select id,CURRENT_BALANCE,GEN_AMOUNT,GEN_EVENT,BUSS_ORDER_TYPE  from finance_bill 
+  		
+  		 where SELLER_ID=#{sellerId, jdbcType=DECIMAL}  order by update_time desc
+  		 
+  		 limit #{startPage, jdbcType=DECIMAL},#{pageSize, jdbcType=DECIMAL} 
+  
+  </select>
+  
+   <select id="countTranctaionList" parameterType="map" resultType="int">
+  		select count(1) from finance_bill   where SELLER_ID=#{sellerId, jdbcType=DECIMAL} 
+  </select>
+</mapper>

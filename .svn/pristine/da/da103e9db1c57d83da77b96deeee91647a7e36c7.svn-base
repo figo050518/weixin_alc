@@ -1,0 +1,4 @@
+function closeClick(){
+	$(".popup").css("display","none");
+	$(".overlay").css("display","none");
+}

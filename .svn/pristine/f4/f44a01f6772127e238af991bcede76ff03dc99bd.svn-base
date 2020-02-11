@@ -1,0 +1,58 @@
+function TixianShow() {
+	window.location.href="/uc/finance/withdrwaApplyInit";
+}
+
+function nowDepoitBack() {
+	$(".mainPage").show();
+	$(".nowDepoit").hide();
+}
+
+function SettledIncomeShow() {
+	$(".mainPage").hide();
+	$(".SettledIncome").show();
+}
+
+function SettledIncomeBack() {
+	$(".mainPage").show();
+	$(".SettledIncome").hide();
+}
+
+function OutstandingIncomeShow() {
+	$(".mainPage").hide();
+	$(".OutstandingIncome").show();
+}
+
+function OutstandingIncomeBack() {
+	$(".mainPage").show();
+	$(".OutstandingIncome").hide();
+}
+
+function shouzhidetailShow() {
+	$(".mainPage").hide();
+	$(".shouzhidetail").show();
+}
+
+function shouzhidetailBack() {
+	$(".mainPage").show();
+	$(".shouzhidetail").hide();
+}
+
+function PresentationRecordShow() {
+	$(".mainPage").hide();
+	$(".PresentationRecord").show();
+}
+
+function PresentationRecordBack() {
+	$(".mainPage").show();
+	$(".PresentationRecord").hide();
+}
+
+function noDepoitShow() {
+	$(".mainPage").hide();
+	$(".noDepoit").show();
+}
+
+function noDepoitBack() {
+	$(".mainPage").show();
+	$(".noDepoit").hide();
+}

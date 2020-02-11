@@ -1,0 +1,210 @@
+package com.fcgo.weixin.application.impl.interfaces.fcg;
+
+import java.util.HashMap;
+import java.util.List;
+
+import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
+import org.springframework.stereotype.Service;
+
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.fcgo.weixin.application.interfaces.fcg.IFcgService;
+import com.fcgo.weixin.common.dto.Page;
+import com.fcgo.weixin.common.util.logisticsTrack.HttpRequest;
+import com.fcgo.weixin.persist.po.fcg.FcgCate;
+import com.fcgo.weixin.persist.po.fcg.FcgMerchant;
+import com.fcgo.weixin.persist.po.fcg.FcgPostage;
+import com.fcgo.weixin.persist.po.fcg.FcgProduct;
+import com.fcgo.weixin.persist.po.fcg.FcgProductFullInfo;
+/**
+ * 菲常购接口实现类
+ * @ClassName: FcgServiceImpl 
+ * @Description: TODO
+ * @author mail.chenc
+ * @date 2017年4月10日 下午8:58:49 
+ *
+ */
+@Service
+public class FcgServiceImpl implements IFcgService{
+	private Logger logger = Logger.getLogger(FcgServiceImpl.class);
+	
+	private static final String URL_MERCHANTCATELIST = "http://106.14.76.20/fcgo_pro/v1/api/fcg/merchantCateList.html";
+	private static final String URL_GETPOSTAGE = "http://106.14.76.20/fcgo_pro/v1/api/fcg/getPostage.html";
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<FcgCate> findFcgCateList(Integer merchantId, String token) {
+		List<FcgCate> result = null;
+		if(merchantId == null || StringUtils.isEmpty(token)){
+			
+		}
+		
+		//定义请求参数
+		HashMap<String, String> params = new HashMap<String, String>();
+        params.put("param", merchantId.toString());
+        params.put("sign", token);
+        
+        //发送post请求
+		try {
+			String resp = HttpRequest.postData(URL_MERCHANTCATELIST, params, "utf-8");
+			if(!StringUtils.isEmpty(resp)){
+				Object obj = this.paserHttpResult(resp, FcgCate.class, true);
+				if(obj!=null){
+					result = (List<FcgCate>) obj;
+				}
+			}
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		return result;
+	}
+	
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public Page findFcgProductListByPage(Integer fcgCateId, Integer texe,
+			Integer pageNo, String order) {
+		Page page = null;
+		if(fcgCateId == null){
+			
+		}
+		
+		//定义接口参数
+		HashMap<String, String> params = new HashMap<String, String>();
+		params.put("cate", fcgCateId.toString());
+		if(texe!=null){
+			params.put("texe", texe.toString());
+		}
+		if(pageNo!=null){
+			params.put("page", pageNo.toString());
+		}else{
+			params.put("page", "1");
+		}
+		if(order!=null){
+			params.put("groupBy", order);
+		}
+		
+		//发送post请求
+		try {
+			String resp = HttpRequest.postData(URL_GETPOSTAGE, params, "utf-8");
+			if(!StringUtils.isEmpty(resp)){
+				Object obj = this.paserHttpResult(resp, FcgProduct.class, true);
+				if(obj!=null){
+					List<FcgProduct> result = (List<FcgProduct>) obj;
+				}
+			}
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		
+		return page;
+	}
+	
+	@Override
+	public FcgPostage findFcgPostage(String areaCode, Integer skuId,
+			Integer count) {
+		FcgPostage postage = new FcgPostage();
+		if(StringUtils.isEmpty(areaCode) || skuId == null || count == null){
+			
+		}
+		//定义查询参数
+		HashMap<String, String> params = new HashMap<String, String>();
+		params.put("areaCode", areaCode);
+		params.put("suppliersSkuId", skuId.toString());
+		params.put("count", count.toString());
+		try {
+			String resp = HttpRequest.postData(URL_GETPOSTAGE, params, "utf-8");
+			if(!StringUtils.isEmpty(resp)){
+				Object obj = this.paserHttpResult(resp, FcgProduct.class, false);
+				if(obj!=null){
+					postage = (FcgPostage) obj;
+				}
+			}
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		return postage;
+	}
+	
+	@Override
+	public FcgProductFullInfo findFcgProductFullInfo(String goodsId) {
+		// TODO Auto-generated method stub
+		FcgProductFullInfo fcgProFullInfo = null;
+		if(StringUtils.isEmpty(goodsId)){
+			
+		}
+		
+		//定义查询参数
+		HashMap<String, String> params = new HashMap<String, String>();
+		params.put("goodsId", goodsId);
+		
+		try {
+			String resp = HttpRequest.postData(URL_GETPOSTAGE, params, "utf-8");
+			if(!StringUtils.isEmpty(resp)){
+				Object obj = this.paserHttpResult(resp, FcgProductFullInfo.class, false);
+				if(obj!=null){
+					fcgProFullInfo = (FcgProductFullInfo)obj;
+				}
+			}
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		
+		
+		return fcgProFullInfo;
+	}
+	
+	@Override
+	public FcgMerchant doFcgLogin(String mobile, String password) {
+		// TODO Auto-generated method stub
+		FcgMerchant merchant = null;
+		if(StringUtils.isEmpty(mobile) || StringUtils.isEmpty(password)){
+			
+		}
+		
+		//定义查询参数
+		HashMap<String, String> params = new HashMap<String, String>();
+		params.put("mobile", mobile);
+		params.put("password", password);
+		
+		try {
+			String resp = HttpRequest.postData(URL_GETPOSTAGE, params, "utf-8");
+			if(!StringUtils.isEmpty(resp)){
+				Object obj = this.paserHttpResult(resp, FcgMerchant.class, false);
+				if(obj!=null){
+					merchant = (FcgMerchant)obj;
+				}
+			}
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		return merchant;
+	}
+	
+	
+
+	/**
+	 * 解析HTTP请求返回的参数
+	 * @param res
+	 */
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	private Object paserHttpResult(String resp, Class clazz, boolean isList){
+		if(!StringUtils.isEmpty(resp)){
+			JSONObject jsonObj = JSON.parseObject(resp);
+			if(jsonObj!=null && jsonObj.getIntValue("errCode")==0){
+				if(isList){
+					return JSON.parseArray(jsonObj.getJSONArray("data").toJSONString(), clazz);
+				}else{
+					return JSON.parseObject(jsonObj.getJSONObject("data").toJSONString(), clazz);
+				}
+			}
+		}
+		return null;
+	}
+	
+	private Page paserHttpResutl4Page(String resp, Class clazz, boolean isList ){
+		
+		return null;
+	}
+}

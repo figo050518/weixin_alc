@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="weixin-backend" />
+        <module name="weixin-common" />
+        <module name="weixin-frontend" />
+        <module name="weixin-mybatis-generated" />
+        <module name="weixin-persist" />
+        <module name="weixin-service" />
+        <module name="weixin-web-common" />
+      </profile>
+    </annotationProcessing>
+  </component>
+</project>

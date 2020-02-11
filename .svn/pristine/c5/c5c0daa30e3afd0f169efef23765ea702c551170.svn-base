@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fcgo.weixin.persist.dao.IProductDAO" >
+  <resultMap id="pdtProductListResult" type="com.fcgo.weixin.persist.po.ProductPO" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="IS_DELETE" property="isDelete" jdbcType="INTEGER" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="PRO_NAME" property="proName" jdbcType="VARCHAR" />
+    <result column="UP_STATE" property="upState" jdbcType="INTEGER" />
+    <result column="UP_TIME" property="upTime" jdbcType="TIMESTAMP" />
+    <result column="GROUP_ID" property="groupId" jdbcType="INTEGER" />
+    <result column="SHOP_ID" property="shopId" jdbcType="INTEGER" />
+    <result column="FROM_TYPE" property="fromType" jdbcType="INTEGER" />
+    <result column="create_name" property="createName" jdbcType="VARCHAR" />
+    <result column="update_name" property="updateName" jdbcType="VARCHAR" />
+    <result column="seller_id" property="sellerId" jdbcType="INTEGER" />
+    <result column="fcg_product_id" property="fcgProductId" jdbcType="INTEGER" />
+    <result column="fcg_product_type" property="fcgProductType" jdbcType="INTEGER" />
+    <result column="max_price" property="maxPrice" jdbcType="DECIMAL" />
+    <result column="min_price" property="minPrice" jdbcType="DECIMAL" />
+    <result column="sales_count" property="salesCount" jdbcType="INTEGER" />
+  </resultMap>
+    <select id="pdtProductList" parameterType="map" resultMap="pdtProductListResult">
+  		select ID, IS_DELETE, CREATE_TIME, UPDATE_TIME, PRO_NAME, UP_STATE, UP_TIME, GROUP_ID, SHOP_ID, 
+    FROM_TYPE, create_name, update_name, seller_id, fcg_product_id, fcg_product_type, 
+    max_price, min_price, sales_count from pdt_product
+  		 where 1 = 1
+  		<if test="PRO_NAME!=null and PRO_NAME!=''">
+			AND PRO_NAME like  #{PRO_NAME,jdbcType=VARCHAR}
+		</if>
+		<if test="GROUP_ID!=null and GROUP_ID!=''">
+			AND GROUP_ID = #{GROUP_ID,jdbcType=DECIMAL} 
+		</if>
+		<if test="fcg_product_type!=null and fcg_product_type!=''">
+			AND fcg_product_type = #{fcg_product_type,jdbcType=DECIMAL} 
+		</if>
+		<if test="UP_STATE!=null and UP_STATE!=''">
+			AND UP_STATE = #{UP_STATE,jdbcType=DECIMAL} 
+		</if>
+		<if test="SHOP_ID!=null and SHOP_ID!=''">
+			AND SHOP_ID = #{SHOP_ID,jdbcType=DECIMAL} 
+		</if>
+		<if test="FROM_TYPE!=null and FROM_TYPE!=''">
+			AND FROM_TYPE = #{FROM_TYPE,jdbcType=DECIMAL} 
+		</if>
+  		 order by ID desc
+  		 limit #{startPage, jdbcType=DECIMAL},#{pageSize, jdbcType=DECIMAL} 
+  </select>
+</mapper>

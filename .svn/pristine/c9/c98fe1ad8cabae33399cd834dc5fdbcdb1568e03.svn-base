@@ -1,0 +1,552 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fcgo.weixin.persist.dao.IProductDAO" >
+  <resultMap id="BaseResultMap" type="com.fcgo.weixin.persist.po.ProductPO" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="IS_DELETE" property="isDelete" jdbcType="INTEGER" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="PRO_NAME" property="proName" jdbcType="VARCHAR" />
+    <result column="UP_STATE" property="upState" jdbcType="INTEGER" />
+    <result column="UP_TIME" property="upTime" jdbcType="TIMESTAMP" />
+    <result column="GROUP_ID" property="groupId" jdbcType="INTEGER" />
+    <result column="SHOP_ID" property="shopId" jdbcType="INTEGER" />
+    <result column="FROM_TYPE" property="fromType" jdbcType="INTEGER" />
+    <result column="create_name" property="createName" jdbcType="VARCHAR" />
+    <result column="update_name" property="updateName" jdbcType="VARCHAR" />
+    <result column="seller_id" property="sellerId" jdbcType="INTEGER" />
+    <result column="fcg_product_id" property="fcgProductId" jdbcType="INTEGER" />
+    <result column="fcg_product_type" property="fcgProductType" jdbcType="INTEGER" />
+    <result column="max_price" property="maxPrice" jdbcType="DECIMAL" />
+    <result column="min_price" property="minPrice" jdbcType="DECIMAL" />
+    <result column="sales_count" property="salesCount" jdbcType="INTEGER" />
+    <result column="freight" property="freight" jdbcType="DECIMAL" />
+    <result column="fcg_category_id" property="fcgCategoryId" jdbcType="INTEGER" />
+    <result column="category_name" property="categoryName" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.fcgo.weixin.persist.po.ProductPO" extends="BaseResultMap" >
+    <result column="product_DESC" property="productDesc" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, IS_DELETE, CREATE_TIME, UPDATE_TIME, PRO_NAME, UP_STATE, UP_TIME, GROUP_ID, SHOP_ID, 
+    FROM_TYPE, create_name, update_name, seller_id, fcg_product_id, fcg_product_type, 
+    max_price, min_price, sales_count, freight, fcg_category_id, category_name
+  </sql>
+  <sql id="Blob_Column_List" >
+    product_DESC
+  </sql>
+  <select id="selectByCriteriaWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.fcgo.weixin.persist.generate.criteria.ProductCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from pdt_product
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByCriteria" resultMap="BaseResultMap" parameterType="com.fcgo.weixin.persist.generate.criteria.ProductCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from pdt_product
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from pdt_product
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from pdt_product
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByCriteria" parameterType="com.fcgo.weixin.persist.generate.criteria.ProductCriteria" >
+    delete from pdt_product
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.fcgo.weixin.persist.po.ProductPO" useGeneratedKeys="true" keyProperty="id">
+    insert into pdt_product (ID, IS_DELETE, CREATE_TIME, 
+      UPDATE_TIME, PRO_NAME, UP_STATE, 
+      UP_TIME, GROUP_ID, SHOP_ID, 
+      FROM_TYPE, create_name, update_name, 
+      seller_id, fcg_product_id, fcg_product_type, 
+      max_price, min_price, sales_count, 
+      freight, fcg_category_id, category_name, 
+      product_DESC)
+    values (#{id,jdbcType=INTEGER}, #{isDelete,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{proName,jdbcType=VARCHAR}, #{upState,jdbcType=INTEGER}, 
+      #{upTime,jdbcType=TIMESTAMP}, #{groupId,jdbcType=INTEGER}, #{shopId,jdbcType=INTEGER}, 
+      #{fromType,jdbcType=INTEGER}, #{createName,jdbcType=VARCHAR}, #{updateName,jdbcType=VARCHAR}, 
+      #{sellerId,jdbcType=INTEGER}, #{fcgProductId,jdbcType=INTEGER}, #{fcgProductType,jdbcType=INTEGER}, 
+      #{maxPrice,jdbcType=DECIMAL}, #{minPrice,jdbcType=DECIMAL}, #{salesCount,jdbcType=INTEGER}, 
+      #{freight,jdbcType=DECIMAL}, #{fcgCategoryId,jdbcType=INTEGER}, #{categoryName,jdbcType=VARCHAR}, 
+      #{productDesc,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fcgo.weixin.persist.po.ProductPO" >
+    insert into pdt_product
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="isDelete != null" >
+        IS_DELETE,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+      <if test="proName != null" >
+        PRO_NAME,
+      </if>
+      <if test="upState != null" >
+        UP_STATE,
+      </if>
+      <if test="upTime != null" >
+        UP_TIME,
+      </if>
+      <if test="groupId != null" >
+        GROUP_ID,
+      </if>
+      <if test="shopId != null" >
+        SHOP_ID,
+      </if>
+      <if test="fromType != null" >
+        FROM_TYPE,
+      </if>
+      <if test="createName != null" >
+        create_name,
+      </if>
+      <if test="updateName != null" >
+        update_name,
+      </if>
+      <if test="sellerId != null" >
+        seller_id,
+      </if>
+      <if test="fcgProductId != null" >
+        fcg_product_id,
+      </if>
+      <if test="fcgProductType != null" >
+        fcg_product_type,
+      </if>
+      <if test="maxPrice != null" >
+        max_price,
+      </if>
+      <if test="minPrice != null" >
+        min_price,
+      </if>
+      <if test="salesCount != null" >
+        sales_count,
+      </if>
+      <if test="freight != null" >
+        freight,
+      </if>
+      <if test="fcgCategoryId != null" >
+        fcg_category_id,
+      </if>
+      <if test="categoryName != null" >
+        category_name,
+      </if>
+      <if test="productDesc != null" >
+        product_DESC,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="isDelete != null" >
+        #{isDelete,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="proName != null" >
+        #{proName,jdbcType=VARCHAR},
+      </if>
+      <if test="upState != null" >
+        #{upState,jdbcType=INTEGER},
+      </if>
+      <if test="upTime != null" >
+        #{upTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="groupId != null" >
+        #{groupId,jdbcType=INTEGER},
+      </if>
+      <if test="shopId != null" >
+        #{shopId,jdbcType=INTEGER},
+      </if>
+      <if test="fromType != null" >
+        #{fromType,jdbcType=INTEGER},
+      </if>
+      <if test="createName != null" >
+        #{createName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateName != null" >
+        #{updateName,jdbcType=VARCHAR},
+      </if>
+      <if test="sellerId != null" >
+        #{sellerId,jdbcType=INTEGER},
+      </if>
+      <if test="fcgProductId != null" >
+        #{fcgProductId,jdbcType=INTEGER},
+      </if>
+      <if test="fcgProductType != null" >
+        #{fcgProductType,jdbcType=INTEGER},
+      </if>
+      <if test="maxPrice != null" >
+        #{maxPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="minPrice != null" >
+        #{minPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="salesCount != null" >
+        #{salesCount,jdbcType=INTEGER},
+      </if>
+      <if test="freight != null" >
+        #{freight,jdbcType=DECIMAL},
+      </if>
+      <if test="fcgCategoryId != null" >
+        #{fcgCategoryId,jdbcType=INTEGER},
+      </if>
+      <if test="categoryName != null" >
+        #{categoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="productDesc != null" >
+        #{productDesc,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByCriteria" parameterType="com.fcgo.weixin.persist.generate.criteria.ProductCriteria" resultType="java.lang.Integer" >
+    select count(*) from pdt_product
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByCriteriaSelective" parameterType="map" >
+    update pdt_product
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.isDelete != null" >
+        IS_DELETE = #{record.isDelete,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.proName != null" >
+        PRO_NAME = #{record.proName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.upState != null" >
+        UP_STATE = #{record.upState,jdbcType=INTEGER},
+      </if>
+      <if test="record.upTime != null" >
+        UP_TIME = #{record.upTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.groupId != null" >
+        GROUP_ID = #{record.groupId,jdbcType=INTEGER},
+      </if>
+      <if test="record.shopId != null" >
+        SHOP_ID = #{record.shopId,jdbcType=INTEGER},
+      </if>
+      <if test="record.fromType != null" >
+        FROM_TYPE = #{record.fromType,jdbcType=INTEGER},
+      </if>
+      <if test="record.createName != null" >
+        create_name = #{record.createName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateName != null" >
+        update_name = #{record.updateName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sellerId != null" >
+        seller_id = #{record.sellerId,jdbcType=INTEGER},
+      </if>
+      <if test="record.fcgProductId != null" >
+        fcg_product_id = #{record.fcgProductId,jdbcType=INTEGER},
+      </if>
+      <if test="record.fcgProductType != null" >
+        fcg_product_type = #{record.fcgProductType,jdbcType=INTEGER},
+      </if>
+      <if test="record.maxPrice != null" >
+        max_price = #{record.maxPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.minPrice != null" >
+        min_price = #{record.minPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.salesCount != null" >
+        sales_count = #{record.salesCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.freight != null" >
+        freight = #{record.freight,jdbcType=DECIMAL},
+      </if>
+      <if test="record.fcgCategoryId != null" >
+        fcg_category_id = #{record.fcgCategoryId,jdbcType=INTEGER},
+      </if>
+      <if test="record.categoryName != null" >
+        category_name = #{record.categoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productDesc != null" >
+        product_DESC = #{record.productDesc,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByCriteriaWithBLOBs" parameterType="map" >
+    update pdt_product
+    set IS_DELETE = #{record.isDelete,jdbcType=INTEGER},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      PRO_NAME = #{record.proName,jdbcType=VARCHAR},
+      UP_STATE = #{record.upState,jdbcType=INTEGER},
+      UP_TIME = #{record.upTime,jdbcType=TIMESTAMP},
+      GROUP_ID = #{record.groupId,jdbcType=INTEGER},
+      SHOP_ID = #{record.shopId,jdbcType=INTEGER},
+      FROM_TYPE = #{record.fromType,jdbcType=INTEGER},
+      create_name = #{record.createName,jdbcType=VARCHAR},
+      update_name = #{record.updateName,jdbcType=VARCHAR},
+      seller_id = #{record.sellerId,jdbcType=INTEGER},
+      fcg_product_id = #{record.fcgProductId,jdbcType=INTEGER},
+      fcg_product_type = #{record.fcgProductType,jdbcType=INTEGER},
+      max_price = #{record.maxPrice,jdbcType=DECIMAL},
+      min_price = #{record.minPrice,jdbcType=DECIMAL},
+      sales_count = #{record.salesCount,jdbcType=INTEGER},
+      freight = #{record.freight,jdbcType=DECIMAL},
+      fcg_category_id = #{record.fcgCategoryId,jdbcType=INTEGER},
+      category_name = #{record.categoryName,jdbcType=VARCHAR},
+      product_DESC = #{record.productDesc,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByCriteria" parameterType="map" >
+    update pdt_product
+    set IS_DELETE = #{record.isDelete,jdbcType=INTEGER},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      PRO_NAME = #{record.proName,jdbcType=VARCHAR},
+      UP_STATE = #{record.upState,jdbcType=INTEGER},
+      UP_TIME = #{record.upTime,jdbcType=TIMESTAMP},
+      GROUP_ID = #{record.groupId,jdbcType=INTEGER},
+      SHOP_ID = #{record.shopId,jdbcType=INTEGER},
+      FROM_TYPE = #{record.fromType,jdbcType=INTEGER},
+      create_name = #{record.createName,jdbcType=VARCHAR},
+      update_name = #{record.updateName,jdbcType=VARCHAR},
+      seller_id = #{record.sellerId,jdbcType=INTEGER},
+      fcg_product_id = #{record.fcgProductId,jdbcType=INTEGER},
+      fcg_product_type = #{record.fcgProductType,jdbcType=INTEGER},
+      max_price = #{record.maxPrice,jdbcType=DECIMAL},
+      min_price = #{record.minPrice,jdbcType=DECIMAL},
+      sales_count = #{record.salesCount,jdbcType=INTEGER},
+      freight = #{record.freight,jdbcType=DECIMAL},
+      fcg_category_id = #{record.fcgCategoryId,jdbcType=INTEGER},
+      category_name = #{record.categoryName,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fcgo.weixin.persist.po.ProductPO" >
+    update pdt_product
+    <set >
+      <if test="isDelete != null" >
+        IS_DELETE = #{isDelete,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="proName != null" >
+        PRO_NAME = #{proName,jdbcType=VARCHAR},
+      </if>
+      <if test="upState != null" >
+        UP_STATE = #{upState,jdbcType=INTEGER},
+      </if>
+      <if test="upTime != null" >
+        UP_TIME = #{upTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="groupId != null" >
+        GROUP_ID = #{groupId,jdbcType=INTEGER},
+      </if>
+      <if test="shopId != null" >
+        SHOP_ID = #{shopId,jdbcType=INTEGER},
+      </if>
+      <if test="fromType != null" >
+        FROM_TYPE = #{fromType,jdbcType=INTEGER},
+      </if>
+      <if test="createName != null" >
+        create_name = #{createName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateName != null" >
+        update_name = #{updateName,jdbcType=VARCHAR},
+      </if>
+      <if test="sellerId != null" >
+        seller_id = #{sellerId,jdbcType=INTEGER},
+      </if>
+      <if test="fcgProductId != null" >
+        fcg_product_id = #{fcgProductId,jdbcType=INTEGER},
+      </if>
+      <if test="fcgProductType != null" >
+        fcg_product_type = #{fcgProductType,jdbcType=INTEGER},
+      </if>
+      <if test="maxPrice != null" >
+        max_price = #{maxPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="minPrice != null" >
+        min_price = #{minPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="salesCount != null" >
+        sales_count = #{salesCount,jdbcType=INTEGER},
+      </if>
+      <if test="freight != null" >
+        freight = #{freight,jdbcType=DECIMAL},
+      </if>
+      <if test="fcgCategoryId != null" >
+        fcg_category_id = #{fcgCategoryId,jdbcType=INTEGER},
+      </if>
+      <if test="categoryName != null" >
+        category_name = #{categoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="productDesc != null" >
+        product_DESC = #{productDesc,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.fcgo.weixin.persist.po.ProductPO" >
+    update pdt_product
+    set IS_DELETE = #{isDelete,jdbcType=INTEGER},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      PRO_NAME = #{proName,jdbcType=VARCHAR},
+      UP_STATE = #{upState,jdbcType=INTEGER},
+      UP_TIME = #{upTime,jdbcType=TIMESTAMP},
+      GROUP_ID = #{groupId,jdbcType=INTEGER},
+      SHOP_ID = #{shopId,jdbcType=INTEGER},
+      FROM_TYPE = #{fromType,jdbcType=INTEGER},
+      create_name = #{createName,jdbcType=VARCHAR},
+      update_name = #{updateName,jdbcType=VARCHAR},
+      seller_id = #{sellerId,jdbcType=INTEGER},
+      fcg_product_id = #{fcgProductId,jdbcType=INTEGER},
+      fcg_product_type = #{fcgProductType,jdbcType=INTEGER},
+      max_price = #{maxPrice,jdbcType=DECIMAL},
+      min_price = #{minPrice,jdbcType=DECIMAL},
+      sales_count = #{salesCount,jdbcType=INTEGER},
+      freight = #{freight,jdbcType=DECIMAL},
+      fcg_category_id = #{fcgCategoryId,jdbcType=INTEGER},
+      category_name = #{categoryName,jdbcType=VARCHAR},
+      product_DESC = #{productDesc,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fcgo.weixin.persist.po.ProductPO" >
+    update pdt_product
+    set IS_DELETE = #{isDelete,jdbcType=INTEGER},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      PRO_NAME = #{proName,jdbcType=VARCHAR},
+      UP_STATE = #{upState,jdbcType=INTEGER},
+      UP_TIME = #{upTime,jdbcType=TIMESTAMP},
+      GROUP_ID = #{groupId,jdbcType=INTEGER},
+      SHOP_ID = #{shopId,jdbcType=INTEGER},
+      FROM_TYPE = #{fromType,jdbcType=INTEGER},
+      create_name = #{createName,jdbcType=VARCHAR},
+      update_name = #{updateName,jdbcType=VARCHAR},
+      seller_id = #{sellerId,jdbcType=INTEGER},
+      fcg_product_id = #{fcgProductId,jdbcType=INTEGER},
+      fcg_product_type = #{fcgProductType,jdbcType=INTEGER},
+      max_price = #{maxPrice,jdbcType=DECIMAL},
+      min_price = #{minPrice,jdbcType=DECIMAL},
+      sales_count = #{salesCount,jdbcType=INTEGER},
+      freight = #{freight,jdbcType=DECIMAL},
+      fcg_category_id = #{fcgCategoryId,jdbcType=INTEGER},
+      category_name = #{categoryName,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

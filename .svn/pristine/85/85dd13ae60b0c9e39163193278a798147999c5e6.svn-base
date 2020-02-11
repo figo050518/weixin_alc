@@ -1,0 +1,42 @@
+
+$(".min").click(function() {
+    var t = $(this).parent().find('.text_box');
+    t.val(parseInt(t.val()) - 1);
+    if (t.val() <= 1) {
+      t.val(1);
+    }
+    $(this).parent().parent().next().find(".goodsCounts").text(t.val());
+});
+  // 数量加
+$(".add").click(function() {
+	var goondsNum=$(".goodsNum").text();
+    var t = $(this).parent().find('.text_box');
+    t.val(parseInt(t.val()) + 1);
+    if (t.val() <= 1) {
+      t.val(1);
+    }
+    if(t.val() >goondsNum){
+    	alert("退货数量应小于商品数量！");
+    	t.val(goondsNum);
+    }
+    $(this).parent().parent().next().find(".goodsCounts").text(t.val());
+});
+$(function() {
+	$(".filepath").on("change",function() {
+	   var srcs = getObjectURL(this.files[0]); //获取路径
+	   $(this).nextAll(".img1").hide(); //this指的是input
+	   $(this).nextAll(".img2").show(); //fireBUg查看第二次换图片不起做用
+	   $(this).nextAll(".img2").attr("src",srcs); //this指的是input
+	})
+})
+function getObjectURL(file) {
+    var url = null;
+    if (window.createObjectURL != undefined) {
+   		url = window.createObjectURL(file)
+    } else if (window.URL != undefined) {
+   		url = window.URL.createObjectURL(file)
+    } else if (window.webkitURL != undefined) {
+   		url = window.webkitURL.createObjectURL(file)
+    }
+    return url
+};

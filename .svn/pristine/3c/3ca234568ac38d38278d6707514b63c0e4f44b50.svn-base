@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fcgo.weixin.persist.dao.IOrderPaymentLogDAO" >
+  <resultMap id="BaseResultMap" type="com.fcgo.weixin.persist.po.OrderPaymentLogPO" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="order_id" property="orderId" jdbcType="INTEGER" />
+    <result column="product_id" property="productId" jdbcType="INTEGER" />
+    <result column="payment_status" property="paymentStatus" jdbcType="INTEGER" />
+    <result column="refund_status" property="refundStatus" jdbcType="INTEGER" />
+    <result column="transaction_amount" property="transactionAmount" jdbcType="DECIMAL" />
+    <result column="bank_transaction_number" property="bankTransactionNumber" jdbcType="VARCHAR" />
+    <result column="payment_type" property="paymentType" jdbcType="VARCHAR" />
+    <result column="cause_of_failure" property="causeOfFailure" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="create_name" property="createName" jdbcType="VARCHAR" />
+    <result column="update_name" property="updateName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, order_id, product_id, payment_status, refund_status, transaction_amount, bank_transaction_number, 
+    payment_type, cause_of_failure, create_time, update_time, create_name, update_name
+  </sql>
+  <select id="selectByCriteria" resultMap="BaseResultMap" parameterType="com.fcgo.weixin.persist.generate.criteria.OrderPaymentLogCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ord_payment_log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from ord_payment_log
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from ord_payment_log
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByCriteria" parameterType="com.fcgo.weixin.persist.generate.criteria.OrderPaymentLogCriteria" >
+    delete from ord_payment_log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.fcgo.weixin.persist.po.OrderPaymentLogPO" >
+    insert into ord_payment_log (id, order_id, product_id, 
+      payment_status, refund_status, transaction_amount, 
+      bank_transaction_number, payment_type, cause_of_failure, 
+      create_time, update_time, create_name, 
+      update_name)
+    values (#{id,jdbcType=INTEGER}, #{orderId,jdbcType=INTEGER}, #{productId,jdbcType=INTEGER}, 
+      #{paymentStatus,jdbcType=INTEGER}, #{refundStatus,jdbcType=INTEGER}, #{transactionAmount,jdbcType=DECIMAL}, 
+      #{bankTransactionNumber,jdbcType=VARCHAR}, #{paymentType,jdbcType=VARCHAR}, #{causeOfFailure,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{createName,jdbcType=VARCHAR}, 
+      #{updateName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fcgo.weixin.persist.po.OrderPaymentLogPO" >
+    insert into ord_payment_log
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="productId != null" >
+        product_id,
+      </if>
+      <if test="paymentStatus != null" >
+        payment_status,
+      </if>
+      <if test="refundStatus != null" >
+        refund_status,
+      </if>
+      <if test="transactionAmount != null" >
+        transaction_amount,
+      </if>
+      <if test="bankTransactionNumber != null" >
+        bank_transaction_number,
+      </if>
+      <if test="paymentType != null" >
+        payment_type,
+      </if>
+      <if test="causeOfFailure != null" >
+        cause_of_failure,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="createName != null" >
+        create_name,
+      </if>
+      <if test="updateName != null" >
+        update_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="productId != null" >
+        #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="paymentStatus != null" >
+        #{paymentStatus,jdbcType=INTEGER},
+      </if>
+      <if test="refundStatus != null" >
+        #{refundStatus,jdbcType=INTEGER},
+      </if>
+      <if test="transactionAmount != null" >
+        #{transactionAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="bankTransactionNumber != null" >
+        #{bankTransactionNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="paymentType != null" >
+        #{paymentType,jdbcType=VARCHAR},
+      </if>
+      <if test="causeOfFailure != null" >
+        #{causeOfFailure,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createName != null" >
+        #{createName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateName != null" >
+        #{updateName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByCriteria" parameterType="com.fcgo.weixin.persist.generate.criteria.OrderPaymentLogCriteria" resultType="java.lang.Integer" >
+    select count(*) from ord_payment_log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByCriteriaSelective" parameterType="map" >
+    update ord_payment_log
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.orderId != null" >
+        order_id = #{record.orderId,jdbcType=INTEGER},
+      </if>
+      <if test="record.productId != null" >
+        product_id = #{record.productId,jdbcType=INTEGER},
+      </if>
+      <if test="record.paymentStatus != null" >
+        payment_status = #{record.paymentStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.refundStatus != null" >
+        refund_status = #{record.refundStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.transactionAmount != null" >
+        transaction_amount = #{record.transactionAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.bankTransactionNumber != null" >
+        bank_transaction_number = #{record.bankTransactionNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.paymentType != null" >
+        payment_type = #{record.paymentType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.causeOfFailure != null" >
+        cause_of_failure = #{record.causeOfFailure,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createName != null" >
+        create_name = #{record.createName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateName != null" >
+        update_name = #{record.updateName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByCriteria" parameterType="map" >
+    update ord_payment_log
+    set payment_status = #{record.paymentStatus,jdbcType=INTEGER},
+      refund_status = #{record.refundStatus,jdbcType=INTEGER},
+      transaction_amount = #{record.transactionAmount,jdbcType=DECIMAL},
+      bank_transaction_number = #{record.bankTransactionNumber,jdbcType=VARCHAR},
+      payment_type = #{record.paymentType,jdbcType=VARCHAR},
+      cause_of_failure = #{record.causeOfFailure,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      create_name = #{record.createName,jdbcType=VARCHAR},
+      update_name = #{record.updateName,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fcgo.weixin.persist.po.OrderPaymentLogPO" >
+    update ord_payment_log
+    <set >
+      <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="productId != null" >
+        product_id = #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="paymentStatus != null" >
+        payment_status = #{paymentStatus,jdbcType=INTEGER},
+      </if>
+      <if test="refundStatus != null" >
+        refund_status = #{refundStatus,jdbcType=INTEGER},
+      </if>
+      <if test="transactionAmount != null" >
+        transaction_amount = #{transactionAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="bankTransactionNumber != null" >
+        bank_transaction_number = #{bankTransactionNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="paymentType != null" >
+        payment_type = #{paymentType,jdbcType=VARCHAR},
+      </if>
+      <if test="causeOfFailure != null" >
+        cause_of_failure = #{causeOfFailure,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createName != null" >
+        create_name = #{createName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateName != null" >
+        update_name = #{updateName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fcgo.weixin.persist.po.OrderPaymentLogPO" >
+    update ord_payment_log
+    set order_id = #{orderId,jdbcType=INTEGER},
+      product_id = #{productId,jdbcType=INTEGER},
+      payment_status = #{paymentStatus,jdbcType=INTEGER},
+      refund_status = #{refundStatus,jdbcType=INTEGER},
+      transaction_amount = #{transactionAmount,jdbcType=DECIMAL},
+      bank_transaction_number = #{bankTransactionNumber,jdbcType=VARCHAR},
+      payment_type = #{paymentType,jdbcType=VARCHAR},
+      cause_of_failure = #{causeOfFailure,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      create_name = #{createName,jdbcType=VARCHAR},
+      update_name = #{updateName,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

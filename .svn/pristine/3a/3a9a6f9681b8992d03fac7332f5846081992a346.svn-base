@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fcgo.weixin.persist.dao.IOrderRefundRequestDAO" >
+	  <resultMap id="OrdRefundResultMap" type="com.fcgo.weixin.persist.po.OrderRefundRequestPO" >
+	   <id column="ID" property="id" jdbcType="INTEGER" />
+	    <result column="IS_DELETE" property="isDelete" jdbcType="INTEGER" />
+	    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+	    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+	    <result column="REFUND_NUMBER" property="refundNumber" jdbcType="VARCHAR" />
+	    <result column="BUYER_ID" property="buyerId" jdbcType="INTEGER" />
+	    <result column="SELLER_ID" property="sellerId" jdbcType="INTEGER" />
+	    <result column="ORDER_ID" property="orderId" jdbcType="INTEGER" />
+	    <result column="ORDER_NUM" property="orderNum" jdbcType="VARCHAR" />
+	    <result column="PRODUCT_ID" property="productId" jdbcType="INTEGER" />
+	    <result column="PRODUCT_PIC_URL" property="productPicUrl" jdbcType="VARCHAR" />
+	    <result column="PRODUCT_NAME" property="productName" jdbcType="VARCHAR" />
+	    <result column="PRODUCT_PRICE" property="productPrice" jdbcType="DECIMAL" />
+	    <result column="PRODUCT_SPEC" property="productSpec" jdbcType="VARCHAR" />
+	    <result column="PRODUCT_QUANT" property="productQuant" jdbcType="INTEGER" />
+	    <result column="PRODUCT_TOTAL_AMOUNT" property="productTotalAmount" jdbcType="DECIMAL" />
+	    <result column="IS_TUIHUO" property="isTuihuo" jdbcType="INTEGER" />
+	    <result column="AFTERSALE_FREIGHT" property="aftersaleFreight" jdbcType="DECIMAL" />
+	    <result column="REFUND_MONEY" property="refundMoney" jdbcType="DECIMAL" />
+	    <result column="REFUND_REASON" property="refundReason" jdbcType="VARCHAR" />
+	    <result column="REFUSED_REASON" property="refusedReason" jdbcType="VARCHAR" />
+	    <result column="REFUND_STATUS" property="refundStatus" jdbcType="VARCHAR" />
+	    <result column="AUDIT_NAME" property="auditName" jdbcType="VARCHAR" />
+	    <result column="AUDIT_TIME" property="auditTime" jdbcType="TIMESTAMP" />
+	    <result column="FINISH_TIME" property="finishTime" jdbcType="TIMESTAMP" />
+	    <result column="CREATE_NAME" property="createName" jdbcType="VARCHAR" />
+	    <result column="UPDATE_NAME" property="updateName" jdbcType="VARCHAR" />
+	    <result column="DELETE_NAME" property="deleteName" jdbcType="VARCHAR" />
+	    <result column="DELETE_TIME" property="deleteTime" jdbcType="TIMESTAMP" />
+	    <result column="REDUNDS_REASON" property="redundsReason" jdbcType="VARCHAR" />
+	    <result column="REFUND_COMMISON" property="refundCommison" jdbcType="DECIMAL" />
+	    <result column="fcg_product_price" property="fcgProductPrice" jdbcType="DECIMAL" />
+	    <result column="FCG_REFUND_FLAG" property="fcgRefundFlag" jdbcType="INTEGER" />
+	  </resultMap>
+	  <select id="findOrdRefundByPage" parameterType="map" resultMap="OrdRefundResultMap">
+	  	select ID, IS_DELETE, CREATE_TIME, UPDATE_TIME, REFUND_NUMBER, BUYER_ID, SELLER_ID, ORDER_ID, 
+	    ORDER_NUM, PRODUCT_ID, PRODUCT_PIC_URL, PRODUCT_NAME, PRODUCT_PRICE, PRODUCT_SPEC, 
+	    PRODUCT_QUANT, PRODUCT_TOTAL_AMOUNT, IS_TUIHUO, AFTERSALE_FREIGHT, REFUND_MONEY, 
+	    REFUND_REASON, REFUSED_REASON, REFUND_STATUS, AUDIT_NAME, AUDIT_TIME, FINISH_TIME, 
+	    CREATE_NAME, UPDATE_NAME as updateTime, DELETE_NAME, DELETE_TIME, REDUNDS_REASON, REFUND_COMMISON, 
+	    fcg_product_price, FCG_REFUND_FLAG from ord_refund_request where 1=1 and IS_DELETE=0
+	   	<!-- 买家 -->
+  		<if test="userType=='1'.toString()">
+			AND BUYER_ID = #{userId,jdbcType=VARCHAR} 
+		</if>
+  		 <!-- 卖家 -->
+  		<if test="userType=='2'.toString()">
+			AND SELLER_ID = #{userId,jdbcType=VARCHAR} 
+		</if>
+		 <!-- 订单状态不为空时添加订单状态条件 -->
+		 <if test="refundStatus!=null and refundStatus!=''">
+			AND REFUND_STATUS = #{refundStatus,jdbcType=VARCHAR} 
+		</if>
+		 <!-- 排序字段 ,方式（ase desc） -->
+		<if test="sorter!=null and sorter!=''">
+			 ORDER BY #{sorter}
+		</if>
+  		  limit #{startPage, jdbcType=DECIMAL},#{endPage, jdbcType=DECIMAL}
+	  </select>
+	  <select id="getCountBypage" parameterType="map" resultType="int">
+	  	select count(0) from ord_refund_request where 1=1 and IS_DELETE=0 
+	  	<!-- 买家 -->
+  		<if test="userType=='1'.toString()">
+			AND BUYER_ID = #{userId,jdbcType=VARCHAR} 
+		</if>
+  		 <!-- 卖家 -->
+  		<if test="userType=='2'.toString()">
+			AND SELLER_ID = #{userId,jdbcType=VARCHAR} 
+		</if>
+		 <!-- 订单状态不为空时添加订单状态条件 -->
+		 <if test="refundStatus!=null and refundStatus!=''">
+			AND REFUND_STATUS = #{refundStatus,jdbcType=VARCHAR} 
+		</if>
+	  </select>
+  </mapper>

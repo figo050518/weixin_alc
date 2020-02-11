@@ -1,0 +1,17 @@
+package com.fcgo.weixin.application.product;
+
+import java.util.List;
+
+import com.fcgo.weixin.common.dto.Page;
+import com.fcgo.weixin.persist.po.UserProductFavPO;
+
+public interface ProductFavService {
+    /**
+     * 收藏夹列表
+     * 
+     * @param userId
+     * @return
+     */
+    public List<UserProductFavPO> listUserProductFav(int userId, Page page);
+
+}

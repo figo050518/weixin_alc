@@ -1,0 +1,37 @@
+package com.fcgo.weixin.common.log;
+
+/**
+ * LogCategory.java
+ * 
+ * @author xiahan
+ */
+public enum LogCategory {
+
+    /** log controller */
+    CONTROLLER("controller"),
+    /** log service */
+    SERVICE("service"),
+    /** log domain */
+    DOMAIN("domain"),
+    /** log persist layer */
+    PERSIST("persist"),
+    /** log system info */
+    SYSTEM("system"),
+    /** app interface */
+    INTERFACE("interface"),
+    /** log system exception */
+    EXCEPTION("exception"),
+    /** log rpc exception */
+    LOG_FOR_RPC("rpc");
+
+    private String name;
+
+    private LogCategory(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return name;
+    }
+}

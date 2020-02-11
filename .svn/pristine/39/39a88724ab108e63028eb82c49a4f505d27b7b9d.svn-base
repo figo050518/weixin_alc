@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fcgo.weixin.persist.dao.IUserProductFavDAO" >
+  <resultMap id="productFavResultMap" type="com.fcgo.weixin.persist.po.UserProductFavPO" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="IS_DELETE" property="isDelete" jdbcType="INTEGER" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="USER_ID" property="userId" jdbcType="INTEGER" />
+    <result column="PRODUCT_ID" property="productId" jdbcType="INTEGER" />
+    <result column="FAV_STATE" property="favState" jdbcType="INTEGER" />
+    <result column="create_name" property="createName" jdbcType="VARCHAR" />
+    <result column="update_name" property="updateName" jdbcType="VARCHAR" />
+    <result column="spec_name" property="specName" jdbcType="VARCHAR" />
+    <result column="product_url" property="productUrl" jdbcType="VARCHAR" />
+    <result column="product_name" property="productName" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <select id="listUserProductFav" parameterType="map" resultMap="productFavResultMap">
+  
+  		select PRODUCT_ID,spec_name,product_name,product_url  from user_product_fav 
+  		
+  		 where USER_ID=#{userId, jdbcType=DECIMAL} and IS_DELETE=0 
+  		 
+  		 limit #{startPage, jdbcType=DECIMAL},#{pageSize, jdbcType=DECIMAL}
+  
+  </select>
+  
+</mapper>

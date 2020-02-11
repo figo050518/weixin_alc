@@ -1,0 +1,54 @@
+package com.fcgo.weixin.controller.shop.convert;
+
+import java.util.Collection;
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import com.fcgo.weixin.convert.Convert;
+import com.fcgo.weixin.dto.SellerShopDTO;
+import com.fcgo.weixin.persist.po.SellerShopPO;
+
+@Service
+public class SellerShopConvert implements  Convert<SellerShopPO,SellerShopDTO > {
+
+    @Override
+    public SellerShopDTO convertToDTO(SellerShopPO domain) {
+        SellerShopDTO sellerShop = new SellerShopDTO();
+        sellerShop.setId(domain.getId());
+        sellerShop.setShopName(domain.getShopName());
+        sellerShop.setShopDesc(domain.getShopDesc());
+        sellerShop.setLogoUrlId(domain.getLogoUrlId());
+        sellerShop.setLogoUrl("https://image.baidu.com/search/detail?ct=503316480&z=0&ipn=d&word=%E5%B0%8F%E5%9B%BE%E7%89%87%E7%B4%A0%E6%9D%90&step_word=&hs=2&pn=44&spn=0&di=62379284440&pi=0&rn=1&tn=baiduimagedetail&is=0%2C0&istype=0&ie=utf-8&oe=utf-8&in=&cl=2&lm=-1&st=undefined&cs=584817260%2C4005112723&os=3431360400%2C1021782182&simid=4250258503%2C607593783&adpicid=0&lpn=0&ln=1993&fr=&fmq=1491396284796_R&fm=&ic=undefined&s=undefined&se=&sme=&tab=0&width=undefined&height=undefined&face=undefined&ist=&jit=&cg=&bdtype=0&oriquery=&objurl=http%3A%2F%2Fpic.58pic.com%2F58pic%2F12%2F74%2F32%2F48J58PICpuE.jpg&fromurl=ippr_z2C%24qAzdH3FAzdH3Fooo_z%26e3Bcbrtv_z%26e3Bv54AzdH3Frf1AzdH3F8d09nd9b_z%26e3Bip4s&gsm=0&rpstart=0&rpnum=0");//根据imageId获取imageUrl
+        sellerShop.setBgUrl("https://image.baidu.com/search/detail?ct=503316480&z=0&ipn=d&word=%E5%B0%8F%E5%9B%BE%E7%89%87%E7%B4%A0%E6%9D%90&step_word=&hs=2&pn=44&spn=0&di=62379284440&pi=0&rn=1&tn=baiduimagedetail&is=0%2C0&istype=0&ie=utf-8&oe=utf-8&in=&cl=2&lm=-1&st=undefined&cs=584817260%2C4005112723&os=3431360400%2C1021782182&simid=4250258503%2C607593783&adpicid=0&lpn=0&ln=1993&fr=&fmq=1491396284796_R&fm=&ic=undefined&s=undefined&se=&sme=&tab=0&width=undefined&height=undefined&face=undefined&ist=&jit=&cg=&bdtype=0&oriquery=&objurl=http%3A%2F%2Fpic.58pic.com%2F58pic%2F12%2F74%2F32%2F48J58PICpuE.jpg&fromurl=ippr_z2C%24qAzdH3FAzdH3Fooo_z%26e3Bcbrtv_z%26e3Bv54AzdH3Frf1AzdH3F8d09nd9b_z%26e3Bip4s&gsm=0&rpstart=0&rpnum=0");//根据imageId获取imageUrl
+        return sellerShop;
+    }
+
+    @Override
+    public SellerShopPO convertToDomain(SellerShopDTO client) {
+        SellerShopPO shop = new SellerShopPO();
+        shop.setId(client.getId());
+        shop.setShopName(client.getShopName());
+        shop.setShopDesc(client.getShopDesc());
+        shop.setBgUrlId(client.getBgUrlId());
+        shop.setLogoUrlId(client.getLogoUrlId());
+        return shop;
+    }
+
+    @Override
+    public List<SellerShopDTO> convertCollectionToDTO(List<SellerShopPO> domains) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    @Override
+    public List<SellerShopPO> convertCollectionToDomain(List<SellerShopDTO> clients) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+   
+
+    
+
+}

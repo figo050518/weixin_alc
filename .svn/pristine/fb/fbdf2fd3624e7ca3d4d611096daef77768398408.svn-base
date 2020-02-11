@@ -1,0 +1,66 @@
+package com.fcgo.weixin.dto;
+
+public class SellerShopDTO {
+
+    private Integer id;
+
+    private String shopName;
+
+    private String shopDesc;
+
+    private String logoUrlId;
+
+    private String bgUrlId;
+
+    private String fcgUserId;
+
+    
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getShopName() {
+        return shopName;
+    }
+
+    public void setShopName(String shopName) {
+        this.shopName = shopName;
+    }
+
+    public String getShopDesc() {
+        return shopDesc;
+    }
+
+    public void setShopDesc(String shopDesc) {
+        this.shopDesc = shopDesc;
+    }
+
+    public String getLogoUrlId() {
+        return logoUrlId;
+    }
+
+    public void setLogoUrlId(String logoUrlId) {
+        this.logoUrlId = logoUrlId;
+    }
+
+    public String getBgUrlId() {
+        return bgUrlId;
+    }
+
+    public void setBgUrlId(String bgUrlId) {
+        this.bgUrlId = bgUrlId;
+    }
+
+    public String getFcgUserId() {
+        return fcgUserId;
+    }
+
+    public void setFcgUserId(String fcgUserId) {
+        this.fcgUserId = fcgUserId;
+    }
+
+}

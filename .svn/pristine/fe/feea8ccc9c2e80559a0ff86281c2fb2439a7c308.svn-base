@@ -1,0 +1,67 @@
+package com.fcgo.weixin.controller.product;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.fcgo.weixin.application.product.IProductImageService;
+import com.fcgo.weixin.application.product.IProductService;
+import com.fcgo.weixin.application.product.IProductSpecService;
+import com.fcgo.weixin.persist.po.ProductImagePO;
+import com.fcgo.weixin.persist.po.ProductPO;
+import com.fcgo.weixin.persist.po.ProductSpecPO;
+
+/**
+ * 商品
+ * 
+ * @author Ww
+ */
+@Controller
+@RequestMapping("/product")
+public class PdtProductController {
+    @Autowired
+    private IProductService productService;
+    @Autowired
+    private IProductImageService productImageService;
+    @Autowired
+    private IProductSpecService productSpecService;
+
+    /**
+     * 商品详细
+     * 
+     * @param productId
+     * @return
+     */
+    @RequestMapping(value="/pdtProductdeail",method = RequestMethod.GET)
+    @ResponseBody
+    public Map<String, Object> pdtProductdeail(String productId, Model model, HttpSession session,
+            HttpServletRequest request, HttpServletResponse response) {
+        // 先回去session中的用户信息，用户判断是否已收藏改商品，计算购物车数量
+        Map<String, Object> map = new HashMap<String, Object>();
+        // 商品基本信息
+        ProductPO productPO = productService.getById(Integer.parseInt(productId));
+        map.put("productPO", productPO);
+        model.addAttribute("productPO", productPO);
+        // 商品图片信息
+        List<ProductImagePO> productImagePOs = productImageService.getByProductId(Integer.parseInt(productId));
+        model.addAttribute("productImagePOs", productImagePOs);
+        map.put("productImagePOs", productImagePOs);
+        // 商品属性集合
+        List<ProductSpecPO> productSpecPOs = productSpecService.getByProductId(Integer.valueOf(productId));
+        model.addAttribute("productSpecPOs", productSpecPOs);
+        map.put("productSpecPOs", productSpecPOs);
+        return map;
+
+    }
+}

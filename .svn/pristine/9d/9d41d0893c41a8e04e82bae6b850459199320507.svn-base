@@ -1,0 +1,127 @@
+//验证提现
+/*^(?:0|[1-9]\d*)(\.\d{2})?$*/
+function validateTianMoney(){
+	var regex = /^(?:0|[1-9]\d*)(\.\d{2})?$/;
+	var balance=$("#tixianInput").val();
+	var tianMoney=$(".yue").text();
+	if(parseInt(balance)>parseInt(tianMoney)){
+		$(".p_view").css("display","none");
+		Info.view('提现金额不能大于余额!');
+		return false;
+	}
+	if(parseInt(balance)>parseInt("50000.00")){
+		$(".p_view").css("display","none");
+		Info.view('提现金额不能大于2万!');
+		return false;
+	}
+	if(balance==""){
+		$(".p_view").css("display","none");
+		Info.view('请输入提现金额!');
+		return false;
+	}
+	if(balance=="0"||balance=="0.0"||balance=="0.00"){
+		$(".p_view").css("display","none");
+		Info.view('提现金额不能为0!');
+		return false;
+	}
+	if (regex.test(balance) == false) {
+		$(".p_view").css("display","none");
+		Info.view('请正确输入提现金额！');
+		return false;
+	}
+	else{
+		return true;
+	}
+}
+
+function btnNow(){
+	var flag = validateTianMoney()&&tixianCard();
+	if(flag==true){
+		alert("o");
+	}
+}
+			function bankCardShow(){
+				$(".bankCard").show();
+				$(".overlay").show();
+			}
+			function bankCardHide(){
+				$(".bankCard").hide();
+				$(".overlay").hide();
+			}
+			
+// 验证银行卡卡号（只验证非空）
+  function cardNumVal() {
+	var cardNumVal = $(".cardNum").val();
+	if (cardNumVal == "") {
+		$(".p_view").css("display","none");
+		Info.view('银行卡卡号不能为空！');
+		return false;
+	}
+	else {
+		return true;
+	}
+}
+// 验证姓名（只验证非空）
+  function nameVal() {
+	var nameVal = $(".name").val();
+	if (nameVal == "") {
+		$(".p_view").css("display","none");
+		Info.view('您的姓名不能为空！');
+		return false;
+	}
+	else {
+		return true;
+	}
+}
+  
+// 验证验证码（只验证非空）
+  function messageVel() {
+	var messageVal = $(".codeNum").val();
+	if (messageVal == "") {
+		$(".p_view").css("display","none");
+		Info.view('验证码不能为空！');
+		return false;
+	}
+	else {
+		return true;
+	}
+}
+function tixianCard(){
+	var selectCard = $(".selectCard");
+	var selectCardOption = $(".selectCard option");
+	if(selectCardOption.length==1){
+		$(".p_view").css("display","none");
+			Info.view('请添加账户！');
+			return false;
+	}else{
+		var optionST = selectCard.find("option:selected").text();
+		console.log(optionST);
+		if(optionST=="请选择提现账户"){
+			$(".p_view").css("display","none");
+			Info.view('请选择提现账户！');
+			return false;
+			
+		}else{
+			return true;
+		}
+	}
+}
+
+
+function wanchengBtn(){
+	var flag = cardNumVal()&&nameVal()&&messageVel();
+	if(flag ==true){
+		alert("0")
+	}
+}
+$(document).ready(function(){
+	var localHeight = $("section").height();//获取可视宽度
+	$("input").focus(function() {
+	var keyboardHeight = localHeight - $("section").height();//获取键盘的高度
+	var keyboardY = localHeight - keyboardHeight;
+	var addBottom = (parseInt($(this).position().top) + parseInt($(this).height()));//文本域的底部
+	var offset = addBottom - keyboardY;//计算上滑的距离
+	$("section").scrollTop(offset);
+	});
+	
+})

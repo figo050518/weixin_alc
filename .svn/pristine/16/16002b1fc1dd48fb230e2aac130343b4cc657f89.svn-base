@@ -1,0 +1,79 @@
+package com.fcgo.weixin.application.impl.order;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.fcgo.weixin.application.order.IOrderInfoService;
+import com.fcgo.weixin.common.constants.UserType;
+import com.fcgo.weixin.common.dto.BaseSessionUserDTO;
+import com.fcgo.weixin.common.dto.Page;
+import com.fcgo.weixin.persist.dao.IOrderInfoDAO;
+import com.fcgo.weixin.persist.generate.criteria.OrderInfoCriteria;
+import com.fcgo.weixin.persist.po.OrderInfoPO;
+
+@Service
+public class OrderInfoServiceImpl implements IOrderInfoService {
+    @Autowired
+    private IOrderInfoDAO orderInfoDAO;
+    private static final Logger logger = LoggerFactory.getLogger(OrderInfoServiceImpl.class);
+
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    @Override
+    public Page getOrderInfoList(BaseSessionUserDTO baseSessionUserDTO, String orderState, int pageIndex) {
+        Page page = new Page();
+        // 更新当前页码
+        if (pageIndex >= 1) {
+            page.setPageIndex(pageIndex);
+        }
+
+        // 参数map
+        Map parm = new HashMap();
+        // 查询数量参数
+        OrderInfoCriteria orderInfoCriteria = new OrderInfoCriteria();
+        // 用户ID
+        parm.put("userId", baseSessionUserDTO.getUserId());
+        // 用户类型
+        if (baseSessionUserDTO.getIsBuyer()) {
+            // 买家
+            parm.put("userType", UserType.BUYER.getKey());
+            orderInfoCriteria.createCriteria().andUserIdEqualTo(baseSessionUserDTO.getUserId());
+        }
+        else {
+            // 卖家
+            parm.put("userType", Integer.valueOf(UserType.BUYER.getKey()));
+            orderInfoCriteria.createCriteria().andSellerIdEqualTo(baseSessionUserDTO.getUserId());
+        }
+        // 订单状态 （可空）
+        parm.put("orderState", orderState);
+        if (StringUtils.isNotBlank(orderState)) {
+            orderInfoCriteria.createCriteria().andOrderStateEqualTo(Integer.valueOf(orderState));
+        }
+        // 默认排序字段 方式（如果需要可更改）
+        parm.put("orderStatus", "updateTime desc");
+        // 分页信息
+        parm.put("startPage", (page.getPageIndex() - 1) * page.getPageSize());
+        parm.put("endPage", page.getPageIndex() * page.getPageSize());
+        // 获取主编分页数据
+        List<OrderInfoPO> orderInfoPOs = orderInfoDAO.orderInfoPage(parm);
+        // 获取本次查询数据总条数
+        Integer records = orderInfoDAO.countByCriteria(orderInfoCriteria);
+        // 组装数据
+        // 返回数据集合
+        page.setRow(orderInfoPOs);
+        page.setRecords(records);
+        return page;
+    }
+
+    @Override
+    public OrderInfoPO getByOrderId(Integer orderId) {
+        return orderInfoDAO.selectByPrimaryKey(orderId);
+    }
+
+}

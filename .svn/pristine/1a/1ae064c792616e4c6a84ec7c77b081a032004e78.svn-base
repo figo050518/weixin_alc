@@ -1,0 +1,31 @@
+package com.fcgo.weixin.application.order;
+
+import com.fcgo.weixin.common.dto.BaseSessionUserDTO;
+import com.fcgo.weixin.common.dto.Page;
+import com.fcgo.weixin.persist.po.OrderInfoPO;
+
+/**
+ * 订单
+ * 
+ * @author Ww
+ */
+public interface IOrderInfoService {
+
+    /**
+     * 不同身份分页查询订单列表
+     * 
+     * @param baseSessionUserDTO
+     * @param orderState
+     * @param pageIndex
+     * @return
+     */
+    public Page getOrderInfoList(BaseSessionUserDTO baseSessionUserDTO, String orderState, int pageIndex);
+
+    /**
+     * 根据订单ID 查看订单详情
+     * 
+     * @param orderId
+     * @return
+     */
+    public OrderInfoPO getByOrderId(Integer orderId);
+}

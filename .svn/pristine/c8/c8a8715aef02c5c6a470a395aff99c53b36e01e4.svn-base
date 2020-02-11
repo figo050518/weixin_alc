@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fcgo.weixin.persist.dao.IUserInfoDAO" >
+  <resultMap id="BaseResultMap" type="com.fcgo.weixin.persist.po.UserInfoPO" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="IS_DELETE" property="isDelete" jdbcType="INTEGER" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="WX_ID" property="wxId" jdbcType="VARCHAR" />
+    <result column="TEL_NUM" property="telNum" jdbcType="VARCHAR" />
+    <result column="NIKE_NAME" property="nikeName" jdbcType="VARCHAR" />
+    <result column="create_name" property="createName" jdbcType="VARCHAR" />
+    <result column="update_name" property="updateName" jdbcType="VARCHAR" />
+    <result column="user_type" property="userType" jdbcType="INTEGER" />
+    <result column="fcg_seller_id" property="fcgSellerId" jdbcType="INTEGER" />
+    <result column="fcg_token" property="fcgToken" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, IS_DELETE, CREATE_TIME, UPDATE_TIME, WX_ID, TEL_NUM, NIKE_NAME, create_name, 
+    update_name, user_type, fcg_seller_id, fcg_token
+  </sql>
+  <select id="selectByCriteria" resultMap="BaseResultMap" parameterType="com.fcgo.weixin.persist.generate.criteria.UserInfoCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from user_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_info
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from user_info
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByCriteria" parameterType="com.fcgo.weixin.persist.generate.criteria.UserInfoCriteria" >
+    delete from user_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.fcgo.weixin.persist.po.UserInfoPO" useGeneratedKeys="true" keyProperty="id" >
+    insert into user_info (ID, IS_DELETE, CREATE_TIME, 
+      UPDATE_TIME, WX_ID, TEL_NUM, 
+      NIKE_NAME, create_name, update_name, 
+      user_type, fcg_seller_id, fcg_token
+      )
+    values (#{id,jdbcType=INTEGER}, #{isDelete,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{wxId,jdbcType=VARCHAR}, #{telNum,jdbcType=VARCHAR}, 
+      #{nikeName,jdbcType=VARCHAR}, #{createName,jdbcType=VARCHAR}, #{updateName,jdbcType=VARCHAR}, 
+      #{userType,jdbcType=INTEGER}, #{fcgSellerId,jdbcType=INTEGER}, #{fcgToken,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.fcgo.weixin.persist.po.UserInfoPO" >
+    insert into user_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="isDelete != null" >
+        IS_DELETE,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+      <if test="wxId != null" >
+        WX_ID,
+      </if>
+      <if test="telNum != null" >
+        TEL_NUM,
+      </if>
+      <if test="nikeName != null" >
+        NIKE_NAME,
+      </if>
+      <if test="createName != null" >
+        create_name,
+      </if>
+      <if test="updateName != null" >
+        update_name,
+      </if>
+      <if test="userType != null" >
+        user_type,
+      </if>
+      <if test="fcgSellerId != null" >
+        fcg_seller_id,
+      </if>
+      <if test="fcgToken != null" >
+        fcg_token,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="isDelete != null" >
+        #{isDelete,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="wxId != null" >
+        #{wxId,jdbcType=VARCHAR},
+      </if>
+      <if test="telNum != null" >
+        #{telNum,jdbcType=VARCHAR},
+      </if>
+      <if test="nikeName != null" >
+        #{nikeName,jdbcType=VARCHAR},
+      </if>
+      <if test="createName != null" >
+        #{createName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateName != null" >
+        #{updateName,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null" >
+        #{userType,jdbcType=INTEGER},
+      </if>
+      <if test="fcgSellerId != null" >
+        #{fcgSellerId,jdbcType=INTEGER},
+      </if>
+      <if test="fcgToken != null" >
+        #{fcgToken,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByCriteria" parameterType="com.fcgo.weixin.persist.generate.criteria.UserInfoCriteria" resultType="java.lang.Integer" >
+    select count(*) from user_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByCriteriaSelective" parameterType="map" >
+    update user_info
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.isDelete != null" >
+        IS_DELETE = #{record.isDelete,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.wxId != null" >
+        WX_ID = #{record.wxId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.telNum != null" >
+        TEL_NUM = #{record.telNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nikeName != null" >
+        NIKE_NAME = #{record.nikeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createName != null" >
+        create_name = #{record.createName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateName != null" >
+        update_name = #{record.updateName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userType != null" >
+        user_type = #{record.userType,jdbcType=INTEGER},
+      </if>
+      <if test="record.fcgSellerId != null" >
+        fcg_seller_id = #{record.fcgSellerId,jdbcType=INTEGER},
+      </if>
+      <if test="record.fcgToken != null" >
+        fcg_token = #{record.fcgToken,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByCriteria" parameterType="map" >
+    update user_info
+    set IS_DELETE = #{record.isDelete,jdbcType=INTEGER},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      WX_ID = #{record.wxId,jdbcType=VARCHAR},
+      TEL_NUM = #{record.telNum,jdbcType=VARCHAR},
+      NIKE_NAME = #{record.nikeName,jdbcType=VARCHAR},
+      create_name = #{record.createName,jdbcType=VARCHAR},
+      update_name = #{record.updateName,jdbcType=VARCHAR},
+      user_type = #{record.userType,jdbcType=INTEGER},
+      fcg_seller_id = #{record.fcgSellerId,jdbcType=INTEGER},
+      fcg_token = #{record.fcgToken,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fcgo.weixin.persist.po.UserInfoPO" >
+    update user_info
+    <set >
+      <if test="isDelete != null" >
+        IS_DELETE = #{isDelete,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="wxId != null" >
+        WX_ID = #{wxId,jdbcType=VARCHAR},
+      </if>
+      <if test="telNum != null" >
+        TEL_NUM = #{telNum,jdbcType=VARCHAR},
+      </if>
+      <if test="nikeName != null" >
+        NIKE_NAME = #{nikeName,jdbcType=VARCHAR},
+      </if>
+      <if test="createName != null" >
+        create_name = #{createName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateName != null" >
+        update_name = #{updateName,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null" >
+        user_type = #{userType,jdbcType=INTEGER},
+      </if>
+      <if test="fcgSellerId != null" >
+        fcg_seller_id = #{fcgSellerId,jdbcType=INTEGER},
+      </if>
+      <if test="fcgToken != null" >
+        fcg_token = #{fcgToken,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fcgo.weixin.persist.po.UserInfoPO" >
+    update user_info
+    set IS_DELETE = #{isDelete,jdbcType=INTEGER},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      WX_ID = #{wxId,jdbcType=VARCHAR},
+      TEL_NUM = #{telNum,jdbcType=VARCHAR},
+      NIKE_NAME = #{nikeName,jdbcType=VARCHAR},
+      create_name = #{createName,jdbcType=VARCHAR},
+      update_name = #{updateName,jdbcType=VARCHAR},
+      user_type = #{userType,jdbcType=INTEGER},
+      fcg_seller_id = #{fcgSellerId,jdbcType=INTEGER},
+      fcg_token = #{fcgToken,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

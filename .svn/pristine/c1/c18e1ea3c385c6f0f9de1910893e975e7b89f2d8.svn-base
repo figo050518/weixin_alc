@@ -1,0 +1,3 @@
+$("#proManage").click(function(){
+	
+})

@@ -1,0 +1,19 @@
+package com.fcgo.weixin.application.order;
+
+import java.math.BigDecimal;
+import java.util.List;
+
+import com.fcgo.weixin.application.dto.OrderConfirmProductDTO;
+import com.fcgo.weixin.application.dto.OrderSaveDTO;
+import com.fcgo.weixin.common.dto.BaseSessionUserDTO;
+import com.fcgo.weixin.persist.po.UserAddressPO;
+
+public interface PlaceOrderService {
+    public List<OrderConfirmProductDTO> resolveProductInfoJson(String tempProductInfoJson);
+
+    public BigDecimal getOrderTotalMoney(List<OrderConfirmProductDTO> orderConfirmProductDTOs);
+
+    public boolean placeOrder(List<OrderSaveDTO> orderSaveDTOs, BaseSessionUserDTO baseSessionUserDTO,
+            UserAddressPO userAddressPO);
+
+}

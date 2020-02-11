@@ -1,0 +1,141 @@
+*{
+	padding: 0;
+	margin: 0;
+}
+.clear{
+	clear: both;
+}
+body{
+	width:100%;
+	height: 100%;
+	font-size:62.5%;
+	background:#F5F5F5;
+}
+.head{
+	height:50px;
+	background: #D13600;
+	width: 100%;
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 101;
+}
+.title{
+	width: 56%;
+	margin-left: 22%;
+	height: 34px;
+	line-height: 34px;
+	font-size: 16px;
+	color: #FFFFFF;
+	text-align: center;
+	margin-top: 7px;
+	border-radius: 5px;
+	border: 1px solid #fff;
+	position: relative;
+}
+.title .pdt{
+	float: left;
+	width: 50%;
+}
+.title .pdtClassify{
+	float: left;
+	width: 50%;
+	background: #fff;
+	color:#D13600
+}
+.return{
+	position: absolute;
+	height: 40px;
+	top: 6px;
+	line-height: 40px;
+	font-size: 16px;
+	color: #fff;
+}
+.returnImg{
+	position: relative;
+    top: 5px;
+    display: inline-block;
+    margin-left: 3px;
+    width: 24px;
+    height: 24px;
+    background-repeat: no-repeat;
+    background-image: url(/resources/images/returnWhite.png);
+    background-size: 24px 24px;
+}
+
+.content{
+	width: 100%;
+	position: relative;
+	background: #fff;
+	border-top:1px solid #eee;
+	border-bottom:1px solid #eee;
+	margin-top:60px;
+}
+.contentItem{
+	width: 90vw;
+	position: relative;
+	height: 50px;
+	margin-left: 5vw;
+	border-bottom: 1px solid #EEEEEE;
+}
+.contentItem:nth-last-of-type(1){
+	border:0;
+}
+
+.contentItem div{
+	height: 50px;
+	line-height: 50px;
+	font-size: 14px;
+}
+.itemText{
+	float: left;
+}
+.itemNum{
+	float: right;
+}
+.itemImg{
+	width: 30px;
+	float: right;
+	text-align: right;
+}
+.itemImg img{
+	height: 18px;
+	margin-top:16px;
+}
+.footerbtn{
+	width: 100%;
+	height: 50px;
+	border-top: 1px solid #eee;
+	background: #fff;
+	text-align: center;
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	z-index: 5;;
+}
+.addClassify{
+	background:  #D13600;
+	border: 0;
+	width: 40vw;
+	height: 34px;
+	margin-top:7px;
+	border-radius: 2px;
+	color:#fff;
+	border: 1px solid #D13600;
+	margin-right: 10px;
+	font-size: 14px;
+	outline: none;
+}
+.batchClassify{
+	background:  #fff;
+	border: 0;
+	width: 40vw;
+	height: 34px;
+	margin-top:7px;
+	border:1px solid #ccc;
+	border-radius: 2px;
+	color:#666;
+	margin-right: 10px;
+	font-size: 14px;
+	outline: none;
+}

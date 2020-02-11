@@ -1,0 +1,5 @@
+db.driverClassName=com.mysql.jdbc.Driver
+db.url=jdbc:mysql://112.74.190.37:3306/fcg_wd?userUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
+db.username=root
+db.password=test123
+

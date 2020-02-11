@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fcgo.weixin.persist.dao.IShoppingCartItemDAO" >
+  <resultMap id="ShopCartItemResultMap" type="com.fcgo.weixin.persist.po.ShoppingCartItemPO" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="IS_DELETE" property="isDelete" jdbcType="INTEGER" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="SHOP_CART_ID" property="shopCartId" jdbcType="INTEGER" />
+    <result column="PRODUCT_ID" property="productId" jdbcType="INTEGER" />
+    <result column="create_name" property="createName" jdbcType="VARCHAR" />
+    <result column="update_name" property="updateName" jdbcType="VARCHAR" />
+    <result column="product_name" property="productName" jdbcType="VARCHAR" />
+    <result column="spec_name" property="specName" jdbcType="VARCHAR" />
+    <result column="product_count" property="productCount" jdbcType="INTEGER" />
+    <result column="product_url" property="productUrl" jdbcType="VARCHAR" />
+     <result column="shop_id" property="shopId" jdbcType="INTEGER" />
+    <result column="shop_name" property="shopName" jdbcType="VARCHAR" />
+     <result column="seller_id" property="sellerId" jdbcType="INTEGER" />
+     <result column="fcg_spec_id" property="fcgSpecId" jdbcType="INTEGER" />
+     <result column="spec_id" property="specId" jdbcType="INTEGER" />
+  </resultMap>
+ 
+  <select id="listShopItemByCartId" parameterType="map" resultMap="ShopCartItemResultMap">
+  
+  		select shop_id,shop_name,PRODUCT_ID,spec_name,product_name,product_url,product_count,seller_id ,spec_id,fcg_spec_id
+  		
+  		 from shopping_cart_item 
+  		
+  		 where SHOP_CART_ID=#{shopCartId, jdbcType=DECIMAL} and IS_DELETE=0  order by update_time desc
+  
+  </select>
+  
+   <select id="countShopItemByCartId" parameterType="map" resultType="int">
+  
+  		select count(1) from shopping_cart_item 
+  		
+  		 where SHOP_CART_ID=#{shopCartId, jdbcType=DECIMAL} and IS_DELETE=0 
+  		 
+  
+  </select>
+ 
+</mapper>

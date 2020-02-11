@@ -1,0 +1,15 @@
+##includeJS
+##生成引入js文件的<script>元素
+#macro(includeJs $filenames)
+#if(!$filenames.size())
+	#set($filenames = [$filenames])
+#end
+#foreach($name in $filenames)
+#if($name.startsWith("/"))
+<script type="text/javascript" src="${name}"></script>
+#else
+<script type="text/javascript" src="${name}"></script>
+#end
+#end
+#end
+

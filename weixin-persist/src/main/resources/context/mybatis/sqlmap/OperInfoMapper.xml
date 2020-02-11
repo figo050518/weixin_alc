@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fcgo.weixin.persist.dao.IOperInfoDAO" >
+  <resultMap id="PageOperInfotMap" type="com.fcgo.weixin.persist.po.OperInfoPO" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="oper_id" property="operId" jdbcType="VARCHAR" />
+    <result column="create_name" property="createName" jdbcType="VARCHAR" />
+    <result column="IS_DELETE" property="isDelete" jdbcType="INTEGER" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="TEL_NUM" property="telNum" jdbcType="VARCHAR" />
+    <result column="oper_NAME" property="operName" jdbcType="VARCHAR" />
+    <result column="update_name" property="updateName" jdbcType="VARCHAR" />
+    <result column="oper_email" property="operEmail" jdbcType="VARCHAR" />
+    <result column="oper_gender" property="operGender" jdbcType="VARCHAR" />
+  </resultMap>
+   <select id="getOperInfoListPage" parameterType="map" resultMap="PageOperInfotMap">
+  		select ID, oper_id,IS_DELETE, CREATE_TIME, UPDATE_TIME,create_name,TEL_NUM,oper_NAME
+  		,update_name, oper_email,oper_gender from oper_info where 1=1
+    	<if test="operName!=null and operName!=''">
+			AND oper_NAME like #{operName,jdbcType=VARCHAR} 
+			or  oper_email like #{operName,jdbcType=VARCHAR} 
+			or TEL_NUM like #{operName,jdbcType=VARCHAR} 
+		</if>
+		<if test="sorter!=null and sorter!=''">
+			 ORDER BY #{sorter}
+		</if>
+  		  limit #{startPage, jdbcType=DECIMAL},#{pageSize, jdbcType=DECIMAL}
+  </select>
+</mapper>

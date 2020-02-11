@@ -1,0 +1,85 @@
+package com.fcgo.weixin.application.dto;
+
+import java.math.BigDecimal;
+import java.util.List;
+
+/**
+ * 确认订单信息显示的商品详细
+ * 
+ * @author xiahan
+ */
+public class OrderConfirmDetailDTO {
+
+    // 产品Id
+    private String shopName;
+
+    private int shopId;
+
+    private int sellerId;
+
+    private List<OrderConfirmProductDTO> orderConfirmProductDTOs;
+
+    // 订单的总运费
+    private BigDecimal orderTotalFreight;
+
+    private BigDecimal productTotalPrice;
+
+    private BigDecimal orderTotalPrice;
+
+    public BigDecimal getOrderTotalPrice() {
+        return orderTotalPrice;
+    }
+
+    public void setOrderTotalPrice(BigDecimal orderTotalPrice) {
+        this.orderTotalPrice = orderTotalPrice;
+    }
+
+    public BigDecimal getProductTotalPrice() {
+        return productTotalPrice;
+    }
+
+    public void setProductTotalPrice(BigDecimal productTotalPrice) {
+        this.productTotalPrice = productTotalPrice;
+    }
+
+    public int getShopId() {
+        return shopId;
+    }
+
+    public void setShopId(int shopId) {
+        this.shopId = shopId;
+    }
+
+    public int getSellerId() {
+        return sellerId;
+    }
+
+    public void setSellerId(int sellerId) {
+        this.sellerId = sellerId;
+    }
+
+    public String getShopName() {
+        return shopName;
+    }
+
+    public void setShopName(String shopName) {
+        this.shopName = shopName;
+    }
+
+    public List<OrderConfirmProductDTO> getOrderConfirmProductDTOs() {
+        return orderConfirmProductDTOs;
+    }
+
+    public void setOrderConfirmProductDTOs(List<OrderConfirmProductDTO> orderConfirmProductDTOs) {
+        this.orderConfirmProductDTOs = orderConfirmProductDTOs;
+    }
+
+    public BigDecimal getOrderTotalFreight() {
+        return orderTotalFreight;
+    }
+
+    public void setOrderTotalFreight(BigDecimal orderTotalFreight) {
+        this.orderTotalFreight = orderTotalFreight;
+    }
+
+}

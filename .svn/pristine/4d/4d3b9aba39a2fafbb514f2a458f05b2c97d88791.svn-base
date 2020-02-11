@@ -1,0 +1,18 @@
+package com.fcgo.weixin.persist.dao;
+
+import java.util.List;
+
+import com.fcgo.weixin.persist.generate.IProductSpecMapper;
+import com.fcgo.weixin.persist.po.ProductSpecPO;
+
+public interface IProductSpecDAO extends IProductSpecMapper {
+
+    void batchInsert(List<ProductSpecPO> list);
+
+    void deleteNotExist(List<Integer> list);
+
+    List<ProductSpecPO> findByProductIds(List<Integer> list);
+
+    void batchUpdate(List<ProductSpecPO> list);
+
+}

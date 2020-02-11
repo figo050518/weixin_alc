@@ -1,0 +1,67 @@
+body{
+	font-family: helvetica,"microsoft yahei";
+	padding: 0;
+	margin: 0;
+	background: #FAFAFA;
+
+}
+.text{
+	width: 100%;
+	height: 10vw;
+	position: relative;
+	text-align: center;
+	margin-top:35vw;
+	font-size: 5vw;
+	color:#666;
+}
+.text p{
+	margin: 0;
+	padding: 0;
+}
+.text1{
+	width: 100%;
+	height: 10vw;
+	position: relative;
+	text-align: center;
+	margin-top:60vw;
+	font-size: 4vw;
+	color:#666;
+}
+.bannerdiv{
+	width: 50%;
+	height: 50vw;
+	position: relative;
+	margin-top:2vw;
+	margin-left:25vw;
+	
+}
+.bannerdiv img{
+	width:50vw;
+	height: 50vw;
+	border-radius: 50%;
+}
+.footerBtn{
+	width: 100%;
+	height: 12vw;
+	padding:2vw 0;
+	position: fixed;
+	bottom: 0;;
+}
+
+.footerBtn button{
+	width:40vw;
+	margin-left:6vw;
+	height: 11vw;
+	border:1px solid #D13600;
+	border-radius: 5px;
+	font-size: 5vw;
+	line-height: 10vw;
+}
+.signBtn{
+	background: #fff;
+	color:#D13600;
+}
+.registerBtn{
+	background: #D13600;
+	color:#FFf;
+}

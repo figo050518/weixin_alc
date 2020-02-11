@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="weixin-frontend">
+        <wb-resource deploy-path="/" source-path="/target/m2e-wtp/web-resources"/>
+        <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
+        <dependent-module archiveName="weixin-service-SNAPSHOT-0.0.1.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/weixin-service/weixin-service">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="weixin-web-common-SNAPSHOT-0.0.1.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/weixin-web-common/weixin-web-common">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="weixin-common-SNAPSHOT-0.0.1.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/weixin-common/weixin-common">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="weixin-persist-SNAPSHOT-0.0.1.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/weixin-persist/weixin-persist">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="weixin-mybatis-generated-SNAPSHOT-0.0.1.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/weixin-mybatis-generated/weixin-mybatis-generated">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <property name="java-output-path" value="/weixin-frontend/target/classes"/>
+        <property name="context-root" value="weixin-frontend"/>
+    </wb-module>
+</project-modules>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fcgo.weixin.persist.dao.IUserInfoDAO" >
+  <resultMap id="userInfoPagerResultMap" type="com.fcgo.weixin.persist.po.UserInfoPO" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="ID" property="id" jdbcType="INTEGER" />
+    <result column="IS_DELETE" property="isDelete" jdbcType="INTEGER" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="WX_ID" property="wxId" jdbcType="VARCHAR" />
+    <result column="TEL_NUM" property="telNum" jdbcType="VARCHAR" />
+    <result column="NIKE_NAME" property="nikeName" jdbcType="VARCHAR" />
+    <result column="create_name" property="createName" jdbcType="VARCHAR" />
+    <result column="update_name" property="updateName" jdbcType="VARCHAR" />
+    <result column="user_type" property="userType" jdbcType="INTEGER" />
+    <result column="fcg_seller_id" property="fcgSellerId" jdbcType="INTEGER" />
+  </resultMap>
+  <select id="lisPagertUserInfos" parameterType="map" resultMap="userInfoPagerResultMap">
+  
+  		select ID,IS_DELETE,CREATE_TIME,UPDATE_TIME,WX_ID,TEL_NUM,NIKE_NAME,create_name,update_name,user_type,fcg_seller_id  from user_info 
+  		
+  		 where 1 = 1
+  		<if test="nike_name!=null and nike_name!=''">
+			AND nike_Name like  #{nike_name,jdbcType=VARCHAR}
+		</if>
+		<if test="tel_num!=null and tel_num!=''">
+			AND tel_num = #{tel_num,jdbcType=VARCHAR} 
+		</if>
+		<if test="user_type!=null and user_type!=''">
+			AND user_type = #{user_type,jdbcType=DECIMAL} 
+		</if>
+  		 order by update_time desc
+  		 limit #{startPage, jdbcType=DECIMAL},#{pageSize, jdbcType=DECIMAL} 
+  </select>
+</mapper>

@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fcgo.weixin.persist.dao.IFinanceBillDAO" >
+  <resultMap id="BaseResultMap" type="com.fcgo.weixin.persist.po.FinanceBillPO" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="IS_DELETE" property="isDelete" jdbcType="INTEGER" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="CURRENT_BALANCE" property="currentBalance" jdbcType="DECIMAL" />
+    <result column="GEN_AMOUNT" property="genAmount" jdbcType="DECIMAL" />
+    <result column="GEN_EVENT" property="genEvent" jdbcType="INTEGER" />
+    <result column="SHOP_ID" property="shopId" jdbcType="INTEGER" />
+    <result column="SELLER_ID" property="sellerId" jdbcType="INTEGER" />
+    <result column="CREATE_NAME" property="createName" jdbcType="VARCHAR" />
+    <result column="UPDATE_NAME" property="updateName" jdbcType="VARCHAR" />
+    <result column="BUSS_ORDER_NUM" property="bussOrderNum" jdbcType="VARCHAR" />
+    <result column="BUSS_ORDER_TYPE" property="bussOrderType" jdbcType="INTEGER" />
+    <result column="ORDER_ID" property="orderId" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, IS_DELETE, CREATE_TIME, UPDATE_TIME, CURRENT_BALANCE, GEN_AMOUNT, GEN_EVENT, 
+    SHOP_ID, SELLER_ID, CREATE_NAME, UPDATE_NAME, BUSS_ORDER_NUM, BUSS_ORDER_TYPE, ORDER_ID
+  </sql>
+  <select id="selectByCriteria" resultMap="BaseResultMap" parameterType="com.fcgo.weixin.persist.generate.criteria.FinanceBillCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from finance_bill
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from finance_bill
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from finance_bill
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByCriteria" parameterType="com.fcgo.weixin.persist.generate.criteria.FinanceBillCriteria" >
+    delete from finance_bill
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.fcgo.weixin.persist.po.FinanceBillPO" >
+    insert into finance_bill (ID, IS_DELETE, CREATE_TIME, 
+      UPDATE_TIME, CURRENT_BALANCE, GEN_AMOUNT, 
+      GEN_EVENT, SHOP_ID, SELLER_ID, 
+      CREATE_NAME, UPDATE_NAME, BUSS_ORDER_NUM, 
+      BUSS_ORDER_TYPE, ORDER_ID)
+    values (#{id,jdbcType=INTEGER}, #{isDelete,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{currentBalance,jdbcType=DECIMAL}, #{genAmount,jdbcType=DECIMAL}, 
+      #{genEvent,jdbcType=INTEGER}, #{shopId,jdbcType=INTEGER}, #{sellerId,jdbcType=INTEGER}, 
+      #{createName,jdbcType=VARCHAR}, #{updateName,jdbcType=VARCHAR}, #{bussOrderNum,jdbcType=VARCHAR}, 
+      #{bussOrderType,jdbcType=INTEGER}, #{orderId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fcgo.weixin.persist.po.FinanceBillPO" >
+    insert into finance_bill
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="isDelete != null" >
+        IS_DELETE,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+      <if test="currentBalance != null" >
+        CURRENT_BALANCE,
+      </if>
+      <if test="genAmount != null" >
+        GEN_AMOUNT,
+      </if>
+      <if test="genEvent != null" >
+        GEN_EVENT,
+      </if>
+      <if test="shopId != null" >
+        SHOP_ID,
+      </if>
+      <if test="sellerId != null" >
+        SELLER_ID,
+      </if>
+      <if test="createName != null" >
+        CREATE_NAME,
+      </if>
+      <if test="updateName != null" >
+        UPDATE_NAME,
+      </if>
+      <if test="bussOrderNum != null" >
+        BUSS_ORDER_NUM,
+      </if>
+      <if test="bussOrderType != null" >
+        BUSS_ORDER_TYPE,
+      </if>
+      <if test="orderId != null" >
+        ORDER_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="isDelete != null" >
+        #{isDelete,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="currentBalance != null" >
+        #{currentBalance,jdbcType=DECIMAL},
+      </if>
+      <if test="genAmount != null" >
+        #{genAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="genEvent != null" >
+        #{genEvent,jdbcType=INTEGER},
+      </if>
+      <if test="shopId != null" >
+        #{shopId,jdbcType=INTEGER},
+      </if>
+      <if test="sellerId != null" >
+        #{sellerId,jdbcType=INTEGER},
+      </if>
+      <if test="createName != null" >
+        #{createName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateName != null" >
+        #{updateName,jdbcType=VARCHAR},
+      </if>
+      <if test="bussOrderNum != null" >
+        #{bussOrderNum,jdbcType=VARCHAR},
+      </if>
+      <if test="bussOrderType != null" >
+        #{bussOrderType,jdbcType=INTEGER},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByCriteria" parameterType="com.fcgo.weixin.persist.generate.criteria.FinanceBillCriteria" resultType="java.lang.Integer" >
+    select count(*) from finance_bill
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByCriteriaSelective" parameterType="map" >
+    update finance_bill
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.isDelete != null" >
+        IS_DELETE = #{record.isDelete,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.currentBalance != null" >
+        CURRENT_BALANCE = #{record.currentBalance,jdbcType=DECIMAL},
+      </if>
+      <if test="record.genAmount != null" >
+        GEN_AMOUNT = #{record.genAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.genEvent != null" >
+        GEN_EVENT = #{record.genEvent,jdbcType=INTEGER},
+      </if>
+      <if test="record.shopId != null" >
+        SHOP_ID = #{record.shopId,jdbcType=INTEGER},
+      </if>
+      <if test="record.sellerId != null" >
+        SELLER_ID = #{record.sellerId,jdbcType=INTEGER},
+      </if>
+      <if test="record.createName != null" >
+        CREATE_NAME = #{record.createName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateName != null" >
+        UPDATE_NAME = #{record.updateName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bussOrderNum != null" >
+        BUSS_ORDER_NUM = #{record.bussOrderNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bussOrderType != null" >
+        BUSS_ORDER_TYPE = #{record.bussOrderType,jdbcType=INTEGER},
+      </if>
+      <if test="record.orderId != null" >
+        ORDER_ID = #{record.orderId,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByCriteria" parameterType="map" >
+    update finance_bill
+    set IS_DELETE = #{record.isDelete,jdbcType=INTEGER},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      CURRENT_BALANCE = #{record.currentBalance,jdbcType=DECIMAL},
+      GEN_AMOUNT = #{record.genAmount,jdbcType=DECIMAL},
+      GEN_EVENT = #{record.genEvent,jdbcType=INTEGER},
+      SHOP_ID = #{record.shopId,jdbcType=INTEGER},
+      SELLER_ID = #{record.sellerId,jdbcType=INTEGER},
+      CREATE_NAME = #{record.createName,jdbcType=VARCHAR},
+      UPDATE_NAME = #{record.updateName,jdbcType=VARCHAR},
+      BUSS_ORDER_NUM = #{record.bussOrderNum,jdbcType=VARCHAR},
+      BUSS_ORDER_TYPE = #{record.bussOrderType,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fcgo.weixin.persist.po.FinanceBillPO" >
+    update finance_bill
+    <set >
+      <if test="isDelete != null" >
+        IS_DELETE = #{isDelete,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="currentBalance != null" >
+        CURRENT_BALANCE = #{currentBalance,jdbcType=DECIMAL},
+      </if>
+      <if test="genAmount != null" >
+        GEN_AMOUNT = #{genAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="genEvent != null" >
+        GEN_EVENT = #{genEvent,jdbcType=INTEGER},
+      </if>
+      <if test="shopId != null" >
+        SHOP_ID = #{shopId,jdbcType=INTEGER},
+      </if>
+      <if test="sellerId != null" >
+        SELLER_ID = #{sellerId,jdbcType=INTEGER},
+      </if>
+      <if test="createName != null" >
+        CREATE_NAME = #{createName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateName != null" >
+        UPDATE_NAME = #{updateName,jdbcType=VARCHAR},
+      </if>
+      <if test="bussOrderNum != null" >
+        BUSS_ORDER_NUM = #{bussOrderNum,jdbcType=VARCHAR},
+      </if>
+      <if test="bussOrderType != null" >
+        BUSS_ORDER_TYPE = #{bussOrderType,jdbcType=INTEGER},
+      </if>
+      <if test="orderId != null" >
+        ORDER_ID = #{orderId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fcgo.weixin.persist.po.FinanceBillPO" >
+    update finance_bill
+    set IS_DELETE = #{isDelete,jdbcType=INTEGER},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      CURRENT_BALANCE = #{currentBalance,jdbcType=DECIMAL},
+      GEN_AMOUNT = #{genAmount,jdbcType=DECIMAL},
+      GEN_EVENT = #{genEvent,jdbcType=INTEGER},
+      SHOP_ID = #{shopId,jdbcType=INTEGER},
+      SELLER_ID = #{sellerId,jdbcType=INTEGER},
+      CREATE_NAME = #{createName,jdbcType=VARCHAR},
+      UPDATE_NAME = #{updateName,jdbcType=VARCHAR},
+      BUSS_ORDER_NUM = #{bussOrderNum,jdbcType=VARCHAR},
+      BUSS_ORDER_TYPE = #{bussOrderType,jdbcType=INTEGER},
+      ORDER_ID = #{orderId,jdbcType=INTEGER}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

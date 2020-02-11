@@ -1,0 +1,133 @@
+package com.fcgo.weixin.application.impl.shop;
+
+import java.util.Date;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.alibaba.druid.util.StringUtils;
+import com.fcgo.weixin.application.shop.SellerShopService;
+import com.fcgo.weixin.common.constants.UserType;
+import com.fcgo.weixin.persist.dao.ISellerShopDAO;
+import com.fcgo.weixin.persist.dao.IUserAddressDAO;
+import com.fcgo.weixin.persist.dao.IUserInfoDAO;
+import com.fcgo.weixin.persist.dao.IUserLoginDAO;
+import com.fcgo.weixin.persist.generate.criteria.SellerShopCriteria;
+import com.fcgo.weixin.persist.po.SellerShopPO;
+import com.fcgo.weixin.persist.po.UserAddressPO;
+import com.fcgo.weixin.persist.po.UserInfoPO;
+import com.fcgo.weixin.persist.po.UserLoginPO;
+
+@Service
+public class SellerShopServiceImpl implements SellerShopService {
+    @Autowired
+    private ISellerShopDAO sellerShopDao;
+    @Autowired
+    private IUserInfoDAO userInfoDao;
+    @Autowired
+    private IUserLoginDAO userLoginDao;
+
+    @Override
+    public SellerShopPO findById(String id) {
+        if (StringUtils.isEmpty(id)) {
+            return null;
+        }
+        return sellerShopDao.selectByPrimaryKey(Integer.valueOf(id));
+    }
+
+    @Override
+    public boolean save(SellerShopPO sellerShopPO) {
+        sellerShopPO.setCreateTime(new Date());
+        sellerShopPO.setUpdateTime(new Date());
+        sellerShopPO.setIsDelete(0);
+        int flag = sellerShopDao.insert(sellerShopPO);
+        return flag > 0 ? true : false;
+    }
+
+    @Transactional
+    @Override
+    public SellerShopPO save(SellerShopPO shop, MultipartFile file,MultipartFile file2, String tel, String fcgUserId) {
+        Date d = new Date();
+        // 上传图片，记录插入imageInfo，获取imageInfoId
+        String imageUrlId = "";// 走图片上传接口返回的URL，需要插入imageInfo表
+        String imageUrlId2 ="";
+        shop.setLogoUrlId(imageUrlId);
+        shop.setBgUrlId(imageUrlId2);
+        // step1 先插入用户信息
+        UserInfoPO userInfo = new UserInfoPO();
+        String name = shop.getCreateName();
+        userInfo.setCreateName(name);
+        userInfo.setCreateTime(d);
+        userInfo.setFcgSellerId(Integer.valueOf(fcgUserId));
+        userInfo.setIsDelete(0);
+        userInfo.setNikeName(name);
+        userInfo.setTelNum(tel);
+        userInfo.setUpdateName(name);
+        userInfo.setUpdateTime(d);
+        userInfo.setUserType(Integer.valueOf(UserType.SELLER.getKey()));
+        userInfoDao.insert(userInfo);
+        // step2 插入用户登录信息
+        UserLoginPO userLogin = new UserLoginPO();
+        userLogin.setCreateName(name);
+        userLogin.setCreateTime(d);
+        userLogin.setIsDelete(0);
+        // 密码设置为空，是否影响登录？
+        userLogin.setPassword("");
+        userLogin.setTelephone(tel);
+        userLogin.setUpdateName(name);
+        userLogin.setUserId(userInfo.getId());
+        userLoginDao.insert(userLogin);
+//        // step3 插入用户地址信息
+//        UserAddressPO userAddress = new UserAddressPO();
+//        userAddress.setArea("");
+//        userAddress.setCity("");
+//        userAddress.setContactNum(tel);
+//        userAddress.setCreateName(name);
+//        userAddress.setCreateTime(d);
+//        userAddress.setDetailAddr("");
+//        userAddress.setIsDefault(1);
+//        userAddress.setIsDelete(0);
+//        userAddress.setProvince("");
+//        userAddress.setReceiverName(name);
+//        userAddress.setUpdateName(name);
+//        userAddress.setUpdateTime(d);
+//        userAddress.setUserId(userInfo.getId());
+//        userAddressDao.insert(userAddress);
+        // step4 插入店铺
+        shop.setIsDelete(0);
+        shop.setSellerId(userInfo.getId());
+        shop.setCreateTime(d);
+        shop.setUpdateTime(d);
+        this.save(shop);
+        return shop;
+
+    }
+
+    @Override
+    public SellerShopPO findByParam(String shopId, String sellerId) {
+        if (!StringUtils.isEmpty(shopId)) {
+            return this.findById(shopId);
+        }
+        SellerShopCriteria criteria = new SellerShopCriteria();
+        criteria.createCriteria().andSellerIdEqualTo(Integer.valueOf(sellerId));
+        List<SellerShopPO> shopList = sellerShopDao.selectByCriteria(criteria);
+        if (shopList == null || shopList.isEmpty() || shopList.size() > 1) {
+            return null;
+        }
+        return shopList.get(0);
+    }
+
+    @Override
+    public int update(SellerShopPO sellerShop) {
+        if(sellerShop.getId()==null){
+            return 0;
+        }
+        return sellerShopDao.updateByPrimaryKey(sellerShop);
+    }
+    
+    
+
+}

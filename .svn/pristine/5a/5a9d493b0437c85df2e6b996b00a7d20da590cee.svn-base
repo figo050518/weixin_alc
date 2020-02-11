@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/" debug="true">
+	<appender name="default_syn" class="org.apache.log4j.FileAppender">
+		<param name="File" value="${weixin.log.dir}/www/weixin_default.log" />
+		<param name="append" value="true" />
+		<param name="encoding" value="${weixin.log.encoding}" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d %p [%c] %t - %m%n" />
+		</layout>
+	</appender>
+
+	<appender name="service_syn" class="org.apache.log4j.FileAppender">
+		<param name="File" value="${weixin.log.dir}/www/weixin_service.log" />
+		<param name="append" value="true" />
+		<param name="encoding" value="${weixin.log.encoding}" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d %p [%c] %t - %m%n" />
+		</layout>
+	</appender>
+
+	<appender name="controller_syn" class="org.apache.log4j.FileAppender">
+		<param name="File" value="${weixin.log.dir}/www/weixin_controller.log" />
+		<param name="append" value="true" />
+		<param name="encoding" value="${weixin.log.encoding}" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d %p [%c] %t - %m%n" />
+		</layout>
+	</appender>
+
+	<appender name="exception_syn" class="org.apache.log4j.FileAppender">
+		<param name="File" value="${weixin.log.dir}/www/weixin_exception.log" />
+		<param name="append" value="true" />
+		<param name="encoding" value="${weixin.log.encoding}" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d %p [%c] %t - %m%n" />
+		</layout>
+	</appender>
+
+
+	<appender name="persist_syn" class="org.apache.log4j.FileAppender">
+		<param name="File" value="${weixin.log.dir}/www/weixin_persist.log" />
+		<param name="append" value="true" />
+		<param name="encoding" value="${weixin.log.encoding}" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d %p [%c] %t - %m%n" />
+		</layout>
+	</appender>
+
+	<appender name="system_syn" class="org.apache.log4j.FileAppender">
+		<param name="File" value="${weixin.log.dir}/www/weixin_system.log" />
+		<param name="append" value="true" />
+		<param name="encoding" value="${weixin.log.encoding}" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d %p [%c] %t - %m%n" />
+		</layout>
+	</appender>
+
+
+	<appender name="default_asyn" class="org.apache.log4j.AsyncAppender">
+			<param name="BufferSize" value="512"/>
+			<appender-ref ref="default_syn" />
+	</appender>
+
+	<appender name="service_asyn" class="org.apache.log4j.AsyncAppender">
+			<param name="BufferSize" value="512"/>
+			<appender-ref ref="service_syn" />
+	</appender>
+
+	<appender name="controller_asyn" class="org.apache.log4j.AsyncAppender">
+			<param name="BufferSize" value="512"/>
+			<appender-ref ref="controller_syn" />
+	</appender>
+
+	<appender name="exception_asyn" class="org.apache.log4j.AsyncAppender">
+			<param name="BufferSize" value="512"/>
+			<appender-ref ref="exception_syn" />
+	</appender>
+
+
+	<appender name="persist_asyn" class="org.apache.log4j.AsyncAppender">
+			<param name="BufferSize" value="512"/>
+			<appender-ref ref="persist_syn" />
+	</appender>
+
+	<appender name="system_asyn" class="org.apache.log4j.AsyncAppender">
+			<param name="BufferSize" value="512"/>
+			<appender-ref ref="system_syn" />
+	</appender>
+
+
+	<root>
+		<level value="info" />
+		<appender-ref ref="default_asyn" />
+	</root>
+
+	<logger name="controller" additivity="false">
+		<level value="info" />
+		<appender-ref ref="controller_syn" />
+	</logger>
+
+	<logger name="service" additivity="false">
+		<level value="info" />
+		<appender-ref ref="service_asyn" />
+	</logger>
+
+
+	<logger name="persist" additivity="false">
+		<level value="debug" />
+		<appender-ref ref="persist_asyn" />
+	</logger>
+
+	<logger name="exception" additivity="false">
+		<level value="WARN" />
+		<appender-ref ref="exception_asyn" />
+	</logger>
+
+	<logger name="system" additivity="false">
+		<level value="info" />
+		<appender-ref ref="system_asyn" />
+	</logger>
+
+    <appender name="console" class="org.apache.log4j.ConsoleAppender">
+        <param name="Target" value="System.out" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%-5p: %c - %m%n" />
+        </layout>
+    </appender>
+	
+	<logger name="com.ibatis" additivity="true">
+		<level value="DEBUG" />
+		<appender-ref ref="console" />
+	</logger>
+	<logger name="java.sql.Connection" additivity="true">
+		<level value="DEBUG" />
+		<appender-ref ref="console" />
+	</logger>
+	<logger name="java.sql.Statement">
+		<level value="DEBUG" />
+		<appender-ref ref="console" />
+	</logger>
+	<logger name="java.sql.PreparedStatement">
+		<level value="DEBUG" />
+		<appender-ref ref="console" />
+	</logger>
+	<logger name="java.sql.ResultSet">
+		<level value="DEBUG" />
+		<appender-ref ref="console" />
+	</logger>
+	 
+    <!-- <logger name="org.springframework">
+        <level value="debug" />
+         <appender-ref ref="console"/>
+    </logger> -->
+    
+	
+
+
+</log4j:configuration>

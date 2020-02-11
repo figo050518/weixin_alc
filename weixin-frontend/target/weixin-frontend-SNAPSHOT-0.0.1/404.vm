@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+	<META NAME="ROBOTS" CONTENT="NOARCHIVE">
+	<META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW" />
+    <title>Online Shopping for Electronics, Apparel, Cell Phone, Automotives & Motorcycles from China - CROV.com</title>
+    <link rel="stylesheet" href="/resources/style/core/base.css" />
+    <link rel="stylesheet" href="/resources/style/core/component.css" />
+    <link rel="stylesheet" href="/resources/style/core/layout.css" />
+    <link rel="stylesheet" href="/resources/style/core/public.css" />
+	<link rel="stylesheet" href="/resources/style/module/global_page.css" />
+	<link rel="stylesheet" href="/resources/style/ui/ui_icon.css" />
+</head>
+<body>
+	#parse("layout/buyer/status.vm")
+    #parse("layout/buyer/header.vm")
+    <div class="grid">
+        <div class="page-404">
+			<div class="page-404-img"></div>
+                    <p class="page-404-tit">Sorry.The page you requested can not be found!</p>
+            <div class="page-404-img page-404-img-2"></div>
+        </div>
+    </div>
+    #parse("layout/buyer/footer.vm")
+	#includeJs(["/resources/script/jquery/jquery-1.7.1.js","/resources/script/common/message/messageRemind.js"])
+</body>
+</html>

@@ -1,0 +1,114 @@
+package com.fcgo.weixin.application.impl.order;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.fcgo.weixin.application.dto.OrderConfirmProductDTO;
+import com.fcgo.weixin.application.dto.OrderSaveDTO;
+import com.fcgo.weixin.application.order.PlaceOrderService;
+import com.fcgo.weixin.common.constants.OrderStateConstants;
+import com.fcgo.weixin.common.constants.PayWayType;
+import com.fcgo.weixin.common.dto.BaseSessionUserDTO;
+import com.fcgo.weixin.common.util.OrderNumberUtil;
+import com.fcgo.weixin.persist.dao.IOrderInfoDAO;
+import com.fcgo.weixin.persist.dao.IOrderItemDAO;
+import com.fcgo.weixin.persist.po.OrderInfoPO;
+import com.fcgo.weixin.persist.po.OrderItemPO;
+import com.fcgo.weixin.persist.po.UserAddressPO;
+
+@Service
+public class PlaceOrderServiceImpl implements PlaceOrderService {
+
+    @Autowired
+    private IOrderInfoDAO orderInfoDAO;
+
+    @Autowired
+    private IOrderItemDAO orderItemDAO;
+
+    @Override
+    public List<OrderConfirmProductDTO> resolveProductInfoJson(String tempProductInfoJson) {
+        List<OrderConfirmProductDTO> list = new ArrayList<OrderConfirmProductDTO>();
+        if (tempProductInfoJson != null) {
+            JSONArray jsonArray = JSONArray.fromObject(tempProductInfoJson);
+            for (int i = 0; i < jsonArray.size(); i++) {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                int productId = Integer.parseInt(jsonObject.get("productId").toString());
+                String productSpecName = jsonObject.get("productSpecName").toString().trim();
+                int productCount = Integer.parseInt(jsonObject.get("productCount").toString());
+                OrderConfirmProductDTO orderConfirmProductDTO =
+                        new OrderConfirmProductDTO(productId, productSpecName, productCount);
+                // TODO 查询规格
+                // PdtCatePropItemQuote pdtCatePropItemQuote = null;
+                // if (pdtCatePropItemQuote != null) {
+                orderConfirmProductDTO.setProductPrice(null);
+                // }
+                orderConfirmProductDTO.setPicUrl(null);
+                list.add(orderConfirmProductDTO);
+            }
+        }
+        return list;
+
+    }
+
+    @Override
+    public BigDecimal getOrderTotalMoney(List<OrderConfirmProductDTO> orderConfirmProductDTOs) {
+        return null;
+    }
+
+    @Override
+    @Transactional
+    public boolean placeOrder(List<OrderSaveDTO> orderSaveDTOs, BaseSessionUserDTO baseSessionUserDTO,
+            UserAddressPO userAddressPO) {
+        for (OrderSaveDTO orderSaveDTO : orderSaveDTOs) {
+            List<OrderConfirmProductDTO> orderConfirmProductDTOs = orderSaveDTO.getOrderConfirmProductDTOs();
+            OrderInfoPO orderInfoPO = new OrderInfoPO();
+            orderInfoPO.setOrderNum(OrderNumberUtil.generateOrderNo());
+            orderInfoPO.setCreateName(baseSessionUserDTO.getNickName());
+            orderInfoPO.setCreateTime(new Date());
+            orderInfoPO.setUpdateTime(new Date());
+            orderInfoPO.setUpdateName(baseSessionUserDTO.getNickName());
+            orderInfoPO.setUserId(baseSessionUserDTO.getUserId());
+            orderInfoPO.setSellerId(orderSaveDTO.getSellerId());
+            orderInfoPO.setShopId(orderSaveDTO.getShopId());
+            orderInfoPO.setPayWay(PayWayType.WEIXIN.getValue());
+            orderInfoPO.setProAmount(orderSaveDTO.getProductTotalPrice());
+            orderInfoPO.setFreightAmount(orderSaveDTO.getFreightTotalPrice());
+            orderInfoPO.setActPayAmount(orderSaveDTO.getActualPayPrice());
+            orderInfoPO.setIsEaluate(0);
+            orderInfoPO.setOrderType(orderSaveDTO.getOrderType());
+            orderInfoPO.setSellerRemarks(orderSaveDTO.getRemark());
+            orderInfoPO.setOrderState(OrderStateConstants.WAIT_PAY.getKey());
+            orderInfoPO.setIsDelete(0);
+            orderInfoDAO.insert(orderInfoPO);
+            for (OrderConfirmProductDTO orderConfirmProductDTO : orderConfirmProductDTOs) {
+                OrderItemPO orderItemPO = new OrderItemPO();
+                orderItemPO.setCreateName(baseSessionUserDTO.getNickName());
+                orderItemPO.setCreateTime(new Date());
+                orderItemPO.setUpdateTime(new Date());
+                orderItemPO.setUpdateName(baseSessionUserDTO.getNickName());
+                orderItemPO.setOrderId(orderInfoPO.getId());
+                orderItemPO.setProductId(orderConfirmProductDTO.getProductId());
+                orderItemPO.setProductSpec(orderConfirmProductDTO.getProductSpecName());
+                orderItemPO.setProductName(null);
+                orderItemPO.setProductPrice(null);
+                orderItemPO.setProductTotalAmount(null);
+                orderItemPO.setFcgProductPrice(null);
+                orderItemPO.setReturnState(0);
+                orderItemPO.setProductPicUrl(orderConfirmProductDTO.getPicUrl());
+                orderItemPO.setIsDelete(0);
+                orderItemDAO.insert(orderItemPO);
+
+            }
+        }
+        return false;
+    }
+}

@@ -1,0 +1,345 @@
+input{
+	margin:0 !important;
+	padding:0 !important;
+	border:none !important;
+}
+
+body{
+	background: #FAFAFA;padding: 0;margin: 0;
+	color: #333;
+	font-family: helvetica,"microsoft yahei";
+
+}
+.titleTable{
+	height: 50px;
+	width: 100%;
+}
+.titleTable td{
+	background:#D13600;
+	padding:0 2vw;
+	color: #fff;
+	font-size: 16px;
+}
+ul{
+	padding: 0;
+	margin: 0;
+	
+}
+a{
+	color: blue;
+	text-decoration: none;
+	font-size: 3.3vw;
+}
+.clear{
+	clear: both;
+}
+p{
+	padding: 0;
+	margin: 1vw 0;
+}
+td{
+	background: #E10705;
+	color: #Ffffff;
+	padding: 2vw 0;
+	font-size: 5vw;
+}
+.nowDepoitCon{
+	width: 100%;
+	position: relative;
+	background: #fff;
+	margin-top: 5vw;
+}
+.Conitem{
+	width: 90vw;
+	height: calc(13vw + 1px);
+	border-bottom: 1px solid #EBECEE;
+	line-height: 13vw;
+	position: relative;
+	margin-left:5vw !important;
+}
+.Conitem div{
+	width: 30vw;
+	font-size: 14px;
+	float: left;
+}
+.Conitem span{
+	display: block;
+	float: left;
+}
+.Conitem input{
+	border: 0;
+	height: 13vw !important;
+	float: left;
+	outline: 0;
+	line-height: 13vw !important;
+	padding: 0;
+	width:60vw !important;
+}
+.Conitem .selectCard{
+	width:60vw !important;
+	border:0;
+	outline: 0;
+	background: #fff url(../img/downtriangle2.png) no-repeat right;
+	background-size: 14px;
+	margin:0 !important;
+	padding:0 !important;
+}
+.Mleft{
+	margin-left: 5px;
+}
+.btnNow{
+	width: 90vw;
+	margin-left: 5vw;
+	height:35px;
+	background: #D13600;
+	color: #fff;
+	font-size: 14px;
+	border:0;
+	outline: 0;
+	border-radius: 3px;
+	margin-top: 5vw;
+	}
+.pointUl{
+	width: 90vw;
+	margin-left: 5vw;
+	line-height:5vw;
+	font-size: 3.3vw;
+	margin-top:2vw;
+}
+.pointUl li{
+	line-height:6vw;
+	margin-left: 4vw;
+}
+.bankCardlist{
+	position: relative;
+	background: #fff;
+	width: 100%;
+}
+.bankCardlistItem{
+	width: 92vw;
+	height: 15vw;
+	margin-left: 4vw;
+	line-height: 15vw;
+	font-size: 14px;
+	
+}
+.bankCardlistItem label{
+	width: 100%;
+	height: 15vw;
+	position: relative;
+	display: block;
+	border-bottom: 1px solid #eee;
+}
+.bankCardlistItem label input{
+	float: left;
+	text-align: left;
+	width: 20px;
+	margin-top: -10px;
+	top: 50%;
+}
+.bankCardlistItem div{
+	width: 40%;
+	float: left;
+	text-align: left;
+}
+.bankCardlistItem label div:nth-child(3){
+	width: 40%;
+	float: left;
+	text-align: right;
+}
+.addzhanghu{
+	width: 50vw;
+	height: 35px;
+	margin-top:5vw;
+	margin-left: 25vw;
+	background: #FFF;
+	border: 1px solid #D13600;
+	
+	outline: none;
+	color: #fff;
+	font-size: 16px;
+	border-radius: 3px;
+	color:#D13600;
+}
+.bankCard{
+	width: 90vw;
+	position: absolute;
+	top: 10vw;
+	left: 5vw;
+	background: #fff;
+	display: none;
+	z-index: 9;
+	border-radius: 3px;
+	
+}
+.bankCardTitle{
+	width: 100%;
+	height:40px;
+	background: #D13600;
+	text-align: center;
+	color: #fff;
+	font-size: 16px;
+	line-height: 40px;
+	border: #D13600 1px solid;
+	border-radius: 3px 3px 0 0 ;
+	
+}
+.bankCardTitle img{
+	position: absolute;
+	width: 12px;
+	right: 12px;
+	top:13px;
+}
+.bankCardCon{
+	width: 100%;
+	position: relative;
+	background:#FAFAFA;
+	border:1px solid #EBECEE;
+	border:0 0 3px 3px;
+}
+
+.bankCardConitem{
+	width: 100%;
+	height: calc(13vw + 1px);
+	border-bottom: 1px solid #EBECEE;
+	line-height: 13vw;
+	background:#fff;
+}
+.bankCardConitem div{
+	width: 25vw;
+	float: left;
+	padding-left: 4vw;
+	font-size:4vw;
+}
+.bankCardConitem select{
+	width: 40vw;
+	font-size:4vw;
+	float: left;
+	border: 0;
+	padding: 0;
+	margin: 0;
+	height: 13vw;
+	outline: none;
+	background: #fff url(../img/downtriangle2.png) no-repeat right;
+	background-size: 14px;
+}
+.bankCardConitem input{
+	width: 60vw !important;
+	font-size: 4vw;
+	float: left;
+	border: 0;
+	padding:0;
+	margin: 0;
+	background: #fff;
+	outline: none;
+	line-height: 13vw !important;
+	height:13vw !important;
+	margin-left:3vw !important;
+}
+.getCodeDiv{
+	width: 100%;
+	height: calc(13vw + 1px);
+	border-bottom: 1px solid #EBECEE;
+	line-height: 13vw;
+	background:#fff;
+}
+.aa{
+	width: 25vw;
+	float: left;
+	padding-left: 4vw;
+	font-size:4vw;
+}
+.telephone{
+	font-size: 4vw !important;
+	float: left;
+	border: 0 !important;
+	padding:0 !important;
+	margin: 0 !important;
+	line-height: 13vw !important;
+	background: #fff !important;
+	outline: none !important;
+	height:13vw !important;
+}
+.getCode{
+	float: right !important;
+	font-size: 12px !important;
+	height: 25px !important;
+	line-height:25px !important;
+	outline: 0 !important;
+	margin-top:calc(6.5vw - 12.5px)!important;
+	background: #fff !important;
+	color: #D13600 !important;
+	border:1px solid #D13600 !important;
+	padding-right: 5vw !important;
+	border-radius: 5px !important;
+	width:80px !important;
+	margin-right:5vw !important;
+	text-align:center !important;
+	padding:0px !important;
+}
+.wanchengBtn{
+	width: 80vw;
+	height: 35px;
+	margin: 5vw;
+	background: #D13600;
+	color: #fff;
+	border: 1px solid #D13600;
+	outline: 0;
+	border-radius: 3px;
+	font-size:14px;
+}
+.overlay{
+	width: 100%;
+	height: 100%;
+	background: rgba(0,0,0,0.5);
+	left: 0;
+	top: 0;
+	z-index: 5;
+	position: fixed;
+	display: none;
+}
+.radio{
+	-webkit-appearance: none;
+    position: relative;
+    width: 20px;
+    height: 20px;
+    -webkit-transition: all 0.15s ease-out 0;
+    background: #fff;
+    border: none;
+    color: #fff;
+    display: inline-block;
+    outline: none;
+    position: relative;
+    margin-right: 0.5rem;
+    z-index: 1;
+    border: 1px solid #ccc;
+    border-radius: 50%;
+}
+.radio:checked{
+	background: #D13600;
+	border:1px solid #D13600;
+}
+.radio:checked:before{
+	opacity: 1;
+    content: '';
+    position: absolute;
+    width: 8px;
+    height: 5px;
+    background: transparent;
+    top: 4px;
+    left: 4px;
+    border: 2px solid #fff;
+    border-top: none;
+    border-right: none;
+    -webkit-transform: rotate(-45deg);
+}
+.lineRightInput{
+	width: 100% !important;
+	font-size: 14px !important;
+	outline: none !important;
+	height: 9vw !important;
+	line-height: 9vw !important;
+	box-sizing: border-box !important;
+	border: none !important;
+	padding:0 !important;
+}

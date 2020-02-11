@@ -1,0 +1,7 @@
+input.encoding = UTF-8
+output.encoding = UTF-8
+velocimacro.context.localscope = true
+velocimacro.library = macro/global.vm
+velocimacro.library.autoreload = true
+tools.view.servlet.layout.directory = layout/
+tools.view.servlet.layout.default.template = default.vm
