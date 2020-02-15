@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.fcgo.weixin.application.user.ISellerCustomerService;
 import com.fcgo.weixin.common.dto.Page;
-import com.fcgo.weixin.persist.dao.ISellerCustomerDAO;
 import com.fcgo.weixin.persist.po.SellerCustomerPO;
 
 /**

@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import com.fcgo.weixin.application.user.UserInfoService;
 import com.fcgo.weixin.application.user.ValidateCodeLogService;
 import com.fcgo.weixin.common.log.LogCategory;
-import com.fcgo.weixin.persist.dao.IValidateCodeLogDAO;
 import com.fcgo.weixin.persist.po.ValidateCodeLogPO;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;

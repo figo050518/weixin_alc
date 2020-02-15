@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fcgo.weixin.application.user.UserSessionInfoService;
-import com.fcgo.weixin.persist.dao.IUserSessionInfoDAO;
 import com.fcgo.weixin.persist.generate.criteria.UserSessionInfoCriteria;
 import com.fcgo.weixin.persist.po.UserSessionInfoPO;
 

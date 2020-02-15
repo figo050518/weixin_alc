@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.fcgo.weixin.application.user.UserAddressService;
-import com.fcgo.weixin.persist.dao.IUserAddressDAO;
 import com.fcgo.weixin.persist.generate.criteria.UserAddressCriteria;
 import com.fcgo.weixin.persist.po.UserAddressPO;
 

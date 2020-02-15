@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fcgo.weixin.persist.dao.OrderAddressMapper">
+  <resultMap id="BaseResultMap" type="com.fcgo.weixin.persist.model.OrderAddress">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="order_code" jdbcType="BIGINT" property="orderCode" />
+    <result column="contact_user" jdbcType="VARCHAR" property="contactUser" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="area" jdbcType="VARCHAR" property="area" />
+    <result column="address_detail" jdbcType="VARCHAR" property="addressDetail" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, order_code, contact_user, phone, area, address_detail
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from order_address
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from order_address
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.fcgo.weixin.persist.model.OrderAddress" useGeneratedKeys="true">
+    insert into order_address (order_code, contact_user, phone, 
+      area, address_detail)
+    values (#{orderCode,jdbcType=BIGINT}, #{contactUser,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
+      #{area,jdbcType=VARCHAR}, #{addressDetail,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.fcgo.weixin.persist.model.OrderAddress" useGeneratedKeys="true">
+    insert into order_address
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="orderCode != null">
+        order_code,
+      </if>
+      <if test="contactUser != null">
+        contact_user,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="area != null">
+        area,
+      </if>
+      <if test="addressDetail != null">
+        address_detail,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="orderCode != null">
+        #{orderCode,jdbcType=BIGINT},
+      </if>
+      <if test="contactUser != null">
+        #{contactUser,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null">
+        #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="addressDetail != null">
+        #{addressDetail,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fcgo.weixin.persist.model.OrderAddress">
+    update order_address
+    <set>
+      <if test="orderCode != null">
+        order_code = #{orderCode,jdbcType=BIGINT},
+      </if>
+      <if test="contactUser != null">
+        contact_user = #{contactUser,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null">
+        area = #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="addressDetail != null">
+        address_detail = #{addressDetail,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fcgo.weixin.persist.model.OrderAddress">
+    update order_address
+    set order_code = #{orderCode,jdbcType=BIGINT},
+      contact_user = #{contactUser,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      area = #{area,jdbcType=VARCHAR},
+      address_detail = #{addressDetail,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

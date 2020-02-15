@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.fcgo.weixin.application.product.ProductFavService;
 import com.fcgo.weixin.common.dto.Page;
-import com.fcgo.weixin.persist.dao.IUserProductFavDAO;
 import com.fcgo.weixin.persist.generate.criteria.UserProductFavCriteria;
 import com.fcgo.weixin.persist.po.UserProductFavPO;
 

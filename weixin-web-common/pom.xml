@@ -53,8 +53,6 @@
 			<version>1.8.5</version>
 		</dependency>
 
-
-
 		<dependency>
 			<groupId>hessian</groupId>
 			<artifactId>hessian</artifactId>

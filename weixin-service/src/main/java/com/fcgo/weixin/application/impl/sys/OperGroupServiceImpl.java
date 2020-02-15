@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,17 +11,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.fcgo.weixin.application.sys.OperGroupService;
 import com.fcgo.weixin.common.dto.Page;
-import com.fcgo.weixin.persist.dao.IFunctionAuthDAO;
-import com.fcgo.weixin.persist.dao.IOperGroupDAO;
-import com.fcgo.weixin.persist.dao.IOperGroupRelationDAO;
-import com.fcgo.weixin.persist.dao.IOperInfoDAO;
-import com.fcgo.weixin.persist.generate.IOperGroupRelationMapper;
 import com.fcgo.weixin.persist.generate.criteria.FunctionAuthCriteria;
 import com.fcgo.weixin.persist.generate.criteria.OperGroupCriteria;
 import com.fcgo.weixin.persist.generate.criteria.OperGroupRelationCriteria;
-import com.fcgo.weixin.persist.generate.criteria.OperInfoCriteria;
 import com.fcgo.weixin.persist.po.OperGroupPO;
-import com.fcgo.weixin.persist.po.OperInfoPO;
 
 @Service
 @Transactional

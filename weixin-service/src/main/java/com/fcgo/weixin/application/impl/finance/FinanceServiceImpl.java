@@ -12,10 +12,6 @@ import org.springframework.stereotype.Service;
 
 import com.fcgo.weixin.application.finance.FinanceService;
 import com.fcgo.weixin.common.dto.Page;
-import com.fcgo.weixin.persist.dao.IFinanceBankCardDAO;
-import com.fcgo.weixin.persist.dao.IFinanceBillDAO;
-import com.fcgo.weixin.persist.dao.IFinanceCapitalDAO;
-import com.fcgo.weixin.persist.dao.IFinanceWithdrawApplyDAO;
 import com.fcgo.weixin.persist.generate.criteria.FinanceBankCardCriteria;
 import com.fcgo.weixin.persist.generate.criteria.FinanceCapitalCriteria;
 import com.fcgo.weixin.persist.po.FinanceBankCardPO;

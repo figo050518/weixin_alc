@@ -31,8 +31,6 @@ import com.fcgo.weixin.application.weixin.WeixinPayService;
 import com.fcgo.weixin.common.dto.BaseSessionUserDTO;
 import com.fcgo.weixin.common.util.HttpSessionProvider;
 import com.fcgo.weixin.common.util.XmlUtil;
-import com.fcgo.weixin.persist.dao.IOrderInfoDAO;
-import com.fcgo.weixin.persist.dao.IParentOrderInfoDAO;
 import com.fcgo.weixin.persist.generate.criteria.OrderInfoCriteria;
 import com.fcgo.weixin.persist.generate.criteria.ParentOrderInfoCriteria;
 import com.fcgo.weixin.persist.po.OrderInfoPO;

@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.fcgo.weixin.application.order.IOrderRefundImageService;
-import com.fcgo.weixin.persist.dao.IOrderRefundImageDAO;
 import com.fcgo.weixin.persist.generate.criteria.OrderRefundImageCriteria;
 import com.fcgo.weixin.persist.po.OrderRefundImagePO;
 

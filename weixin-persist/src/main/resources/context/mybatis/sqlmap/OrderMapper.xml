@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fcgo.weixin.persist.dao.OrderMapper">
+  <resultMap id="BaseResultMap" type="com.fcgo.weixin.persist.model.Order">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="brand_id" jdbcType="INTEGER" property="brandId" />
+    <result column="brand_phone" jdbcType="CHAR" property="brandPhone" />
+    <result column="buyer_id" jdbcType="INTEGER" property="buyerId" />
+    <result column="buyer_phone" jdbcType="VARCHAR" property="buyerPhone" />
+    <result column="status" jdbcType="CHAR" property="status" />
+    <result column="pay_status" jdbcType="CHAR" property="payStatus" />
+    <result column="amount" jdbcType="DOUBLE" property="amount" />
+    <result column="pay_type" jdbcType="SMALLINT" property="payType" />
+    <result column="pay_time" jdbcType="INTEGER" property="payTime" />
+    <result column="create_time" jdbcType="INTEGER" property="createTime" />
+    <result column="update_time" jdbcType="INTEGER" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, brand_id, brand_phone, buyer_id, buyer_phone, status, pay_status, amount, pay_type, 
+    pay_time, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from order
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from order
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.fcgo.weixin.persist.model.Order" useGeneratedKeys="true">
+    insert into order (brand_id, brand_phone, buyer_id, 
+      buyer_phone, status, pay_status, 
+      amount, pay_type, pay_time, 
+      create_time, update_time)
+    values (#{brandId,jdbcType=INTEGER}, #{brandPhone,jdbcType=CHAR}, #{buyerId,jdbcType=INTEGER}, 
+      #{buyerPhone,jdbcType=VARCHAR}, #{status,jdbcType=CHAR}, #{payStatus,jdbcType=CHAR}, 
+      #{amount,jdbcType=DOUBLE}, #{payType,jdbcType=SMALLINT}, #{payTime,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=INTEGER}, #{updateTime,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.fcgo.weixin.persist.model.Order" useGeneratedKeys="true">
+    insert into order
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="brandId != null">
+        brand_id,
+      </if>
+      <if test="brandPhone != null">
+        brand_phone,
+      </if>
+      <if test="buyerId != null">
+        buyer_id,
+      </if>
+      <if test="buyerPhone != null">
+        buyer_phone,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="payStatus != null">
+        pay_status,
+      </if>
+      <if test="amount != null">
+        amount,
+      </if>
+      <if test="payType != null">
+        pay_type,
+      </if>
+      <if test="payTime != null">
+        pay_time,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="brandId != null">
+        #{brandId,jdbcType=INTEGER},
+      </if>
+      <if test="brandPhone != null">
+        #{brandPhone,jdbcType=CHAR},
+      </if>
+      <if test="buyerId != null">
+        #{buyerId,jdbcType=INTEGER},
+      </if>
+      <if test="buyerPhone != null">
+        #{buyerPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="payStatus != null">
+        #{payStatus,jdbcType=CHAR},
+      </if>
+      <if test="amount != null">
+        #{amount,jdbcType=DOUBLE},
+      </if>
+      <if test="payType != null">
+        #{payType,jdbcType=SMALLINT},
+      </if>
+      <if test="payTime != null">
+        #{payTime,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=INTEGER},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fcgo.weixin.persist.model.Order">
+    update order
+    <set>
+      <if test="brandId != null">
+        brand_id = #{brandId,jdbcType=INTEGER},
+      </if>
+      <if test="brandPhone != null">
+        brand_phone = #{brandPhone,jdbcType=CHAR},
+      </if>
+      <if test="buyerId != null">
+        buyer_id = #{buyerId,jdbcType=INTEGER},
+      </if>
+      <if test="buyerPhone != null">
+        buyer_phone = #{buyerPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=CHAR},
+      </if>
+      <if test="payStatus != null">
+        pay_status = #{payStatus,jdbcType=CHAR},
+      </if>
+      <if test="amount != null">
+        amount = #{amount,jdbcType=DOUBLE},
+      </if>
+      <if test="payType != null">
+        pay_type = #{payType,jdbcType=SMALLINT},
+      </if>
+      <if test="payTime != null">
+        pay_time = #{payTime,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=INTEGER},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fcgo.weixin.persist.model.Order">
+    update order
+    set brand_id = #{brandId,jdbcType=INTEGER},
+      brand_phone = #{brandPhone,jdbcType=CHAR},
+      buyer_id = #{buyerId,jdbcType=INTEGER},
+      buyer_phone = #{buyerPhone,jdbcType=VARCHAR},
+      status = #{status,jdbcType=CHAR},
+      pay_status = #{payStatus,jdbcType=CHAR},
+      amount = #{amount,jdbcType=DOUBLE},
+      pay_type = #{payType,jdbcType=SMALLINT},
+      pay_time = #{payTime,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=INTEGER},
+      update_time = #{updateTime,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

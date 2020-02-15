@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fcgo.weixin.application.product.IProductSpecService;
-import com.fcgo.weixin.persist.dao.IProductSpecDAO;
 import com.fcgo.weixin.persist.generate.criteria.ProductSpecCriteria;
 import com.fcgo.weixin.persist.po.ProductSpecPO;
 

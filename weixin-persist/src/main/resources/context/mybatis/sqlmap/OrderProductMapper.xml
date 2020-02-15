@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fcgo.weixin.persist.dao.OrderProductMapper">
+  <resultMap id="BaseResultMap" type="com.fcgo.weixin.persist.model.OrderProduct">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="order_id" jdbcType="INTEGER" property="orderId" />
+    <result column="order_code" jdbcType="BIGINT" property="orderCode" />
+    <result column="product_type_id" jdbcType="INTEGER" property="productTypeId" />
+    <result column="product_type" jdbcType="VARCHAR" property="productType" />
+    <result column="product_id" jdbcType="INTEGER" property="productId" />
+    <result column="product_name" jdbcType="VARCHAR" property="productName" />
+    <result column="product_price" jdbcType="DOUBLE" property="productPrice" />
+    <result column="product_number" jdbcType="INTEGER" property="productNumber" />
+    <result column="product_unit" jdbcType="VARCHAR" property="productUnit" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, order_id, order_code, product_type_id, product_type, product_id, product_name, 
+    product_price, product_number, product_unit
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from order_product
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from order_product
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.fcgo.weixin.persist.model.OrderProduct" useGeneratedKeys="true">
+    insert into order_product (order_id, order_code, product_type_id, 
+      product_type, product_id, product_name, 
+      product_price, product_number, product_unit
+      )
+    values (#{orderId,jdbcType=INTEGER}, #{orderCode,jdbcType=BIGINT}, #{productTypeId,jdbcType=INTEGER}, 
+      #{productType,jdbcType=VARCHAR}, #{productId,jdbcType=INTEGER}, #{productName,jdbcType=VARCHAR}, 
+      #{productPrice,jdbcType=DOUBLE}, #{productNumber,jdbcType=INTEGER}, #{productUnit,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.fcgo.weixin.persist.model.OrderProduct" useGeneratedKeys="true">
+    insert into order_product
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="orderId != null">
+        order_id,
+      </if>
+      <if test="orderCode != null">
+        order_code,
+      </if>
+      <if test="productTypeId != null">
+        product_type_id,
+      </if>
+      <if test="productType != null">
+        product_type,
+      </if>
+      <if test="productId != null">
+        product_id,
+      </if>
+      <if test="productName != null">
+        product_name,
+      </if>
+      <if test="productPrice != null">
+        product_price,
+      </if>
+      <if test="productNumber != null">
+        product_number,
+      </if>
+      <if test="productUnit != null">
+        product_unit,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="orderId != null">
+        #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="orderCode != null">
+        #{orderCode,jdbcType=BIGINT},
+      </if>
+      <if test="productTypeId != null">
+        #{productTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="productType != null">
+        #{productType,jdbcType=VARCHAR},
+      </if>
+      <if test="productId != null">
+        #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="productName != null">
+        #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="productPrice != null">
+        #{productPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="productNumber != null">
+        #{productNumber,jdbcType=INTEGER},
+      </if>
+      <if test="productUnit != null">
+        #{productUnit,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fcgo.weixin.persist.model.OrderProduct">
+    update order_product
+    <set>
+      <if test="orderId != null">
+        order_id = #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="orderCode != null">
+        order_code = #{orderCode,jdbcType=BIGINT},
+      </if>
+      <if test="productTypeId != null">
+        product_type_id = #{productTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="productType != null">
+        product_type = #{productType,jdbcType=VARCHAR},
+      </if>
+      <if test="productId != null">
+        product_id = #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="productName != null">
+        product_name = #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="productPrice != null">
+        product_price = #{productPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="productNumber != null">
+        product_number = #{productNumber,jdbcType=INTEGER},
+      </if>
+      <if test="productUnit != null">
+        product_unit = #{productUnit,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fcgo.weixin.persist.model.OrderProduct">
+    update order_product
+    set order_id = #{orderId,jdbcType=INTEGER},
+      order_code = #{orderCode,jdbcType=BIGINT},
+      product_type_id = #{productTypeId,jdbcType=INTEGER},
+      product_type = #{productType,jdbcType=VARCHAR},
+      product_id = #{productId,jdbcType=INTEGER},
+      product_name = #{productName,jdbcType=VARCHAR},
+      product_price = #{productPrice,jdbcType=DOUBLE},
+      product_number = #{productNumber,jdbcType=INTEGER},
+      product_unit = #{productUnit,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

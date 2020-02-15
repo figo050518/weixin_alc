@@ -26,10 +26,9 @@
   
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">  
 	    <property name="dataSource" ref="dataSource" /> 
-		    <property name="typeAliasesPackage" value="com.fcgo.weixin.persist.po" />
+		    <property name="typeAliasesPackage" value="com.fcgo.weixin.persist.model" />
 	        <property name="mapperLocations">
 	        	<list>
-	        		<value>classpath:/context/mybatis/generate/sqlmap/*.xml</value>
 	        		<value>classpath:/context/mybatis/sqlmap/*.xml</value>
 	        	</list>
 	        </property>

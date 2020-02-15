@@ -13,7 +13,6 @@
 	<packaging>pom</packaging>
 
 	<modules>
-		<module>weixin-mybatis-generated</module>
 		<module>weixin-service</module>
 		<module>weixin-common</module>
 		<module>weixin-persist</module>

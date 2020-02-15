@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.fcgo.weixin.application.product.IProductImageService;
-import com.fcgo.weixin.persist.dao.IProductImageDAO;
 import com.fcgo.weixin.persist.generate.criteria.ProductImageCriteria;
 import com.fcgo.weixin.persist.po.ProductImagePO;
 

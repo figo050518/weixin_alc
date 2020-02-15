@@ -18,9 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.fcgo.weixin.application.product.IProductService;
 import com.fcgo.weixin.common.dto.Page;
-import com.fcgo.weixin.persist.dao.IProductDAO;
-import com.fcgo.weixin.persist.dao.IProductImageDAO;
-import com.fcgo.weixin.persist.dao.IProductSpecDAO;
 import com.fcgo.weixin.persist.generate.criteria.ProductCriteria;
 import com.fcgo.weixin.persist.generate.criteria.ProductCriteria.Criteria;
 import com.fcgo.weixin.persist.po.ProductImagePO;

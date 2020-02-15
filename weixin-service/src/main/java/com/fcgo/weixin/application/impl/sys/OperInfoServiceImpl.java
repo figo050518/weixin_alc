@@ -12,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.fcgo.weixin.application.sys.OperInfoService;
 import com.fcgo.weixin.common.dto.Page;
-import com.fcgo.weixin.persist.dao.IOperInfoDAO;
 import com.fcgo.weixin.persist.generate.criteria.OperInfoCriteria;
 import com.fcgo.weixin.persist.po.OperInfoPO;
 

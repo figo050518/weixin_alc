@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import com.fcgo.weixin.application.product.IProductGroupService;
 import com.fcgo.weixin.common.dto.Page;
-import com.fcgo.weixin.persist.dao.IProductGroupDAO;
 import com.fcgo.weixin.persist.generate.criteria.ProductGroupCriteria;
 import com.fcgo.weixin.persist.po.ProductGroupPO;
 

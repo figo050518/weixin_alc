@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fcgo.weixin.persist.dao.UserFlowMapper">
+  <resultMap id="BaseResultMap" type="com.fcgo.weixin.persist.model.UserFlow">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="flow_type" jdbcType="SMALLINT" property="flowType" />
+    <result column="order_id" jdbcType="INTEGER" property="orderId" />
+    <result column="amount" jdbcType="DOUBLE" property="amount" />
+    <result column="create_time" jdbcType="INTEGER" property="createTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, user_id, flow_type, order_id, amount, create_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user_flow
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from user_flow
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.fcgo.weixin.persist.model.UserFlow" useGeneratedKeys="true">
+    insert into user_flow (user_id, flow_type, order_id, 
+      amount, create_time)
+    values (#{userId,jdbcType=INTEGER}, #{flowType,jdbcType=SMALLINT}, #{orderId,jdbcType=INTEGER}, 
+      #{amount,jdbcType=DOUBLE}, #{createTime,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.fcgo.weixin.persist.model.UserFlow" useGeneratedKeys="true">
+    insert into user_flow
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="flowType != null">
+        flow_type,
+      </if>
+      <if test="orderId != null">
+        order_id,
+      </if>
+      <if test="amount != null">
+        amount,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="flowType != null">
+        #{flowType,jdbcType=SMALLINT},
+      </if>
+      <if test="orderId != null">
+        #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="amount != null">
+        #{amount,jdbcType=DOUBLE},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fcgo.weixin.persist.model.UserFlow">
+    update user_flow
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="flowType != null">
+        flow_type = #{flowType,jdbcType=SMALLINT},
+      </if>
+      <if test="orderId != null">
+        order_id = #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="amount != null">
+        amount = #{amount,jdbcType=DOUBLE},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fcgo.weixin.persist.model.UserFlow">
+    update user_flow
+    set user_id = #{userId,jdbcType=INTEGER},
+      flow_type = #{flowType,jdbcType=SMALLINT},
+      order_id = #{orderId,jdbcType=INTEGER},
+      amount = #{amount,jdbcType=DOUBLE},
+      create_time = #{createTime,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -9,13 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.fcgo.weixin.application.user.OperLoginService;
 import com.fcgo.weixin.common.codec.MD5EncrypterUtil;
-import com.fcgo.weixin.persist.dao.IOperInfoDAO;
-import com.fcgo.weixin.persist.dao.IOperLoginDAO;
-import com.fcgo.weixin.persist.generate.criteria.OperInfoCriteria;
 import com.fcgo.weixin.persist.generate.criteria.OperLoginCriteria;
-import com.fcgo.weixin.persist.po.OperInfoPO;
 import com.fcgo.weixin.persist.po.OperLoginPO;
-import com.fcgo.weixin.persist.po.UserLoginPO;
 
 @Service
 @Transactional

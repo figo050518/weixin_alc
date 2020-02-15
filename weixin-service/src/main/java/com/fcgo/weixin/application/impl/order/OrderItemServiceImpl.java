@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.fcgo.weixin.application.order.IOrderItemService;
-import com.fcgo.weixin.persist.dao.IOrderItemDAO;
 import com.fcgo.weixin.persist.generate.criteria.OrderItemCriteria;
 import com.fcgo.weixin.persist.po.OrderItemPO;
 
