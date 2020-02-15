@@ -1,9 +1,0 @@
-package com.fcgo.weixin.application.user;
-
-import com.fcgo.weixin.persist.po.UserInfoPO;
-
-public interface UserInfoService {
-
-    public boolean addUserInfo(UserInfoPO userInfoPO);
-
-}

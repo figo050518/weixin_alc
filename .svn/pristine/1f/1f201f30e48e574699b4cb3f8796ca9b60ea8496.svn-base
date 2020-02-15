@@ -1,3 +1,0 @@
-我是头部
-$!screen_content
-#parse("layout/footer.vm")

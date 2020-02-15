@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.fcgo.weixin.persist.dao.IUserAddressDAO" >
-  
-  <update id="deleteById" parameterType="Integer" >
-    update user_address t set t.is_delete=1 where t.id =#{userAddrId}
-  </update>
-  
-</mapper>
