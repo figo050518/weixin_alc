@@ -1,18 +1,9 @@
 package com.fcgo.weixin.uitl;
 
-import java.io.Serializable;
-import java.util.Map;
-
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.commons.collections.MapUtils;
-import org.apache.commons.lang.StringUtils;
-import org.springframework.util.Assert;
-
 import com.fcgo.weixin.common.util.HttpSessionProvider;
-import com.fcgo.weixin.dto.OperInfoDTO;
+
+import javax.servlet.http.HttpServletRequest;
+import java.io.Serializable;
 
 /**
  * 管理端 辅助类
@@ -46,7 +37,7 @@ public class BackendUtils {
     * @param name
     * @return
     */
-    public static void addLoginSession(HttpServletRequest request,OperInfoDTO info) {
+    public static void addLoginSession(HttpServletRequest request,Serializable info) {
     	addSessionAttr(request, OPER_INFO_SESSION_NAME,info);
     }
     /**

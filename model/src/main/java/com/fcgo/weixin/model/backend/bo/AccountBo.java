@@ -1,4 +1,4 @@
-package com.fcgo.weixin.persist.model;
+package com.fcgo.weixin.model.backend.bo;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,20 +8,19 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 @NoArgsConstructor@AllArgsConstructor
-public class Account {
+public class AccountBo {
+
     private Integer id;
 
     private String name;
 
     private String pwd;
 
-    private Integer brandId;
+    private BrandBo brand;
 
     private Byte status;
 
-    private Integer createTime;
+    private String createTime;
 
-    private Integer updateTime;
-
-
+    private String updateTime;
 }

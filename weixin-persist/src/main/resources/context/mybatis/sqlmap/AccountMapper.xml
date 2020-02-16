@@ -19,10 +19,26 @@
     from account
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from account
+
+
+
+  <select id="selectAllByCondtion" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from account
+    where 1=1
+    limit #{offset},#{limit}
+  </select>
+
+
+
+  <select id="selectCntByCondition" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from account
     where id = #{id,jdbcType=INTEGER}
-  </delete>
+  </select>
+
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.fcgo.weixin.persist.model.Account" useGeneratedKeys="true">
     insert into account (name, pwd, brand_id, 
       status, create_time, update_time

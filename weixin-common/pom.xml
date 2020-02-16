@@ -147,7 +147,11 @@
 				    <artifactId>jackson-core-asl</artifactId>
 				    <version>1.8.5</version>
 				</dependency>
-				
+
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+		</dependency>
 		
 	</dependencies>
 

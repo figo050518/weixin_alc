@@ -19,16 +19,18 @@
 		<module>weixin-web-common</module>
 		<module>weixin-frontend</module>
 		<module>weixin-backend</module>
-	</modules>
+        <module>model</module>
+    </modules>
 
 	<properties>
-		<java.version>1.6</java.version>
+		<java.version>1.8</java.version>
 		<resin.version>3.0.25</resin.version>
-		<spring.version>3.1.2.RELEASE</spring.version>
+		<spring.version>4.3.8.RELEASE</spring.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <aspectj.version>1.6.11</aspectj.version>
         <pentaho.kettle.version>4.2.0-GA</pentaho.kettle.version>
 		<hydra.version>2.3.0</hydra.version>
+		<lombok.version>1.18.12</lombok.version>
 	</properties>
 
 	<dependencyManagement>
@@ -150,7 +152,43 @@
                 <artifactId>jasypt</artifactId>
                 <version>1.6</version>
             </dependency>
+			<dependency>
+				<groupId>org.projectlombok</groupId>
+				<artifactId>lombok</artifactId>
+				<version>${lombok.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.fcgo.weixin</groupId>
+				<artifactId>model</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.fcgo.weixin</groupId>
+				<artifactId>weixin-persist</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.fcgo.weixin</groupId>
+				<artifactId>weixin-common</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>${project.groupId}</groupId>
+				<artifactId>weixin-web-common</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.mybatis</groupId>
+				<artifactId>mybatis</artifactId>
+				<version>3.2.6</version>
+			</dependency>
 		</dependencies>
+
 	</dependencyManagement>
 
 	<dependencies>
@@ -212,6 +250,7 @@
 			<scope>system</scope>
 			<systemPath>${java.home}/lib/rt.jar</systemPath>
 		</dependency>
+
 	</dependencies>
 
 	<build>

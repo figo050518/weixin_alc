@@ -16,15 +16,10 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>weixin-mybatis-generated</artifactId>
-			<version>${project.version}</version>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>${project.groupId}</groupId>
-			<artifactId>weixin-common</artifactId>
-			<version>${project.version}</version>
-		</dependency>
+
 		<!-- DATASOURCE -->
 		<dependency>
 			<groupId>commons-dbcp</groupId>
@@ -43,6 +38,11 @@
         <artifactId>xerces</artifactId>
         <version>2.4.0</version>
     </dependency>
+
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis</artifactId>
+		</dependency>
 		
 
 	</dependencies>

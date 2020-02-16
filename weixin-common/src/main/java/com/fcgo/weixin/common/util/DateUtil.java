@@ -471,6 +471,12 @@ public abstract class DateUtil {
         return yyyy_MM_dd.format(date);
     }
 
+
+
+    public static int getCurrentTimeSeconds() {
+        return (int) (System.currentTimeMillis() / 1000);
+    }
+
     public static void main(String[] args) {
         Date date = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("hh.mm aa 'EST' MMM d , yyyy", Locale.US);

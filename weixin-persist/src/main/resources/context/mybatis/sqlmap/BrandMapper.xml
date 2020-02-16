@@ -14,15 +14,23 @@
     id, phone, weight, desc, status, create_time, update_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from brand
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from brand
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
+
+  <select id="selectByIds" parameterType="java.util.Collection" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from brand
+    where id in
+    <foreach collection="ids" item="id" separator="," open="(" close=")">
+       #{id,jdbcType=INTEGER}
+    </foreach>
+
+  </select>
+
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.fcgo.weixin.persist.model.Brand" useGeneratedKeys="true">
     insert into brand (phone, weight, desc, 
       status, create_time, update_time

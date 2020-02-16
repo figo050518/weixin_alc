@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fcgo.weixin.application.user.UserInfoService;
 import com.fcgo.weixin.common.dto.Page;
-import com.fcgo.weixin.persist.po.UserInfoPO;
 import com.fcgo.weixin.uitl.BackendUtils;
 import com.fcgo.weixin.uitl.PaginationContext;
 
