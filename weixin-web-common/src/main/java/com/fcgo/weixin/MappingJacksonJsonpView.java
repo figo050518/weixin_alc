@@ -6,7 +6,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.web.servlet.view.json.MappingJacksonJsonView;
+import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 /**
  * 13-7-31
@@ -14,7 +14,7 @@ import org.springframework.web.servlet.view.json.MappingJacksonJsonView;
  * @author heshunfeng
  * @since QB_LV_2003_11
  */
-public class MappingJacksonJsonpView extends MappingJacksonJsonView {
+public class MappingJacksonJsonpView extends MappingJackson2JsonView {
     public static final String DEFAULT_CONTENT_TYPE = "application/javascript";
 
     @Override

@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--涉及到修改这个文件的任何改动，请告诉我下xiahan，发布时需要替换-->
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:web="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://java.sun.com/xml/ns/javaee"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+         id="schedule-console" version="3.0">
   <display-name>weixin-backend</display-name>
   <context-param>
     <param-name>contextConfigLocation</param-name>
     <param-value>
-			classpath:/context/spring/application.xml
+      classpath*:/context/spring/*.xml
         </param-value>
   </context-param>
   <context-param>
