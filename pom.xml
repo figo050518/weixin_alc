@@ -18,7 +18,7 @@
 		<module>weixin-persist</module>
 		<module>weixin-web-common</module>
 		<module>weixin-frontend</module>
-		<module>weixin-backend</module>
+		<module>alc-backend</module>
         <module>model</module>
     </modules>
 
@@ -26,8 +26,9 @@
 		<java.version>1.8</java.version>
 		<resin.version>3.0.25</resin.version>
 		<spring.version>4.3.8.RELEASE</spring.version>
+		<spring.asm.version>3.1.4.RELEASE</spring.asm.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <aspectj.version>1.6.11</aspectj.version>
+        <aspectj.version>1.8.7</aspectj.version>
         <pentaho.kettle.version>4.2.0-GA</pentaho.kettle.version>
 		<hydra.version>2.3.0</hydra.version>
 		<lombok.version>1.18.8</lombok.version>
@@ -52,6 +53,7 @@
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-asm</artifactId>
+				<version>${spring.asm.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework</groupId>
@@ -204,11 +206,6 @@
 				<groupId>com.alibaba</groupId>
 				<artifactId>fastjson</artifactId>
 				<version>1.2.29</version>
-			</dependency>
-			<dependency>
-				<groupId>org.aspectj</groupId>
-				<artifactId>aspectjweaver</artifactId>
-				<version>1.8.7</version>
 			</dependency>
 
 			<dependency>
