@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+  
+<!-- 从高到地低 OFF 、 FATAL 、 ERROR 、 WARN 、 INFO 、 DEBUG 、 TRACE 、 ALL -->  
+<!-- 日志输出规则  根据当前ROOT 级别，日志输出时，级别高于root默认的级别时  会输出 -->  
+<!-- 以下  每个配置的 filter 是过滤掉输出文件里面，会出现高级别文件，依然出现低级别的日志信息，通过filter 过滤只记录本级别的日志-->  
+  
+
+<!-- 属性描述 scan：性设置为true时，配置文件如果发生改变，将会被重新加载，默认值为true scanPeriod:设置监测配置文件是否有修改的时间间隔，如果没有给出时间单位，默认单位是毫秒。当scan为true时，此属性生效。默认的时间间隔为1分钟。   
+    debug:当此属性设置为true时，将打印出logback内部日志信息，实时查看logback运行状态。默认值为false。 -->  
+<configuration scan="true" scanPeriod="60 seconds" debug="false">  
+    <!-- 日志最大的历史 7天 -->  
+    <property name="maxHistory" value="7"/>  
+	<!-- 日志最大的文件大小 10MB -->
+	<property name="maxFileSize" value="10MB"/>
+
+    <!-- ConsoleAppender 控制台输出日志 -->  
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">  
+        <!-- 对日志进行格式化 -->  
+        <encoder>  
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger:%line -%msg%n</pattern>  
+        </encoder>  
+    </appender>  
+  
+    <!-- WARN级别日志 appender -->  
+    <appender name="WARN" class="ch.qos.logback.core.rolling.RollingFileAppender">  
+        <!-- 过滤器，过滤掉 TRACE 和 DEBUG 和 INFO 级别的日志 -->  
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">  
+            <level>WARN</level>
+        </filter>  
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">  
+            <!-- 按天回滚 daily -->  
+            <fileNamePattern>${catalina.home}/logs/%d{yyyy-MM-dd}/warn-log.log</fileNamePattern>
+            <!-- 日志最大的保存天数 -->  
+            <maxHistory>${maxHistory}</maxHistory>  
+        </rollingPolicy>  
+		<triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <maxFileSize>${maxFileSize}</maxFileSize>
+        </triggeringPolicy>
+        <encoder>  
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger:%line - %msg%n</pattern>  
+        </encoder>  
+    </appender>  
+	  
+	<!-- HTTP请求超时 appender -->  
+    <appender name="REQUEST_TIMEOUT" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${catalina.home}/logs/%d{yyyy-MM-dd}/request-timeout.log</fileNamePattern>
+			<!-- 日志最大的保存天数 -->  
+            <maxHistory>${maxHistory}</maxHistory>  
+        </rollingPolicy>
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <maxFileSize>${maxFileSize}</maxFileSize>
+        </triggeringPolicy>
+        <encoder>
+            <pattern>%-1relative - %d{HH:mm:ss.SSS} [%thread] %-5level %logger{0}:%line -- %msg%n</pattern>
+        </encoder>
+    </appender>
+
+	<!-- 数据库请求超时 appender -->  
+    <appender name="DATABASE_TIMEOUT" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${catalina.home}/logs/%d{yyyy-MM-dd}/database-timeout.log</fileNamePattern>
+			<!-- 日志最大的保存天数 -->  
+            <maxHistory>${maxHistory}</maxHistory>  
+        </rollingPolicy>
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <maxFileSize>${maxFileSize}</maxFileSize>
+        </triggeringPolicy>
+        <encoder>
+            <pattern>%-1relative - %d{HH:mm:ss.SSS} [%thread] %-5level %logger{0}:%line -- %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 数据库请求超时 appender -->
+    <appender name="DATABASE_STAT" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${catalina.home}/logs/%d{yyyy-MM-dd}/database-stat.log</fileNamePattern>
+            <!-- 日志最大的保存天数 -->
+            <maxHistory>${maxHistory}</maxHistory>
+        </rollingPolicy>
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <maxFileSize>${maxFileSize}</maxFileSize>
+        </triggeringPolicy>
+        <encoder>
+            <pattern>%-1relative - %d{HH:mm:ss.SSS} [%thread] %-5level %logger{0}:%line -- %msg%n</pattern>
+        </encoder>
+    </appender>
+		
+    <!-- DEBUG级别日志 appender -->  
+    <appender name="DEBUG" class="ch.qos.logback.core.rolling.RollingFileAppender">   
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">  
+            <!-- 按天回滚 daily -->  
+            <fileNamePattern>${catalina.home}/logs/%d{yyyy-MM-dd}/debug-log.log</fileNamePattern>
+            <!-- 日志最大的历史 60天 -->  
+            <maxHistory>${maxHistory}</maxHistory>  
+        </rollingPolicy>  
+		<triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <maxFileSize>${maxFileSize}</maxFileSize>
+        </triggeringPolicy>
+        <encoder>  
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger:%line - %msg%n</pattern>  
+        </encoder>  
+    </appender>  
+    
+    <!-- 商家端登录日志 appender -->
+    <appender name="LOGIN_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">  
+            <!-- 按天回滚 daily -->  
+            <fileNamePattern>${catalina.home}/logs/%d{yyyy-MM-dd}/debug-log.log</fileNamePattern>
+            <!-- 日志最大的历史 60天 -->  
+            <maxHistory>${maxHistory}</maxHistory>  
+        </rollingPolicy>  
+		<triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <maxFileSize>${maxFileSize}</maxFileSize>
+        </triggeringPolicy>
+        <encoder>  
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger:%line - %msg%n</pattern>  
+        </encoder>  
+    </appender>
+    
+    <!-- 操作日志 appender -->
+    <appender name="OPERATE_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">  
+            <!-- 按天回滚 daily -->  
+            <fileNamePattern>${catalina.home}/logs/%d{yyyy-MM-dd}/operate-log.log</fileNamePattern>
+            <!-- 日志最大的历史 60天 -->  
+            <maxHistory>${maxHistory}</maxHistory>  
+        </rollingPolicy>  
+		<triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <maxFileSize>${maxFileSize}</maxFileSize>
+        </triggeringPolicy>
+        <encoder>  
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger:%line - %msg%n</pattern>  
+        </encoder>  
+    </appender>
+    
+    <!-- 定时任务日志 appender -->
+    <appender name="SCHEDULED_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">  
+            <!-- 按天回滚 daily -->  
+            <fileNamePattern>${catalina.home}/logs/%d{yyyy-MM-dd}/scheduled-log.log</fileNamePattern>
+            <!-- 日志最大的历史 60天 -->  
+            <maxHistory>${maxHistory}</maxHistory>  
+        </rollingPolicy>  
+		<triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <maxFileSize>${maxFileSize}</maxFileSize>
+        </triggeringPolicy>
+        <encoder>  
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger:%line - %msg%n</pattern>  
+        </encoder>  
+    </appender>
+    
+    <!-- 腾讯智能推荐：商品信息上传log -->
+    <appender name="TENCENT_LOG_APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${catalina.home}/logs/%d{yyyy-MM-dd}/tencent-upload.log</fileNamePattern>
+            <!-- 日志最大的保存天数 -->
+            <maxHistory>${maxHistory}</maxHistory>
+        </rollingPolicy>
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <maxFileSize>${maxFileSize}</maxFileSize>
+        </triggeringPolicy>
+        <encoder>
+            <pattern>%-1relative - %d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{0}:%line -- %msg%n</pattern>
+        </encoder>
+    </appender>
+    
+    <!-- 商家端操作日志 appender -->
+    <appender name="SELLER_OPERATE_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">  
+            <!-- 按天回滚 daily -->  
+            <fileNamePattern>${catalina.home}/logs/%d{yyyy-MM-dd}/sellerOperate-log.log</fileNamePattern>
+            <!-- 日志最大的历史 60天 -->  
+            <maxHistory>${maxHistory}</maxHistory>  
+        </rollingPolicy>  
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <maxFileSize>${maxFileSize}</maxFileSize>
+        </triggeringPolicy>
+        <encoder>  
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger:%line - %msg%n</pattern>  
+        </encoder>  
+    </appender>
+    
+    <!-- 商家端DEBUG级别日志 appender -->  
+    <appender name="SELLERDEBUG" class="ch.qos.logback.core.rolling.RollingFileAppender">   
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">  
+            <!-- 按天回滚 daily -->  
+            <fileNamePattern>${catalina.home}/logs/%d{yyyy-MM-dd}/sellerDebug-log.log</fileNamePattern>
+            <!-- 日志最大的历史 60天 -->  
+            <maxHistory>${maxHistory}</maxHistory>  
+        </rollingPolicy>  
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <maxFileSize>${maxFileSize}</maxFileSize>
+        </triggeringPolicy>
+        <encoder>  
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger:%line - %msg%n</pattern>  
+        </encoder>  
+    </appender>  
+    
+    <!-- MQ日志 appender -->  
+    <appender name="MQ_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">   
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">  
+            <!-- 按天回滚 daily -->  
+            <fileNamePattern>${catalina.home}/logs/%d{yyyy-MM-dd}/mqOperate-log.log</fileNamePattern>
+            <!-- 日志最大的历史 60天 -->  
+            <maxHistory>${maxHistory}</maxHistory>  
+        </rollingPolicy>  
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <maxFileSize>${maxFileSize}</maxFileSize>
+        </triggeringPolicy>
+        <encoder>  
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger:%line - %msg%n</pattern>  
+        </encoder>  
+    </appender>  
+    
+    <!-- 调用erp服务日志 appender -->  
+    <appender name="ERP_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">   
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">  
+            <fileNamePattern>${catalina.home}/logs/%d{yyyy-MM-dd}/erpService-log.log</fileNamePattern>
+            <maxHistory>${maxHistory}</maxHistory>  
+        </rollingPolicy>  
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <maxFileSize>${maxFileSize}</maxFileSize>
+        </triggeringPolicy>
+        <encoder>  
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger:%line - %msg%n</pattern>  
+        </encoder>  
+    </appender>  
+    
+    <!-- 数据库操作日志 -->
+    <logger name="java.sql.PreparedStatement" value="DEBUG" />    
+    <logger name="java.sql.Connection" value="DEBUG" />    
+    <logger name="java.sql.Statement" value="DEBUG" />    
+    <logger name="com.ibatis" value="DEBUG" />    
+    <logger name="com.ibatis.common.jdbc.SimpleDataSource" value="DEBUG" />    
+    <logger name="com.ibatis.common.jdbc.ScriptRunner" level="DEBUG"/>    
+    <logger name="com.ibatis.sqlmap.engine.impl.SqlMapClientDelegate" value="DEBUG" />
+    <logger name="org.springframework" level="INFO"/>
+    <logger name="org.apache.zookeeper.ClientCnxn" level="INFO"/>
+    <logger name="com.dangdang.ddframe.job.internal.sharding.ShardingService" level="WARN" />
+    <logger name="org.quartz.core.QuartzSchedulerThread" level="WARN" />
+    <!-- root级别   DEBUG -->
+    <root level="INFO">
+        <!-- 控制台输出 -->
+        <appender-ref ref="STDOUT" />
+        <!-- 文件输出 -->
+        <appender-ref ref="DEBUG" />
+		<appender-ref ref="WARN" />
+    </root>  
+	
+
+    <!-- 商家端登录日志 appender -->
+    <logger name="loginLog" level="INFO" additivity="false">
+		<appender-ref ref="LOGIN_LOG" />
+	</logger>
+	
+
+
+
+    <!-- org.apache.zookeeper.ClientCnxn -->
+    <logger name="org.apache.zookeeper.ClientCnxn" additivity="true">
+        <level value="INFO"/>
+        <appender-ref ref="STDOUT"/>
+    </logger>
+
+
+
+    
+    <!-- 操作日志，记录关键操作 -->
+    <logger name="operateLog" additivity="true">
+        <level value="INFO"/>
+        <appender-ref ref="OPERATE_LOG"/>
+    </logger>
+    
+    <!-- 定时日志，记录关键操作 -->
+    <logger name="scheduledLog" additivity="true">
+        <level value="INFO"/>
+        <appender-ref ref="SCHEDULED_LOG"/>
+    </logger>
+    
+    <!--info级别重点部分单独记录-->
+    <logger name="tencentUpload"   additivity="true">
+        <level value="INFO"/>
+        <appender-ref ref="TENCENT_LOG_APPENDER"/>
+    </logger>
+    <!-- 商家端操作日志，记录关键操作 -->
+    <logger name="sellerOperateLog" additivity="true">
+        <level value="INFO"/>
+        <appender-ref ref="SELLER_OPERATE_LOG"/>
+    </logger>
+    
+    <!-- MQ日志 -->
+    <logger name="mqLog" additivity="true">
+        <level value="INFO"/>
+        <appender-ref ref="MQ_LOG"/>
+    </logger>
+    
+    <!-- 调用erp服务日志 -->
+    <logger name="erpService" additivity="true">
+        <level value="INFO"/>
+        <appender-ref ref="ERP_LOG"/>
+    </logger>
+</configuration>  

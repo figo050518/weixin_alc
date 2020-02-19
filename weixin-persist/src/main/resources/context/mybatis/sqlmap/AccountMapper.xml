@@ -32,11 +32,8 @@
 
 
 
-  <select id="selectCntByCondition" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from account
-    where id = #{id,jdbcType=INTEGER}
+  <select id="selectCntByCondition" parameterType="java.lang.Integer" resultType="int">
+    select count(*) from account
   </select>
 
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.fcgo.weixin.persist.model.Account" useGeneratedKeys="true">

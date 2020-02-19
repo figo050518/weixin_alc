@@ -12,7 +12,9 @@
                         http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
                         http://www.springframework.org/schema/tx
                         http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
-
+	<context:annotation-config />
+	<!-- 在默认情况下，如果是目标对象实现了接口的类，采用的JDK动态代理，如果没有则创建一个CGLIB代理  -->
+	<aop:aspectj-autoproxy />
    	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
         <property name="url" value="${db.url}"></property>  
         <property name="username" value="${db.username}"></property>  

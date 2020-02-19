@@ -21,14 +21,6 @@
             <artifactId>lombok</artifactId>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>com.fcgo.weixin</groupId>
-            <artifactId>model</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.fcgo.weixin</groupId>
-            <artifactId>weixin-persist</artifactId>
-        </dependency>
     </dependencies>
 
 </project>
