@@ -11,7 +11,7 @@
     <result column="update_time" jdbcType="INTEGER" property="updateTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, name, pwd, brand_id, status, create_time, update_time
+    id, `name`, pwd, brand_id, status, create_time, update_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -20,7 +20,12 @@
     where id = #{id,jdbcType=INTEGER}
   </select>
 
-
+  <select id="selectByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from account
+    where `name` = #{name,jdbcType=VARCHAR}
+  </select>
 
   <select id="selectAllByCondtion" resultMap="BaseResultMap">
     select

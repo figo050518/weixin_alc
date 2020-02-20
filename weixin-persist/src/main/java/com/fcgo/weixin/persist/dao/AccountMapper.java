@@ -6,7 +6,6 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface AccountMapper {
-    int deleteByPrimaryKey(Integer id);
 
     int insert(Account record);
 
@@ -20,6 +19,8 @@ public interface AccountMapper {
     int selectCntByCondition(Account condition);
 
     Account selectByPrimaryKey(Integer id);
+
+    Account selectByName(String name);
 
     int updateByPrimaryKeySelective(Account record);
 

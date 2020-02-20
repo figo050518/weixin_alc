@@ -2,10 +2,12 @@ package com.fcgo.weixin.service;
 
 import com.fcgo.weixin.common.exception.ServiceException;
 import com.fcgo.weixin.common.util.DateUtil;
+import com.fcgo.weixin.common.util.MD5;
 import com.fcgo.weixin.common.util.PageHelper;
 import com.fcgo.weixin.convert.AccountConvert;
 import com.fcgo.weixin.model.PageResponseBO;
 import com.fcgo.weixin.model.backend.bo.AccountBo;
+import com.fcgo.weixin.model.backend.constant.AccountConstant;
 import com.fcgo.weixin.model.backend.req.AccountListReq;
 import com.fcgo.weixin.model.constant.AccountStatus;
 import com.fcgo.weixin.persist.dao.AccountMapper;
@@ -13,11 +15,13 @@ import com.fcgo.weixin.persist.dao.BrandMapper;
 import com.fcgo.weixin.persist.model.Account;
 import com.fcgo.weixin.persist.model.Brand;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpSession;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -29,9 +33,10 @@ public class AccountService {
     @Autowired
     private AccountMapper accountMapper;
 
-
     @Autowired
     private BrandMapper brandMapper;
+
+    private static final Map<Integer,HttpSession> userIdSessionCache = new HashMap<>(16);
 
     public int add(AccountBo bo){
         logger.info("in add account, {}", bo);
@@ -89,6 +94,62 @@ public class AccountService {
     }
 
 
+    public boolean login(HttpSession session,AccountBo bo){
+        String name = bo.getName();
+        if (StringUtils.isBlank(name)){
+            throw new ServiceException(401,"用户名不能为空");
+        }
+        String pwd = bo.getPwd();
+        if (StringUtils.isBlank(pwd)){
+            throw new ServiceException(401,"密码不能为空");
+        }
+        name = name.trim();
+        pwd = pwd.trim();
+        //get from DB
+        Account account = accountMapper.selectByName(name);
+        if (Objects.isNull(account)){
+            logger.warn("login user not exist {}", bo);
+            throw new ServiceException(401,"用户名或密码错误");
+        }
+        //check status
+        boolean illegal = account.getStatus().equals(AccountStatus.USELESS.getCode());
+        if (illegal){
+            throw new ServiceException(401, "用户失效");
+        }
+        String pwdInDB = account.getPwd();
+        String pwdAfterEncrypt = MD5.md5(pwd);
+        boolean pwdMatched = pwdAfterEncrypt.equals(pwdInDB);
+        if (!pwdMatched){
+            logger.warn("login pwd not match req {} pwdAfterEncrypt {} pwdInDB {}", bo, pwdAfterEncrypt, pwdInDB);
+            throw new ServiceException(401,"用户名或密码错误");
+        }
+        final Integer uid = account.getId();
+        //hit in session
+        boolean sessionExists;
+        if (sessionExists = Objects.nonNull(session)){
+            Integer uidOfSession = (Integer) session.getAttribute(AccountConstant.SESSION_USER_ID_KEY);
+            String userNameOfSession = (String) session.getAttribute(AccountConstant.SESSION_USER_NAME_KEY);
+            if (Objects.nonNull(uidOfSession) && uidOfSession.equals(uid)
+                && Objects.nonNull(userNameOfSession) && userNameOfSession.equals(name)){
+                logger.info("login hit user in session req {} uidOfSession {} userNameOfSession {}",bo, uidOfSession, userNameOfSession);
+                return true;
+            }
+        }
+
+
+        if(sessionExists && pwdMatched){
+            session.setAttribute(AccountConstant.SESSION_USER_ID_KEY, uid);
+            session.setAttribute(AccountConstant.SESSION_USER_NAME_KEY, name);
+            session.setMaxInactiveInterval(3600);
+            //
+            HttpSession oldSession = userIdSessionCache.get(uid);
+            if (Objects.nonNull(oldSession)){
+                oldSession.invalidate();
+            }
+            userIdSessionCache.put(uid, session);
+        }
+        return true;
+    }
 
 
 }

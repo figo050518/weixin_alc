@@ -43,6 +43,12 @@
 			</bean>
 		</mvc:message-converters>
 	</mvc:annotation-driven>
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**"/>
+			<bean class="com.fcgo.weixin.intercept.CrossOriginInterceptor"/>
+		</mvc:interceptor>
+	</mvc:interceptors>
 	<!-- 注解配置结束 -->
 	<mvc:resources mapping="/image/**" location="/resources/images/" />
 	<mvc:resources mapping="/js/**" location="/resources/js/" />
