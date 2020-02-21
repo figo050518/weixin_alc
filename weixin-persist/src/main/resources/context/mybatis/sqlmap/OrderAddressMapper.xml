@@ -6,11 +6,13 @@
     <result column="order_code" jdbcType="BIGINT" property="orderCode" />
     <result column="contact_user" jdbcType="VARCHAR" property="contactUser" />
     <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="province" jdbcType="VARCHAR" property="province" />
+    <result column="city" jdbcType="VARCHAR" property="city" />
     <result column="area" jdbcType="VARCHAR" property="area" />
     <result column="address_detail" jdbcType="VARCHAR" property="addressDetail" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, order_code, contact_user, phone, area, address_detail
+    id, order_code, contact_user, phone, province, city, area, address_detail
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -24,9 +26,11 @@
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.fcgo.weixin.persist.model.OrderAddress" useGeneratedKeys="true">
     insert into order_address (order_code, contact_user, phone, 
-      area, address_detail)
+      province, city, area, 
+      address_detail)
     values (#{orderCode,jdbcType=BIGINT}, #{contactUser,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
-      #{area,jdbcType=VARCHAR}, #{addressDetail,jdbcType=VARCHAR})
+      #{province,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, #{area,jdbcType=VARCHAR}, 
+      #{addressDetail,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.fcgo.weixin.persist.model.OrderAddress" useGeneratedKeys="true">
     insert into order_address
@@ -39,6 +43,12 @@
       </if>
       <if test="phone != null">
         phone,
+      </if>
+      <if test="province != null">
+        province,
+      </if>
+      <if test="city != null">
+        city,
       </if>
       <if test="area != null">
         area,
@@ -56,6 +66,12 @@
       </if>
       <if test="phone != null">
         #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null">
+        #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null">
+        #{city,jdbcType=VARCHAR},
       </if>
       <if test="area != null">
         #{area,jdbcType=VARCHAR},
@@ -77,6 +93,12 @@
       <if test="phone != null">
         phone = #{phone,jdbcType=VARCHAR},
       </if>
+      <if test="province != null">
+        province = #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null">
+        city = #{city,jdbcType=VARCHAR},
+      </if>
       <if test="area != null">
         area = #{area,jdbcType=VARCHAR},
       </if>
@@ -91,6 +113,8 @@
     set order_code = #{orderCode,jdbcType=BIGINT},
       contact_user = #{contactUser,jdbcType=VARCHAR},
       phone = #{phone,jdbcType=VARCHAR},
+      province = #{province,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
       area = #{area,jdbcType=VARCHAR},
       address_detail = #{addressDetail,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}

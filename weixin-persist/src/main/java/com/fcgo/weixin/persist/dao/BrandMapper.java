@@ -7,7 +7,6 @@ import java.util.Collection;
 import java.util.List;
 
 public interface BrandMapper {
-    int deleteByPrimaryKey(Integer id);
 
     int insert(Brand record);
 
@@ -20,4 +19,9 @@ public interface BrandMapper {
     int updateByPrimaryKeySelective(Brand record);
 
     int updateByPrimaryKey(Brand record);
+
+    int selectCnt();
+
+    List<Brand> selectAll(@Param("offset")int offset,
+                            @Param("limit")int limit);
 }

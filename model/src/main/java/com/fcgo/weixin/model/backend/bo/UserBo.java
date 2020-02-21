@@ -1,15 +1,15 @@
-package com.fcgo.weixin.persist.model;
+package com.fcgo.weixin.model.backend.bo;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
 @Data
 @Builder
-@AllArgsConstructor@NoArgsConstructor
-public class User {
+@AllArgsConstructor
+@NoArgsConstructor
+public class UserBo {
     private Integer id;
 
     private String nickName;
@@ -26,6 +26,5 @@ public class User {
 
     private String status;
 
-    private Date createTime;
-
+    private String createTime;
 }

@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateUtils;
 
 /**
@@ -19,7 +20,11 @@ import org.apache.commons.lang.time.DateUtils;
  * @author xiahan
  */
 public abstract class DateUtil {
-    private static final String DATE_FORMATE_PATTERN = "yyyy-MM-dd kk:mm:ss.SSSS";
+    public static final String DATE_FORMATE_PATTERN = "yyyy-MM-dd kk:mm:ss.SSSS",
+    Format_yyyy_MM_dd_HH_mm_ss = "yyyy-MM-dd HH:mm:ss",
+    Format_yyyy_MM_dd = "yyyy-MM-dd",
+    Format_HH_mm_ss = "HH:mm:ss";
+
 
     private static final SimpleDateFormat yyyy_MM_dd = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -59,6 +64,9 @@ public abstract class DateUtil {
         return new SimpleDateFormat(format, locale).format(time);
     }
 
+    public static String format(Date time, String format) {
+        return new SimpleDateFormat(format, Locale.CHINA).format(time);
+    }
     /**
      * 获取当前北京时间
      * 
@@ -79,6 +87,13 @@ public abstract class DateUtil {
             e.printStackTrace();
         }
         return date;
+    }
+
+    public static String getCurrentDateStr(String format){
+        if (StringUtils.isBlank(format)){
+            format = Format_yyyy_MM_dd;
+        }
+        return format(new Date(),format,Locale.CHINA);
     }
 
     public static Date getExpireTimeByDays(Date addDate, short shortValue) {
@@ -471,7 +486,10 @@ public abstract class DateUtil {
         return yyyy_MM_dd.format(date);
     }
 
-
+    public static String getDateStrFromUnixTime(int fromUnixTime, String format){
+        SimpleDateFormat sdf = new SimpleDateFormat(format);
+        return sdf.format(new Date(fromUnixTime*1000L));
+    }
 
     public static int getCurrentTimeSeconds() {
         return (int) (System.currentTimeMillis() / 1000);

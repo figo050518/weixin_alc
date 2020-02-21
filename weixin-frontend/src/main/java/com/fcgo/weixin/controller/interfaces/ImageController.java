@@ -12,16 +12,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fcgo.weixin.application.interfaces.IImageService;
 import com.google.common.collect.Maps;
 
-@Controller
+@RestController
 @RequestMapping("/uc/interfaces/image")
 public class ImageController {
 
@@ -29,8 +26,7 @@ public class ImageController {
     private IImageService imageService;
 
     @RequestMapping(value = "/uploadImage", method = RequestMethod.POST)
-    public @ResponseBody
-    String uploadImage(@RequestParam(value = "imageFileName") MultipartFile files) throws IOException {
+    public String uploadImage(@RequestParam(value = "imageFileName") MultipartFile files) throws IOException {
         String originalFilename = files.getOriginalFilename();
         String ext = originalFilename.substring(originalFilename.lastIndexOf(".") + 1);
         String tempExt = ext.toUpperCase();

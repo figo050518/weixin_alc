@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -12,7 +14,15 @@ import lombok.NoArgsConstructor;
 public class BrandBo {
     private Integer id;
 
+    private String name;
+
     private String phone;
+
+    private String picUrl;
+
+    private String openTime;
+
+    private String closeTime;
 
     private Integer weight;
 

@@ -19,5 +19,5 @@ public interface IImageService {
      * @param suffix 图片文件类型(.png .jpg)
      * @return
      */
-    public String uploadImage(InputStream imgInputStream, String prefix, String suffix);
+    String uploadImage(InputStream imgInputStream, String prefix, String suffix);
 }

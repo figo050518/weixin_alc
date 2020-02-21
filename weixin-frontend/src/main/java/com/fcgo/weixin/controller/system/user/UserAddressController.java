@@ -1,10 +1,11 @@
-package com.fcgo.weixin.controller.user;
+package com.fcgo.weixin.controller.system.user;
 
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.fcgo.weixin.controller.system.user.convert.UserAddressConvert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Controller;
@@ -19,7 +20,6 @@ import com.fcgo.weixin.application.user.UserAddressService;
 import com.fcgo.weixin.application.user.UserInfoService;
 import com.fcgo.weixin.common.dto.BaseSessionUserDTO;
 import com.fcgo.weixin.common.util.HttpSessionProvider;
-import com.fcgo.weixin.controller.user.convert.UserAddressConvert;
 import com.fcgo.weixin.dto.UserAddressDTO;
 import com.fcgo.weixin.persist.po.UserAddressPO;
 

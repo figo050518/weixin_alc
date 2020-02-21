@@ -1,4 +1,4 @@
-package com.fcgo.weixin.controller.user.convert;
+package com.fcgo.weixin.controller.system.user.convert;
 
 import java.util.ArrayList;
 import java.util.List;

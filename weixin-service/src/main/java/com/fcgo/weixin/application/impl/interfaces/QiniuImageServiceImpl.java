@@ -9,7 +9,8 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.fcgo.weixin.application.interfaces.IImageService;
@@ -28,7 +29,7 @@ import com.qiniu.util.Auth;
  */
 @Service
 public class QiniuImageServiceImpl implements IImageService {
-    private Logger logger = Logger.getLogger(QiniuImageServiceImpl.class);
+    private Logger logger = LoggerFactory.getLogger(QiniuImageServiceImpl.class);
 
     private static UploadManager uploadManager = new UploadManager();
     private static String ak = "koCHS2gjqe4bSzxus9oyk2YZ6_FDqiqIzPvcZ-nv";

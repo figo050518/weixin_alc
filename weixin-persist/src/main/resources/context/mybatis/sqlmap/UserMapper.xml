@@ -4,15 +4,16 @@
   <resultMap id="BaseResultMap" type="com.fcgo.weixin.persist.model.User">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="nick_name" jdbcType="VARCHAR" property="nickName" />
+    <result column="avatar_url" jdbcType="VARCHAR" property="avatarUrl" />
     <result column="phone" jdbcType="VARCHAR" property="phone" />
     <result column="open_id" jdbcType="VARCHAR" property="openId" />
+    <result column="province" jdbcType="VARCHAR" property="province" />
     <result column="city" jdbcType="VARCHAR" property="city" />
-    <result column="city_code" jdbcType="VARCHAR" property="cityCode" />
     <result column="status" jdbcType="CHAR" property="status" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, nick_name, phone, open_id, city, city_code, status, create_time
+    id, nick_name, avatar_url, phone, open_id, province, city, status, create_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -20,17 +21,13 @@
     from user
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from user
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.fcgo.weixin.persist.model.User" useGeneratedKeys="true">
-    insert into user (nick_name, phone, open_id, 
-      city, city_code, status, 
-      create_time)
-    values (#{nickName,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{openId,jdbcType=VARCHAR}, 
-      #{city,jdbcType=VARCHAR}, #{cityCode,jdbcType=VARCHAR}, #{status,jdbcType=CHAR}, 
-      #{createTime,jdbcType=TIMESTAMP})
+    insert into user (nick_name, avatar_url, phone, 
+      open_id, province, city, 
+      status, create_time)
+    values (#{nickName,jdbcType=VARCHAR}, #{avatarUrl,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
+      #{openId,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, 
+      #{status,jdbcType=CHAR}, #{createTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.fcgo.weixin.persist.model.User" useGeneratedKeys="true">
     insert into user
@@ -38,17 +35,20 @@
       <if test="nickName != null">
         nick_name,
       </if>
+      <if test="avatarUrl != null">
+        avatar_url,
+      </if>
       <if test="phone != null">
         phone,
       </if>
       <if test="openId != null">
         open_id,
       </if>
+      <if test="province != null">
+        province,
+      </if>
       <if test="city != null">
         city,
-      </if>
-      <if test="cityCode != null">
-        city_code,
       </if>
       <if test="status != null">
         status,
@@ -61,17 +61,20 @@
       <if test="nickName != null">
         #{nickName,jdbcType=VARCHAR},
       </if>
+      <if test="avatarUrl != null">
+        #{avatarUrl,jdbcType=VARCHAR},
+      </if>
       <if test="phone != null">
         #{phone,jdbcType=VARCHAR},
       </if>
       <if test="openId != null">
         #{openId,jdbcType=VARCHAR},
       </if>
+      <if test="province != null">
+        #{province,jdbcType=VARCHAR},
+      </if>
       <if test="city != null">
         #{city,jdbcType=VARCHAR},
-      </if>
-      <if test="cityCode != null">
-        #{cityCode,jdbcType=VARCHAR},
       </if>
       <if test="status != null">
         #{status,jdbcType=CHAR},
@@ -87,17 +90,20 @@
       <if test="nickName != null">
         nick_name = #{nickName,jdbcType=VARCHAR},
       </if>
+      <if test="avatarUrl != null">
+        avatar_url = #{avatarUrl,jdbcType=VARCHAR},
+      </if>
       <if test="phone != null">
         phone = #{phone,jdbcType=VARCHAR},
       </if>
       <if test="openId != null">
         open_id = #{openId,jdbcType=VARCHAR},
       </if>
+      <if test="province != null">
+        province = #{province,jdbcType=VARCHAR},
+      </if>
       <if test="city != null">
         city = #{city,jdbcType=VARCHAR},
-      </if>
-      <if test="cityCode != null">
-        city_code = #{cityCode,jdbcType=VARCHAR},
       </if>
       <if test="status != null">
         status = #{status,jdbcType=CHAR},
@@ -111,12 +117,20 @@
   <update id="updateByPrimaryKey" parameterType="com.fcgo.weixin.persist.model.User">
     update user
     set nick_name = #{nickName,jdbcType=VARCHAR},
+      avatar_url = #{avatarUrl,jdbcType=VARCHAR},
       phone = #{phone,jdbcType=VARCHAR},
       open_id = #{openId,jdbcType=VARCHAR},
+      province = #{province,jdbcType=VARCHAR},
       city = #{city,jdbcType=VARCHAR},
-      city_code = #{cityCode,jdbcType=VARCHAR},
       status = #{status,jdbcType=CHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="selectCnt" resultType="int">
+    select count(*) from `user`
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/>
+    from `user` where 1=1 limit #{offset},#{limit}
+  </select>
 </mapper>

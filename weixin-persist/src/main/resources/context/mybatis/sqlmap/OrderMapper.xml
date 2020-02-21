@@ -3,6 +3,7 @@
 <mapper namespace="com.fcgo.weixin.persist.dao.OrderMapper">
   <resultMap id="BaseResultMap" type="com.fcgo.weixin.persist.model.Order">
     <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="code" jdbcType="BIGINT" property="code" />
     <result column="brand_id" jdbcType="INTEGER" property="brandId" />
     <result column="brand_phone" jdbcType="CHAR" property="brandPhone" />
     <result column="buyer_id" jdbcType="INTEGER" property="buyerId" />
@@ -16,8 +17,8 @@
     <result column="update_time" jdbcType="INTEGER" property="updateTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, brand_id, brand_phone, buyer_id, buyer_phone, status, pay_status, amount, pay_type, 
-    pay_time, create_time, update_time
+    id, code, brand_id, brand_phone, buyer_id, buyer_phone, status, pay_status, amount, 
+    pay_type, pay_time, create_time, update_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -30,18 +31,23 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.fcgo.weixin.persist.model.Order" useGeneratedKeys="true">
-    insert into order (brand_id, brand_phone, buyer_id, 
-      buyer_phone, status, pay_status, 
-      amount, pay_type, pay_time, 
-      create_time, update_time)
-    values (#{brandId,jdbcType=INTEGER}, #{brandPhone,jdbcType=CHAR}, #{buyerId,jdbcType=INTEGER}, 
-      #{buyerPhone,jdbcType=VARCHAR}, #{status,jdbcType=CHAR}, #{payStatus,jdbcType=CHAR}, 
-      #{amount,jdbcType=DOUBLE}, #{payType,jdbcType=SMALLINT}, #{payTime,jdbcType=INTEGER}, 
-      #{createTime,jdbcType=INTEGER}, #{updateTime,jdbcType=INTEGER})
+    insert into order (code, brand_id, brand_phone, 
+      buyer_id, buyer_phone, status, 
+      pay_status, amount, pay_type, 
+      pay_time, create_time, update_time
+      )
+    values (#{code,jdbcType=BIGINT}, #{brandId,jdbcType=INTEGER}, #{brandPhone,jdbcType=CHAR}, 
+      #{buyerId,jdbcType=INTEGER}, #{buyerPhone,jdbcType=VARCHAR}, #{status,jdbcType=CHAR}, 
+      #{payStatus,jdbcType=CHAR}, #{amount,jdbcType=DOUBLE}, #{payType,jdbcType=SMALLINT}, 
+      #{payTime,jdbcType=INTEGER}, #{createTime,jdbcType=INTEGER}, #{updateTime,jdbcType=INTEGER}
+      )
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.fcgo.weixin.persist.model.Order" useGeneratedKeys="true">
     insert into order
     <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="code != null">
+        code,
+      </if>
       <if test="brandId != null">
         brand_id,
       </if>
@@ -77,6 +83,9 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="code != null">
+        #{code,jdbcType=BIGINT},
+      </if>
       <if test="brandId != null">
         #{brandId,jdbcType=INTEGER},
       </if>
@@ -115,6 +124,9 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.fcgo.weixin.persist.model.Order">
     update order
     <set>
+      <if test="code != null">
+        code = #{code,jdbcType=BIGINT},
+      </if>
       <if test="brandId != null">
         brand_id = #{brandId,jdbcType=INTEGER},
       </if>
@@ -153,7 +165,8 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.fcgo.weixin.persist.model.Order">
     update order
-    set brand_id = #{brandId,jdbcType=INTEGER},
+    set code = #{code,jdbcType=BIGINT},
+      brand_id = #{brandId,jdbcType=INTEGER},
       brand_phone = #{brandPhone,jdbcType=CHAR},
       buyer_id = #{buyerId,jdbcType=INTEGER},
       buyer_phone = #{buyerPhone,jdbcType=VARCHAR},

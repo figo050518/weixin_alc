@@ -1,4 +1,4 @@
-package com.fcgo.weixin.controller.user;
+package com.fcgo.weixin.controller.system.user;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Date;

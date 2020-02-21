@@ -17,6 +17,8 @@ public class Product {
 
     private String priceUnit;
 
+    private Integer brandId;
+
     private Integer status;
 
     private Integer verifyStatus;
@@ -87,6 +89,14 @@ public class Product {
 
     public void setPriceUnit(String priceUnit) {
         this.priceUnit = priceUnit == null ? null : priceUnit.trim();
+    }
+
+    public Integer getBrandId() {
+        return brandId;
+    }
+
+    public void setBrandId(Integer brandId) {
+        this.brandId = brandId;
     }
 
     public Integer getStatus() {

@@ -10,14 +10,15 @@
     <result column="pic_url" jdbcType="VARCHAR" property="picUrl" />
     <result column="price" jdbcType="DOUBLE" property="price" />
     <result column="price_unit" jdbcType="VARCHAR" property="priceUnit" />
+    <result column="brand_id" jdbcType="INTEGER" property="brandId" />
     <result column="status" jdbcType="INTEGER" property="status" />
     <result column="verify_status" jdbcType="INTEGER" property="verifyStatus" />
     <result column="create_time" jdbcType="INTEGER" property="createTime" />
     <result column="update_time" jdbcType="INTEGER" property="updateTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, name, unit, product_sort, desc, pic_url, price, price_unit, status, verify_status, 
-    create_time, update_time
+    id, name, unit, product_sort, desc, pic_url, price, price_unit, brand_id, status, 
+    verify_status, create_time, update_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -32,12 +33,14 @@
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.fcgo.weixin.persist.model.Product" useGeneratedKeys="true">
     insert into product (name, unit, product_sort, 
       desc, pic_url, price, 
-      price_unit, status, verify_status, 
-      create_time, update_time)
+      price_unit, brand_id, status, 
+      verify_status, create_time, update_time
+      )
     values (#{name,jdbcType=VARCHAR}, #{unit,jdbcType=VARCHAR}, #{productSort,jdbcType=INTEGER}, 
       #{desc,jdbcType=VARCHAR}, #{picUrl,jdbcType=VARCHAR}, #{price,jdbcType=DOUBLE}, 
-      #{priceUnit,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{verifyStatus,jdbcType=INTEGER}, 
-      #{createTime,jdbcType=INTEGER}, #{updateTime,jdbcType=INTEGER})
+      #{priceUnit,jdbcType=VARCHAR}, #{brandId,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
+      #{verifyStatus,jdbcType=INTEGER}, #{createTime,jdbcType=INTEGER}, #{updateTime,jdbcType=INTEGER}
+      )
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.fcgo.weixin.persist.model.Product" useGeneratedKeys="true">
     insert into product
@@ -62,6 +65,9 @@
       </if>
       <if test="priceUnit != null">
         price_unit,
+      </if>
+      <if test="brandId != null">
+        brand_id,
       </if>
       <if test="status != null">
         status,
@@ -97,6 +103,9 @@
       </if>
       <if test="priceUnit != null">
         #{priceUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="brandId != null">
+        #{brandId,jdbcType=INTEGER},
       </if>
       <if test="status != null">
         #{status,jdbcType=INTEGER},
@@ -136,6 +145,9 @@
       <if test="priceUnit != null">
         price_unit = #{priceUnit,jdbcType=VARCHAR},
       </if>
+      <if test="brandId != null">
+        brand_id = #{brandId,jdbcType=INTEGER},
+      </if>
       <if test="status != null">
         status = #{status,jdbcType=INTEGER},
       </if>
@@ -160,6 +172,7 @@
       pic_url = #{picUrl,jdbcType=VARCHAR},
       price = #{price,jdbcType=DOUBLE},
       price_unit = #{priceUnit,jdbcType=VARCHAR},
+      brand_id = #{brandId,jdbcType=INTEGER},
       status = #{status,jdbcType=INTEGER},
       verify_status = #{verifyStatus,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=INTEGER},

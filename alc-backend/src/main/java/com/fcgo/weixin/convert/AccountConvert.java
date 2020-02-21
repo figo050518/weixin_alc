@@ -11,7 +11,9 @@ import java.util.Objects;
 public class AccountConvert {
 
     public static AccountBo do2Bo(Account account, Brand brand){
-        BrandBo brandBo = Objects.nonNull(brand) ? BrandBo.builder().id(brand.getId())
+        BrandBo brandBo = Objects.nonNull(brand) ? BrandBo.builder()
+                .id(brand.getId())
+                .name(brand.getName())
                 .desc(brand.getDesc()).build() : null;
         AccountBo bo = AccountBo.builder()
                 .id(account.getId())

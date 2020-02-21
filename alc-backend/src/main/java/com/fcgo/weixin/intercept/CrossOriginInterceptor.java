@@ -16,6 +16,15 @@ public class CrossOriginInterceptor implements HandlerInterceptor {
         String method = req.getMethod();
         String url = req.getHeader("origin");
         logger.info("CrossOriginInterceptor preHandle getHeader(origin), url {} method {}",url,method);
+        resp.setHeader("Access-Control-Allow-Origin", "*");
+        resp.setHeader("Access-Control-Allow-Credentials", "true");
+        resp.setHeader("Access-Control-Allow-Methods","*");
+        resp.setHeader("Access-Control-Allow-Headers","Content-Type,Access-Control-Allow-Headers,Content-Length,Accept,Authorization,X-Requested-With,token");
+        //post precheck
+        if(method.equalsIgnoreCase("OPTIONS")){
+            logger.info("in CrossOriginInterceptor.preHandle do {} url {}",method, url);
+            resp.setStatus(HttpServletResponse.SC_OK);
+        }
         return true;
     }
 
@@ -30,14 +39,6 @@ public class CrossOriginInterceptor implements HandlerInterceptor {
         String method = req.getMethod();
         String url = req.getHeader("origin");
         logger.info("CrossOriginInterceptor afterCompletion getHeader(origin), url {} method {}",url,method);
-        resp.setHeader("Access-Control-Allow-Origin", "*");
-        resp.setHeader("Access-Control-Allow-Credentials", "true");
-        resp.setHeader("Access-Control-Allow-Methods","*");
-        resp.setHeader("Access-Control-Allow-Headers","Content-Type,Access-Control-Allow-Headers,Content-Length,Accept,Authorization,X-Requested-With,token");
-        //post precheck
-        if(method.equalsIgnoreCase("OPTIONS")){
-            logger.info("in CrossOriginInterceptor.afterCompletion do {}",method);
-            resp.setStatus(HttpServletResponse.SC_OK);
-        }
+
     }
 }

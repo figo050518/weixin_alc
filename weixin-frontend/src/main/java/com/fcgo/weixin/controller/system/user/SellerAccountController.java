@@ -1,4 +1,4 @@
-package com.fcgo.weixin.controller.user;
+package com.fcgo.weixin.controller.system.user;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;

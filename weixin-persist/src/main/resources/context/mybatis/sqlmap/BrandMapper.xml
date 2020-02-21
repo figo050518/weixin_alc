@@ -3,7 +3,11 @@
 <mapper namespace="com.fcgo.weixin.persist.dao.BrandMapper">
   <resultMap id="BaseResultMap" type="com.fcgo.weixin.persist.model.Brand">
     <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="pic_url" jdbcType="VARCHAR" property="picUrl" />
+    <result column="open_time" jdbcType="TIME" property="openTime" />
+    <result column="close_time" jdbcType="TIME" property="closeTime" />
     <result column="weight" jdbcType="INTEGER" property="weight" />
     <result column="desc" jdbcType="VARCHAR" property="desc" />
     <result column="status" jdbcType="SMALLINT" property="status" />
@@ -11,39 +15,43 @@
     <result column="update_time" jdbcType="INTEGER" property="updateTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, phone, weight, `desc`, status, create_time, update_time
+    id, `name`, phone, pic_url, open_time, close_time, weight, `desc`, status, create_time,
+    update_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select
+    select 
     <include refid="Base_Column_List" />
     from brand
     where id = #{id,jdbcType=INTEGER}
   </select>
 
-  <select id="selectByIds" parameterType="java.util.Collection" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from brand
-    where id in
-    <foreach collection="ids" item="id" separator="," open="(" close=")">
-       #{id,jdbcType=INTEGER}
-    </foreach>
-
-  </select>
-
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.fcgo.weixin.persist.model.Brand" useGeneratedKeys="true">
-    insert into brand (phone, weight, `desc`,
-      status, create_time, update_time
-      )
-    values (#{phone,jdbcType=VARCHAR}, #{weight,jdbcType=INTEGER}, #{desc,jdbcType=VARCHAR}, 
-      #{status,jdbcType=SMALLINT}, #{createTime,jdbcType=INTEGER}, #{updateTime,jdbcType=INTEGER}
-      )
+    insert into brand (`name`, phone, pic_url,
+      open_time, close_time, weight, 
+      `desc`, status, create_time,
+      update_time)
+    values (#{name,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{picUrl,jdbcType=VARCHAR}, 
+      #{openTime,jdbcType=TIME}, #{closeTime,jdbcType=TIME}, #{weight,jdbcType=INTEGER}, 
+      #{desc,jdbcType=VARCHAR}, #{status,jdbcType=SMALLINT}, #{createTime,jdbcType=INTEGER}, 
+      #{updateTime,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.fcgo.weixin.persist.model.Brand" useGeneratedKeys="true">
     insert into brand
     <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        `name`,
+      </if>
       <if test="phone != null">
         phone,
+      </if>
+      <if test="picUrl != null">
+        pic_url,
+      </if>
+      <if test="openTime != null">
+        open_time,
+      </if>
+      <if test="closeTime != null">
+        close_time,
       </if>
       <if test="weight != null">
         weight,
@@ -62,8 +70,20 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
       <if test="phone != null">
         #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="picUrl != null">
+        #{picUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="openTime != null">
+        #{openTime,jdbcType=TIME},
+      </if>
+      <if test="closeTime != null">
+        #{closeTime,jdbcType=TIME},
       </if>
       <if test="weight != null">
         #{weight,jdbcType=INTEGER},
@@ -85,8 +105,20 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.fcgo.weixin.persist.model.Brand">
     update brand
     <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
       <if test="phone != null">
         phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="picUrl != null">
+        pic_url = #{picUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="openTime != null">
+        open_time = #{openTime,jdbcType=TIME},
+      </if>
+      <if test="closeTime != null">
+        close_time = #{closeTime,jdbcType=TIME},
       </if>
       <if test="weight != null">
         weight = #{weight,jdbcType=INTEGER},
@@ -97,23 +129,49 @@
       <if test="status != null">
         status = #{status,jdbcType=SMALLINT},
       </if>
-      <if test="createTime != null">
-        create_time = #{createTime,jdbcType=INTEGER},
-      </if>
+
       <if test="updateTime != null">
         update_time = #{updateTime,jdbcType=INTEGER},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
+
   <update id="updateByPrimaryKey" parameterType="com.fcgo.weixin.persist.model.Brand">
     update brand
-    set phone = #{phone,jdbcType=VARCHAR},
+    set name = #{name,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      pic_url = #{picUrl,jdbcType=VARCHAR},
+      open_time = #{openTime,jdbcType=TIME},
+      close_time = #{closeTime,jdbcType=TIME},
       weight = #{weight,jdbcType=INTEGER},
       `desc` = #{desc,jdbcType=VARCHAR},
       status = #{status,jdbcType=SMALLINT},
-      create_time = #{createTime,jdbcType=INTEGER},
       update_time = #{updateTime,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="selectByIds" parameterType="java.util.Collection" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from brand
+    where id in
+    <foreach collection="ids" item="id" separator="," open="(" close=")">
+      #{id,jdbcType=INTEGER}
+    </foreach>
+
+  </select>
+
+  <select id="selectCnt" resultType="int">
+    select count(*) from brand
+    where 1=1
+  </select>
+
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from brand
+    limit #{offset},#{limit}
+  </select>
+
 </mapper>

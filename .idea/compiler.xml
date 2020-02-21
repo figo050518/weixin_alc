@@ -9,6 +9,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="alc-backend" />
         <module name="model" />
+        <module name="mybatis-generator-core" />
         <module name="weixin-backend" />
         <module name="weixin-common" />
         <module name="weixin-frontend" />

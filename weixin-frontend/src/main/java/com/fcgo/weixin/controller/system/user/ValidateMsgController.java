@@ -1,4 +1,4 @@
-package com.fcgo.weixin.controller.user;
+package com.fcgo.weixin.controller.system.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

@@ -3,6 +3,8 @@ package com.fcgo.weixin.persist.model;
 public class Order {
     private Integer id;
 
+    private Long code;
+
     private Integer brandId;
 
     private String brandPhone;
@@ -31,6 +33,14 @@ public class Order {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Long getCode() {
+        return code;
+    }
+
+    public void setCode(Long code) {
+        this.code = code;
     }
 
     public Integer getBrandId() {

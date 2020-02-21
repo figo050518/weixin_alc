@@ -1,4 +1,4 @@
-package com.fcgo.weixin.controller.user;
+package com.fcgo.weixin.controller.system.user;
 
 import com.fcgo.weixin.common.exception.ServiceException;
 import com.fcgo.weixin.model.ApiResponse;
