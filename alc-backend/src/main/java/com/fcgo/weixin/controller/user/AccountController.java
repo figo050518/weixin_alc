@@ -39,6 +39,7 @@ public class AccountController {
             result = accountService.login(session, bo);
             if (result){
                 code = 200;
+                msg = "登录成功";
             }
         }catch (Exception ex){
             if (ex instanceof ServiceException){
@@ -51,7 +52,7 @@ public class AccountController {
         }
         return new ApiResponse.ApiResponseBuilder()
                 .code(code)
-                .data(result)
+                .data(session.getId())
                 .message(msg)
                 .build();
     }

@@ -40,7 +40,23 @@ public class AccountService {
 
     public int add(AccountBo bo){
         logger.info("in add account, {}", bo);
+        String name;
+        if (StringUtils.isBlank(name = bo.getName()) ){
+            throw new ServiceException(400,"用户名不能为空");
+        }
+        String pwd;
+        if(StringUtils.isBlank(pwd=bo.getPwd())){
+            throw new ServiceException(400,"密码不能为空");
+        }
+        name = name.trim();
+        Account pa = accountMapper.selectByName(name);
+        if (Objects.nonNull(pa)){
+            throw new ServiceException(400,"用户名已存在");
+        }
+        pwd = pwd.trim();
         Account condition = AccountConvert.bo2Do(bo);
+        String pwdAfterEncrypt = MD5.md5(pwd);
+        condition.setPwd(pwdAfterEncrypt);
         int currentDT = DateUtil.getCurrentTimeSeconds();
         condition.setStatus(AccountStatus.USEFUL.getCode());
         condition.setCreateTime(currentDT);
@@ -55,6 +71,14 @@ public class AccountService {
             throw new ServiceException(400, "ID不存在");
         }
         Account condition = AccountConvert.bo2Do(bo);
+        String pwd = bo.getPwd();
+        if (StringUtils.isNotBlank(pwd)){
+            //
+            pwd = pwd.trim();
+            String pwdAfterEncrypt = MD5.md5(pwd);
+            logger.info("update account pwd not blank,{},pwdAfterEncrypt {}",bo, pwdAfterEncrypt);
+            condition.setPwd(pwdAfterEncrypt);
+        }
         int currentDT = DateUtil.getCurrentTimeSeconds();
         condition.setUpdateTime(currentDT);
         int rows = accountMapper.updateByPrimaryKeySelective(condition);

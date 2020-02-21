@@ -4,6 +4,7 @@ import com.fcgo.weixin.model.backend.bo.AccountBo;
 import com.fcgo.weixin.model.backend.bo.BrandBo;
 import com.fcgo.weixin.persist.model.Account;
 import com.fcgo.weixin.persist.model.Brand;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.Objects;
 
@@ -25,7 +26,7 @@ public class AccountConvert {
         Account account = Account.builder().id(bo.getId())
                 .brandId(bo.getBrand().getId())
                 .name(bo.getName())
-                .pwd(bo.getPwd())
+                .pwd(StringUtils.isNotBlank(bo.getPwd()) ? bo.getPwd().trim() : null)
                 .build();
 
         return account;
