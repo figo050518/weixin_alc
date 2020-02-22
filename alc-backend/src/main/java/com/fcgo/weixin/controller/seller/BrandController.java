@@ -10,7 +10,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/brand")
@@ -20,6 +23,13 @@ public class BrandController {
 
     @Autowired
     private BrandService brandService;
+
+    @RequestMapping(value = "/getAll", method = RequestMethod.GET)
+    public ApiResponse getAll(){
+        List<BrandBo> brandBos = brandService.getAll();
+        return new ApiResponse.ApiResponseBuilder().code(200).message("successful")
+                .data(brandBos).build();
+    }
 
     @RequestMapping("/getList")
     public ApiResponse getList(@RequestBody BrandListReq req){

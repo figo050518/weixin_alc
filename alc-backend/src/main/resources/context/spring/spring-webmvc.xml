@@ -13,11 +13,6 @@
 						http://www.springframework.org/schema/util/spring-util.xsd">
 
 
-
-
-
-
-
 	<!-- 静态文件配置 -->
 	<mvc:resources location="/resources/" mapping="/resources/**" />
 	<mvc:default-servlet-handler />
@@ -28,21 +23,7 @@
 		<property name="suffix" value=".jsp"/>
 		<property name="order" value="0"/>
 	</bean>
-	<mvc:annotation-driven>
-		<!-- 消息转换器 -->
-		<mvc:message-converters register-defaults="true">
-			<bean class="org.springframework.http.converter.StringHttpMessageConverter">
-				<property name="supportedMediaTypes">
-					<list>
-						<value>text/plain;charset=UTF-8</value>
-						<value>text/html;charset=UTF-8</value>
-					</list>
-				</property>
-			</bean>
-			<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
-			</bean>
-		</mvc:message-converters>
-	</mvc:annotation-driven>
+
 	<mvc:interceptors>
 		<mvc:interceptor>
 			<mvc:mapping path="/**"/>

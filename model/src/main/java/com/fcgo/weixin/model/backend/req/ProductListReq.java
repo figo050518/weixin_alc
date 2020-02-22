@@ -4,6 +4,9 @@ import com.fcgo.weixin.model.PageRequestBO;
 import lombok.Data;
 
 @Data
-public class BrandListReq extends PageRequestBO {
+public class ProductListReq extends PageRequestBO {
 
+    private Integer uid;
+
+    private String productName;
 }

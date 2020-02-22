@@ -40,7 +40,7 @@ public class UserManageService {
 
         List<UserBo> bos = dolist.stream().map(UserConvert::do2Bo).collect(Collectors.toList());
         int totalPage = PageHelper.getPageTotal(total, pageSize);
-        pageBuilder.totalPage(totalPage).list(bos);
+        pageBuilder.totalPage(totalPage).total(total).list(bos);
         return pageBuilder.build();
     }
 }

@@ -24,4 +24,6 @@ public interface BrandMapper {
 
     List<Brand> selectAll(@Param("offset")int offset,
                             @Param("limit")int limit);
+
+    List<Brand> selectAllBrand();
 }

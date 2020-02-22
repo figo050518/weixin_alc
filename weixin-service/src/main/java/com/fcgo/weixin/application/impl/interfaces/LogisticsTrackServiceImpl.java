@@ -10,7 +10,6 @@ import com.fcgo.weixin.application.interfaces.LogisticsTrackService;
 import com.fcgo.weixin.application.order.IOrderInfoService;
 import com.fcgo.weixin.common.util.LogisticsMD5;
 import com.fcgo.weixin.common.util.logisticsTrack.HttpRequest;
-import com.fcgo.weixin.common.util.logisticsTrack.JacksonHelper;
 
 @Service
 public class LogisticsTrackServiceImpl implements LogisticsTrackService {

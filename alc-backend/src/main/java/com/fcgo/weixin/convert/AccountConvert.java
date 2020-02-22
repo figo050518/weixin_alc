@@ -22,7 +22,7 @@ public class AccountConvert {
                 .name(account.getName())
                 .status(account.getStatus())
                 .createTime(DateUtil.getDateStrFromUnixTime(account.getCreateTime(), DateUtil.Format_yyyy_MM_dd_HH_mm_ss))
-                .updateTime(DateUtil.getDateStrFromUnixTime(account.getCreateTime(), DateUtil.Format_yyyy_MM_dd_HH_mm_ss))
+                .updateTime(DateUtil.getDateStrFromUnixTime(account.getUpdateTime(), DateUtil.Format_yyyy_MM_dd_HH_mm_ss))
                 .brand(brandBo)
                 .build();
 

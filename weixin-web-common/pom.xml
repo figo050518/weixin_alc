@@ -41,12 +41,7 @@
 			    		<version>1.19.3</version>
 			  </dependency>
 
-		<!-- VIEWS -->
-		<dependency>
-			<groupId>org.codehaus.jackson</groupId>
-			<artifactId>jackson-mapper-asl</artifactId>
-			<version>1.8.5</version>
-		</dependency>
+
 
 		<dependency>
 			<groupId>hessian</groupId>

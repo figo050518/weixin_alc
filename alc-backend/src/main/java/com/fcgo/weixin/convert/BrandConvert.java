@@ -11,7 +11,12 @@ import java.util.Objects;
 
 public final class BrandConvert {
 
-
+    public static BrandBo do2SimpleBo(Brand brand){
+        BrandBo bo = new BrandBo();
+        bo.setId(brand.getId());
+        bo.setName(brand.getName());
+        return bo;
+    }
 
     public static BrandBo do2Bo(Brand brand){
         BrandBo bo = new BrandBo();

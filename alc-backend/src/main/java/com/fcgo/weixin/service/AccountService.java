@@ -114,7 +114,7 @@ public class AccountService {
         }).collect(Collectors.toList());
 
         int totalPage = PageHelper.getPageTotal(total, pageSize);
-        boBuilder.list(boList).totalPage(totalPage);
+        boBuilder.list(boList).total(total).totalPage(totalPage);
         return boBuilder.build();
     }
 

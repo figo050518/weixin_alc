@@ -3,6 +3,7 @@ package com.fcgo.weixin.common.util.logisticsTrack;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
+import com.alibaba.fastjson.JSONObject;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.mapper.DefaultMapper;
 
@@ -75,7 +76,7 @@ public class TaskRequest {
 
     @Override
     public String toString() {
-        return JacksonHelper.toJSON(this);
+        return JSONObject.toJSONString(this);
     }
 
     private static XStream getXStream() {

@@ -8,6 +8,7 @@ import com.fcgo.weixin.model.backend.bo.BrandBo;
 import com.fcgo.weixin.model.backend.req.BrandListReq;
 import com.fcgo.weixin.persist.dao.BrandMapper;
 import com.fcgo.weixin.persist.model.Brand;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +26,16 @@ public class BrandService {
     @Autowired
     private BrandMapper brandMapper;
 
+    public List<BrandBo> getAll(){
+        List<Brand> dolist = brandMapper.selectAllBrand();
+        if (CollectionUtils.isEmpty(dolist)){
+            return null;
+        }
+        List<BrandBo> bos = dolist.stream().map(BrandConvert::do2SimpleBo)
+                .collect(Collectors.toList());
+        return bos;
+    }
+
     public PageResponseBO<BrandBo> getList(BrandListReq req){
         int page = req.getPage();
         int pageSize = req.getSize();
@@ -40,7 +51,7 @@ public class BrandService {
 
         List<BrandBo> bos = dolist.stream().map(BrandConvert::do2Bo).collect(Collectors.toList());
         int totalPage = PageHelper.getPageTotal(total, pageSize);
-        pageBuilder.totalPage(totalPage).list(bos);
+        pageBuilder.totalPage(totalPage).total(total).list(bos);
         return pageBuilder.build();
     }
 

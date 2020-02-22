@@ -251,42 +251,6 @@
 			</plugins>
 		</pluginManagement>
 	</build>
-
-	<profiles>
-		<profile>
-			<id>dev</id>
-			<activation>
-				<property>
-					<name>env</name>
-					<value>dev</value>
-				</property>
-			</activation>
-
-			<build>
-				<filters>
-					<filter>../env.properties</filter>
-				</filters>
-
-				<resources>
-					<resource>
-						<directory>src/main/resources</directory>
-						<filtering>true</filtering>
-					</resource>
-				</resources>
-			</build>
-		</profile>
-	</profiles>
-
-    <repositories>
-        <repository>
-            <id>repo2</id>
-            <name>>local private nexus</name>
-            <url>https://maven.aliyun.com/repository/public</url>
-            <snapshots><enabled>true</enabled></snapshots>
-            <releases><enabled>true</enabled></releases>
-        </repository>
-    </repositories>
-    
     
     
     

@@ -174,4 +174,8 @@
     limit #{offset},#{limit}
   </select>
 
+
+  <select id="selectAllBrand" resultMap="BaseResultMap" >
+    select  <include refid="Base_Column_List" /> from brand
+  </select>
 </mapper>

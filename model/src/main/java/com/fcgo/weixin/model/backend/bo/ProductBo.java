@@ -1,4 +1,4 @@
-package com.fcgo.weixin.persist.model;
+package com.fcgo.weixin.model.backend.bo;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,14 +9,17 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Product {
+public class ProductBo {
+
     private Integer id;
 
     private String name;
 
     private String unit;
 
-    private Integer productSort;
+    private Integer productSortId;
+
+    private ProductSortBo productSortBo;
 
     private String desc;
 
@@ -32,9 +35,7 @@ public class Product {
 
     private Integer verifyStatus;
 
-    private Integer createTime;
+    private String createTime;
 
-    private Integer updateTime;
-
-
+    private String updateTime;
 }
