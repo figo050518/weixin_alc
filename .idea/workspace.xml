@@ -34,10 +34,10 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/alc-backend/src/main/java/com/fcgo/weixin/controller/buyer/UserManageController.java">
+        <entry file="file://$PROJECT_DIR$/weixin-common/src/main/java/com/fcgo/weixin/common/controller/GlobalDefaultExceptionHandler.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="162">
-              <caret line="15" column="28" selection-start-line="15" selection-start-column="18" selection-end-line="15" selection-end-column="28" />
+            <state relative-caret-position="191">
+              <caret line="97" column="85" selection-start-line="97" selection-start-column="85" selection-end-line="97" selection-end-column="85" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -46,10 +46,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/weixin-common/src/main/java/com/fcgo/weixin/common/controller/GlobalDefaultExceptionHandler.java">
+        <entry file="file://$PROJECT_DIR$/alc-backend/src/main/java/com/fcgo/weixin/controller/system/user/AccountController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="191">
-              <caret line="97" column="85" selection-start-line="97" selection-start-column="85" selection-end-line="97" selection-end-column="85" />
+            <state relative-caret-position="303">
+              <caret line="90" column="36" selection-start-line="90" selection-start-column="30" selection-end-line="90" selection-end-column="36" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -67,10 +67,64 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="jar://$MAVEN_REPOSITORY$/javax/servlet/servlet-api/2.5/servlet-api-2.5.jar!/javax/servlet/ServletRequest.class">
+        <entry file="file://$PROJECT_DIR$/alc-backend/src/main/java/com/fcgo/weixin/service/AccountService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="151">
-              <caret line="35" column="8" selection-start-line="35" selection-start-column="8" selection-end-line="35" selection-end-column="8" />
+            <state relative-caret-position="258">
+              <caret line="88" column="31" selection-start-line="88" selection-start-column="31" selection-end-line="88" selection-end-column="31" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/model/src/main/java/com/fcgo/weixin/model/constant/DelStatus.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="87">
+              <caret line="6" column="21" selection-start-line="6" selection-start-column="12" selection-end-line="6" selection-end-column="21" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/weixin-persist/src/main/java/com/fcgo/weixin/persist/dao/AccountMapper.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="492">
+              <caret line="24" column="20" selection-start-line="24" selection-start-column="20" selection-end-line="24" selection-end-column="20" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/weixin-persist/src/main/resources/context/mybatis/sqlmap/AccountMapper.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="135">
+              <caret line="41" column="49" selection-start-line="41" selection-start-column="49" selection-end-line="41" selection-end-column="49" />
+              <folding>
+                <element signature="n#update#1;n#mapper#0;n#!!top" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/weixin-persist/src/main/java/com/fcgo/weixin/persist/model/Account.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="249">
+              <caret line="25" column="23" selection-start-line="25" selection-start-column="23" selection-end-line="25" selection-end-column="23" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/alc-backend/src/main/java/com/fcgo/weixin/convert/AccountConvert.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="648">
+              <caret line="31" column="26" selection-start-line="31" selection-start-column="26" selection-end-line="31" selection-end-column="26" />
             </state>
           </provider>
         </entry>
@@ -89,8 +143,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Enum" />
         <option value="Class" />
+        <option value="Enum" />
       </list>
     </option>
   </component>
@@ -131,8 +185,6 @@
       <list>
         <option value="$PROJECT_DIR$/weixin-mybatis-generated/src/main/resources/context/mybatis/generate/generatorConfig.xml" />
         <option value="$PROJECT_DIR$/weixin-frontend/src/main/java/com/fcgo/weixin/controller/user/ValidateMsgController.java" />
-        <option value="$PROJECT_DIR$/weixin-persist/src/main/java/com/fcgo/weixin/persist/dao/AccountMapper.java" />
-        <option value="$PROJECT_DIR$/weixin-persist/src/main/resources/context/mybatis/sqlmap/AccountMapper.xml" />
         <option value="$PROJECT_DIR$/model/src/main/java/com/fcgo/weixin/model/backend/constant/AccountConstant.java" />
         <option value="$PROJECT_DIR$/weixin-common/src/main/java/com/fcgo/weixin/common/util/MD5.java" />
         <option value="$PROJECT_DIR$/alc-backend/src/main/resources/context/spring/spring-webmvc.xml" />
@@ -140,13 +192,11 @@
         <option value="$PROJECT_DIR$/weixin-web-common/src/main/java/com/fcgo/weixin/common/LogExceptionResolver.java" />
         <option value="$PROJECT_DIR$/alc-backend/pom.xml" />
         <option value="$PROJECT_DIR$/alc-backend/src/main/java/com/fcgo/weixin/controller/user/AccountController.java" />
-        <option value="$PROJECT_DIR$/alc-backend/src/main/java/com/fcgo/weixin/service/AccountService.java" />
         <option value="$PROJECT_DIR$/alc-backend/src/main/java/com/fcgo/weixin/intercept/CrossOriginInterceptor.java" />
         <option value="$PROJECT_DIR$/model/src/main/java/com/fcgo/weixin/model/backend/req/BrandListReq.java" />
         <option value="D:/dev/mybatis-generator-core/src/main/resources/META-INF/mybatis/alc/BrandMapper.xml" />
         <option value="$PROJECT_DIR$/weixin-persist/src/main/java/com/fcgo/weixin/persist/dao/BrandMapper.java" />
         <option value="$PROJECT_DIR$/model/src/main/java/com/fcgo/weixin/model/backend/bo/BrandBo.java" />
-        <option value="$PROJECT_DIR$/alc-backend/src/main/java/com/fcgo/weixin/convert/AccountConvert.java" />
         <option value="$PROJECT_DIR$/weixin-persist/src/main/resources/context/mybatis/sqlmap/BrandMapper.xml" />
         <option value="$PROJECT_DIR$/weixin-common/src/main/java/com/fcgo/weixin/common/util/DateUtil.java" />
         <option value="$PROJECT_DIR$/model/src/main/java/com/fcgo/weixin/model/constant/BrandStatus.java" />
@@ -170,6 +220,13 @@
         <option value="$PROJECT_DIR$/weixin-common/src/main/java/com/fcgo/weixin/common/util/HttpRequestUtils.java" />
         <option value="$PROJECT_DIR$/alc-backend/src/main/resources/context/spring/spring-web-context.xml" />
         <option value="$PROJECT_DIR$/weixin-common/src/main/java/com/fcgo/weixin/common/controller/GlobalDefaultExceptionHandler.java" />
+        <option value="$PROJECT_DIR$/alc-backend/src/main/java/com/fcgo/weixin/convert/AccountConvert.java" />
+        <option value="$PROJECT_DIR$/weixin-persist/src/main/java/com/fcgo/weixin/persist/dao/AccountMapper.java" />
+        <option value="$PROJECT_DIR$/weixin-persist/src/main/java/com/fcgo/weixin/persist/model/Account.java" />
+        <option value="$PROJECT_DIR$/weixin-persist/src/main/resources/context/mybatis/sqlmap/AccountMapper.xml" />
+        <option value="$PROJECT_DIR$/model/src/main/java/com/fcgo/weixin/model/constant/DelStatus.java" />
+        <option value="$PROJECT_DIR$/alc-backend/src/main/java/com/fcgo/weixin/service/AccountService.java" />
+        <option value="$PROJECT_DIR$/alc-backend/src/main/java/com/fcgo/weixin/controller/system/user/AccountController.java" />
       </list>
     </option>
   </component>
@@ -224,7 +281,7 @@
   <component name="MavenRunner">
     <option name="jreName" value="#JAVA_HOME" />
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="-8" />
     <option name="y" value="-8" />
     <option name="width" value="1346" />
@@ -248,47 +305,47 @@
             <path>
               <item name="weixin_alc" type="b2602c69:ProjectViewProjectNode" />
               <item name="weixin_alc" type="462c0819:PsiDirectoryNode" />
-              <item name="alc-backend" type="462c0819:PsiDirectoryNode" />
+              <item name="model" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="weixin_alc" type="b2602c69:ProjectViewProjectNode" />
               <item name="weixin_alc" type="462c0819:PsiDirectoryNode" />
-              <item name="alc-backend" type="462c0819:PsiDirectoryNode" />
+              <item name="model" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="weixin_alc" type="b2602c69:ProjectViewProjectNode" />
               <item name="weixin_alc" type="462c0819:PsiDirectoryNode" />
-              <item name="alc-backend" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="weixin_alc" type="b2602c69:ProjectViewProjectNode" />
-              <item name="weixin_alc" type="462c0819:PsiDirectoryNode" />
-              <item name="alc-backend" type="462c0819:PsiDirectoryNode" />
+              <item name="model" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="weixin_alc" type="b2602c69:ProjectViewProjectNode" />
               <item name="weixin_alc" type="462c0819:PsiDirectoryNode" />
-              <item name="alc-backend" type="462c0819:PsiDirectoryNode" />
+              <item name="model" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-              <item name="context" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="weixin_alc" type="b2602c69:ProjectViewProjectNode" />
               <item name="weixin_alc" type="462c0819:PsiDirectoryNode" />
-              <item name="alc-backend" type="462c0819:PsiDirectoryNode" />
+              <item name="model" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-              <item name="context" type="462c0819:PsiDirectoryNode" />
-              <item name="spring" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="model" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="weixin_alc" type="b2602c69:ProjectViewProjectNode" />
+              <item name="weixin_alc" type="462c0819:PsiDirectoryNode" />
+              <item name="model" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="model" type="462c0819:PsiDirectoryNode" />
+              <item name="constant" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -301,7 +358,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1582347000855" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1582355398477" />
     <property name="last_opened_file_path" value="D:/dev/mybatis-generator-core/pom.xml" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -527,7 +584,7 @@
       <workItem from="1582171572556" duration="18398000" />
       <workItem from="1582218682116" duration="1185000" />
       <workItem from="1582253317544" duration="29913000" />
-      <workItem from="1582338962153" duration="6817000" />
+      <workItem from="1582338962153" duration="10992000" />
     </task>
     <servers />
   </component>
@@ -537,14 +594,14 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="75371000" />
+    <option name="totallyTimeSpent" value="79546000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.73535794" visible="true" weight="0.18532526" />
-      <window_info id="Structure" order="1" sideWeight="0.2646421" side_tool="true" visible="true" weight="0.18532526" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.73535794" visible="true" weight="0.28290468" />
+      <window_info id="Structure" order="1" sideWeight="0.2646421" side_tool="true" visible="true" weight="0.28290468" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
       <window_info id="UI Designer" order="4" />
@@ -554,7 +611,7 @@
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32840723" />
       <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49924356" weight="0.13136289" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" sideWeight="0.49924356" visible="true" weight="0.24302134" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49924356" visible="true" weight="0.24302134" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -571,7 +628,7 @@
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" visible="true" weight="0.06429652" />
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="right" id="Capture Analysis" order="4" />
-      <window_info anchor="right" id="Maven Projects" order="5" visible="true" weight="0.0816944" />
+      <window_info anchor="right" id="Maven Projects" order="5" visible="true" weight="0.0" />
       <window_info anchor="right" id="Database" order="6" />
       <window_info anchor="right" id="Palette&#9;" order="7" />
       <window_info anchor="right" id="Theme Preview" order="8" />
@@ -588,30 +645,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/weixin-persist/src/main/resources/context/mybatis/sqlmap/BrandAccountFlowMapper.xml">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/model/src/main/java/com/fcgo/weixin/model/PageResponseBO.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="10" selection-start-line="10" selection-end-line="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/weixin-persist/src/main/java/com/fcgo/weixin/persist/model/Brand.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="19">
-          <caret line="25" column="31" lean-forward="true" selection-start-line="5" selection-start-column="4" selection-end-line="25" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-beans/4.3.8.RELEASE/spring-beans-4.3.8.RELEASE.jar!/org/springframework/beans/BeanUtils.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="231">
-          <caret line="326" column="75" lean-forward="true" selection-start-line="326" selection-start-column="75" selection-end-line="326" selection-end-column="75" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/weixin-persist/src/main/resources/context/mybatis/sqlmap/BrandMapper.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3726">
@@ -637,6 +670,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
           <caret line="6" column="23" selection-start-line="6" selection-start-column="12" selection-end-line="6" selection-end-column="23" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -651,6 +687,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="27">
           <caret line="24" column="48" selection-start-line="24" selection-start-column="48" selection-end-line="24" selection-end-column="48" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -772,16 +811,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/alc-backend/src/main/java/com/fcgo/weixin/controller/system/user/AccountController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="66">
-          <caret line="62" column="24" lean-forward="true" selection-start-line="62" selection-start-column="24" selection-end-line="62" selection-end-column="24" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/alc-backend/src/main/java/com/fcgo/weixin/convert/UserConvert.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="133">
@@ -793,13 +822,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="103">
           <caret line="28" column="118" selection-start-line="28" selection-start-column="8" selection-end-line="28" selection-end-column="118" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/alc-backend/src/main/java/com/fcgo/weixin/convert/AccountConvert.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-297">
-          <caret line="12" column="28" selection-start-line="12" selection-start-column="28" selection-end-line="12" selection-end-column="28" />
         </state>
       </provider>
     </entry>
@@ -840,16 +862,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3564">
           <caret line="132" column="43" selection-start-line="132" selection-start-column="43" selection-end-line="132" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/alc-backend/src/main/java/com/fcgo/weixin/service/AccountService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1053">
-          <caret line="62" column="41" selection-start-line="62" selection-start-column="32" selection-end-line="62" selection-end-column="41" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -940,6 +952,67 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="191">
           <caret line="97" column="85" selection-start-line="97" selection-start-column="85" selection-end-line="97" selection-end-column="85" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/alc-backend/src/main/java/com/fcgo/weixin/convert/AccountConvert.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="648">
+          <caret line="31" column="26" selection-start-line="31" selection-start-column="26" selection-end-line="31" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/weixin-persist/src/main/java/com/fcgo/weixin/persist/model/Account.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="249">
+          <caret line="25" column="23" selection-start-line="25" selection-start-column="23" selection-end-line="25" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/weixin-persist/src/main/java/com/fcgo/weixin/persist/dao/AccountMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="492">
+          <caret line="24" column="20" selection-start-line="24" selection-start-column="20" selection-end-line="24" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/weixin-persist/src/main/resources/context/mybatis/sqlmap/AccountMapper.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="41" column="49" selection-start-line="41" selection-start-column="49" selection-end-line="41" selection-end-column="49" />
+          <folding>
+            <element signature="n#update#1;n#mapper#0;n#!!top" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/model/src/main/java/com/fcgo/weixin/model/constant/DelStatus.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="87">
+          <caret line="6" column="21" selection-start-line="6" selection-start-column="12" selection-end-line="6" selection-end-column="21" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/alc-backend/src/main/java/com/fcgo/weixin/service/AccountService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="258">
+          <caret line="88" column="31" selection-start-line="88" selection-start-column="31" selection-end-line="88" selection-end-column="31" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/alc-backend/src/main/java/com/fcgo/weixin/controller/system/user/AccountController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="303">
+          <caret line="90" column="36" selection-start-line="90" selection-start-column="30" selection-end-line="90" selection-end-column="36" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

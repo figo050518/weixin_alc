@@ -10,6 +10,7 @@ import com.fcgo.weixin.model.backend.bo.AccountBo;
 import com.fcgo.weixin.model.backend.constant.AccountConstant;
 import com.fcgo.weixin.model.backend.req.AccountListReq;
 import com.fcgo.weixin.model.constant.AccountStatus;
+import com.fcgo.weixin.model.constant.DelStatus;
 import com.fcgo.weixin.persist.dao.AccountMapper;
 import com.fcgo.weixin.persist.dao.BrandMapper;
 import com.fcgo.weixin.persist.model.Account;
@@ -58,7 +59,7 @@ public class AccountService {
         String pwdAfterEncrypt = MD5.md5(pwd);
         condition.setPwd(pwdAfterEncrypt);
         int currentDT = DateUtil.getCurrentTimeSeconds();
-        condition.setStatus(AccountStatus.USEFUL.getCode());
+        condition.setStatus(Objects.isNull(bo.getStatus()) ? AccountStatus.USEFUL.getCode() : bo.getStatus());
         condition.setCreateTime(currentDT);
         condition.setUpdateTime(currentDT);
         int rows = accountMapper.insert(condition);
@@ -115,6 +116,15 @@ public class AccountService {
         int totalPage = PageHelper.getPageTotal(total, pageSize);
         boBuilder.list(boList).totalPage(totalPage);
         return boBuilder.build();
+    }
+
+    public int delete(Integer uid){
+        if (Objects.isNull(uid) || uid<1){
+            throw new ServiceException(401, "UID不合法");
+        }
+        Account condition = Account.builder().id(uid).isDel(DelStatus.YES.getCode()).build();
+        logger.info("delete account {}", condition);
+        return accountMapper.updateByPrimaryKeySelective(condition);
     }
 
 

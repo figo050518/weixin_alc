@@ -7,11 +7,12 @@
     <result column="pwd" jdbcType="VARCHAR" property="pwd" />
     <result column="brand_id" jdbcType="INTEGER" property="brandId" />
     <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="is_del" jdbcType="TINYINT" property="isDel" />
     <result column="create_time" jdbcType="INTEGER" property="createTime" />
     <result column="update_time" jdbcType="INTEGER" property="updateTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, `name`, pwd, brand_id, status, create_time, update_time
+    id, `name`, pwd, brand_id, status,is_del, create_time, update_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -31,14 +32,14 @@
     select
     <include refid="Base_Column_List" />
     from account
-    where 1=1
+    where 1=1 and is_del = 0
     limit #{offset},#{limit}
   </select>
 
 
 
   <select id="selectCntByCondition" parameterType="java.lang.Integer" resultType="int">
-    select count(*) from account
+    select count(*) from account where is_del = 0
   </select>
 
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.fcgo.weixin.persist.model.Account" useGeneratedKeys="true">
@@ -107,8 +108,8 @@
       <if test="status != null">
         status = #{status,jdbcType=TINYINT},
       </if>
-      <if test="createTime != null">
-        create_time = #{createTime,jdbcType=INTEGER},
+      <if test="isDel != null">
+        is_del = #{isDel,jdbcType=INTEGER},
       </if>
       <if test="updateTime != null">
         update_time = #{updateTime,jdbcType=INTEGER},

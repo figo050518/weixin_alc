@@ -1,5 +1,6 @@
 package com.fcgo.weixin.convert;
 
+import com.fcgo.weixin.common.util.DateUtil;
 import com.fcgo.weixin.model.backend.bo.AccountBo;
 import com.fcgo.weixin.model.backend.bo.BrandBo;
 import com.fcgo.weixin.persist.model.Account;
@@ -19,8 +20,12 @@ public class AccountConvert {
                 .id(account.getId())
                 .pwd(account.getPwd())
                 .name(account.getName())
+                .status(account.getStatus())
+                .createTime(DateUtil.getDateStrFromUnixTime(account.getCreateTime(), DateUtil.Format_yyyy_MM_dd_HH_mm_ss))
+                .updateTime(DateUtil.getDateStrFromUnixTime(account.getCreateTime(), DateUtil.Format_yyyy_MM_dd_HH_mm_ss))
                 .brand(brandBo)
                 .build();
+
         return bo;
     }
 
@@ -28,6 +33,7 @@ public class AccountConvert {
         Account account = Account.builder().id(bo.getId())
                 .brandId(bo.getBrand().getId())
                 .name(bo.getName())
+                .status(Objects.nonNull(bo.getStatus()) ? bo.getStatus() : null)
                 .pwd(StringUtils.isNotBlank(bo.getPwd()) ? bo.getPwd().trim() : null)
                 .build();
 

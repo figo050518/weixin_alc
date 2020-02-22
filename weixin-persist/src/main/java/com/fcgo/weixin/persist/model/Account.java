@@ -23,5 +23,5 @@ public class Account {
 
     private Integer updateTime;
 
-
+    private Byte isDel;
 }

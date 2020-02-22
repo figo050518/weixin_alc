@@ -10,10 +10,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -87,6 +84,16 @@ public class AccountController {
         return new ApiResponse.ApiResponseBuilder()
                 .code(200)
                 .data(pageResponseBO)
+                .message("get account list successful")
+                .build();
+    }
+
+    @RequestMapping(value = "/delete",method = RequestMethod.GET)
+    public ApiResponse delete(@RequestParam("uid")Integer uid){
+        int row = accountService.delete(uid);
+        return new ApiResponse.ApiResponseBuilder()
+                .code(200)
+                .data(row)
                 .message("get account list successful")
                 .build();
     }
