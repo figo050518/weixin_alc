@@ -17,16 +17,8 @@
 	<bean class="com.fcgo.weixin.common.util.ApplicationContextHolder"/>
 	<context:annotation-config />
 	<context:component-scan base-package="com.fcgo.weixin" />
-	<!-- 出错页面统一处理 -->
-	<bean id="exceptionResolver" class="com.fcgo.weixin.common.LogExceptionResolver">
-		<property name="defaultErrorView" value="error/500"/>
-		<property name="exceptionMappings">
-			<props>
-				<prop key="org.springframework.web.HttpSessionRequiredException">error/500</prop>
-				<prop key="com.fcgo.weixin.common.exception.ResourceNotFoundException">error/404</prop>
-			</props>
-		</property>
-	</bean>
+	<!-- 出错统一处理 -->
+
 	<!-- 启动SpringMVC的注解功能，完成请求和注解POJO的映射 -->
 	<mvc:annotation-driven>
 		<mvc:message-converters>
