@@ -5,6 +5,7 @@ import com.fcgo.weixin.model.ApiResponse;
 import com.fcgo.weixin.model.PageResponseBO;
 import com.fcgo.weixin.model.backend.bo.AccountBo;
 import com.fcgo.weixin.model.backend.req.AccountListReq;
+import com.fcgo.weixin.model.backend.resp.LoginUserResp;
 import com.fcgo.weixin.service.AccountService;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/account")
@@ -29,12 +31,13 @@ public class AccountController {
         AccountBo bo = AccountBo.builder().name(name).pwd(pwd).build();
         logger.info("in account/login req {}", bo);
         HttpSession session = request.getSession();
-        boolean result = false;
+        LoginUserResp resp;
         String msg = "登录失败";
         int code = 401;
         try {
-            result = accountService.login(session, bo);
-            if (result){
+            resp = accountService.login(session, bo);
+            if (Objects.nonNull(resp)){
+                resp.setSessionKey(session.getId());
                 code = 200;
                 msg = "登录成功";
             }

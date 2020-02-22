@@ -30,6 +30,8 @@ public class BrandBo {
 
     private Short status;
 
+    private Double deliveryThreshold;
+
     private String createTime;
 
     private String updateTime;

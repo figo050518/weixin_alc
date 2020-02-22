@@ -8,5 +8,9 @@ public class ProductListReq extends PageRequestBO {
 
     private Integer uid;
 
+    private String userName;
+
+    private Integer brandId;
+
     private String productName;
 }

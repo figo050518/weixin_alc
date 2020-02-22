@@ -11,12 +11,13 @@
     <result column="weight" jdbcType="INTEGER" property="weight" />
     <result column="desc" jdbcType="VARCHAR" property="desc" />
     <result column="status" jdbcType="SMALLINT" property="status" />
+    <result column="delivery_threshold" jdbcType="DOUBLE" property="deliveryThreshold"/>
     <result column="create_time" jdbcType="INTEGER" property="createTime" />
     <result column="update_time" jdbcType="INTEGER" property="updateTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, `name`, phone, pic_url, open_time, close_time, weight, `desc`, status, create_time,
-    update_time
+    id, `name`, phone, pic_url, open_time, close_time, weight, `desc`, status,delivery_threshold,
+     create_time,  update_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -62,6 +63,9 @@
       <if test="status != null">
         status,
       </if>
+      <if test="deliveryThreshold!=null">
+        delivery_threshold,
+      </if>
       <if test="createTime != null">
         create_time,
       </if>
@@ -93,6 +97,9 @@
       </if>
       <if test="status != null">
         #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="deliveryThreshold!=null">
+        #{deliveryThreshold},
       </if>
       <if test="createTime != null">
         #{createTime,jdbcType=INTEGER},
@@ -129,7 +136,9 @@
       <if test="status != null">
         status = #{status,jdbcType=SMALLINT},
       </if>
-
+      <if test="deliveryThreshold!=null">
+        delivery_threshold = #{deliveryThreshold},
+      </if>
       <if test="updateTime != null">
         update_time = #{updateTime,jdbcType=INTEGER},
       </if>

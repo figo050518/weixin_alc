@@ -28,9 +28,9 @@ public class Product {
 
     private Integer brandId;
 
-    private Integer status;
+    private Integer status,exceptStatus;
 
-    private Integer verifyStatus;
+    private Integer verifyStatus,exceptVerifyStatus;
 
     private Integer createTime;
 

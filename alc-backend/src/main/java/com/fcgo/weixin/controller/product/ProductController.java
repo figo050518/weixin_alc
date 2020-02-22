@@ -5,6 +5,8 @@ import com.fcgo.weixin.model.PageResponseBO;
 import com.fcgo.weixin.model.backend.bo.BrandBo;
 import com.fcgo.weixin.model.backend.bo.ProductBo;
 import com.fcgo.weixin.model.backend.req.BrandListReq;
+import com.fcgo.weixin.model.backend.req.ProductAuditReq;
+import com.fcgo.weixin.model.backend.req.ProductCtrlShelveReq;
 import com.fcgo.weixin.model.backend.req.ProductListReq;
 import com.fcgo.weixin.service.ProductService;
 import org.slf4j.Logger;
@@ -28,5 +30,37 @@ public class ProductController {
         PageResponseBO<ProductBo> pageResponseBO = productService.getList(req);
         return new ApiResponse.ApiResponseBuilder().code(200).message("successful")
                 .data(pageResponseBO).build();
+    }
+
+    @RequestMapping("/add")
+    public ApiResponse add(@RequestBody ProductBo req){
+        logger.info("/product/add req {}", req);
+        int result = productService.add(req);
+        return new ApiResponse.ApiResponseBuilder().code(200).message("successful")
+                .data(result).build();
+    }
+
+    @RequestMapping("/update")
+    public ApiResponse update(@RequestBody ProductBo req){
+        logger.info("/product/update req {}", req);
+        int result = productService.update(req);
+        return new ApiResponse.ApiResponseBuilder().code(200).message("successful")
+                .data(result>0).build();
+    }
+
+    @RequestMapping("/audit")
+    public ApiResponse audit(@RequestBody ProductAuditReq req){
+        logger.info("/product/audit req {}", req);
+        int result = productService.audit(req);
+        return new ApiResponse.ApiResponseBuilder().code(200).message("successful")
+                .data(result>0).build();
+    }
+
+    @RequestMapping("/onOffShelve")
+    public ApiResponse onOffShelve(@RequestBody ProductCtrlShelveReq req){
+        logger.info("/product/onOffShelve req {}", req);
+        int result = productService.onOffShelve(req);
+        return new ApiResponse.ApiResponseBuilder().code(200).message("successful")
+                .data(result>0).build();
     }
 }

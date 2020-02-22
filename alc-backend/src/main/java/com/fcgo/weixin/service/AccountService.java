@@ -1,5 +1,6 @@
 package com.fcgo.weixin.service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.fcgo.weixin.common.exception.ServiceException;
 import com.fcgo.weixin.common.util.DateUtil;
 import com.fcgo.weixin.common.util.MD5;
@@ -9,6 +10,7 @@ import com.fcgo.weixin.model.PageResponseBO;
 import com.fcgo.weixin.model.backend.bo.AccountBo;
 import com.fcgo.weixin.model.backend.constant.AccountConstant;
 import com.fcgo.weixin.model.backend.req.AccountListReq;
+import com.fcgo.weixin.model.backend.resp.LoginUserResp;
 import com.fcgo.weixin.model.constant.AccountStatus;
 import com.fcgo.weixin.model.constant.DelStatus;
 import com.fcgo.weixin.persist.dao.AccountMapper;
@@ -128,7 +130,7 @@ public class AccountService {
     }
 
 
-    public boolean login(HttpSession session,AccountBo bo){
+    public LoginUserResp login(HttpSession session, AccountBo bo){
         String name = bo.getName();
         if (StringUtils.isBlank(name)){
             throw new ServiceException(401,"用户名不能为空");
@@ -158,31 +160,52 @@ public class AccountService {
             throw new ServiceException(401,"用户名或密码错误");
         }
         final Integer uid = account.getId();
+        LoginUserResp resp = null;
         //hit in session
         boolean sessionExists;
         if (sessionExists = Objects.nonNull(session)){
-            Integer uidOfSession = (Integer) session.getAttribute(AccountConstant.SESSION_USER_ID_KEY);
-            String userNameOfSession = (String) session.getAttribute(AccountConstant.SESSION_USER_NAME_KEY);
-            if (Objects.nonNull(uidOfSession) && uidOfSession.equals(uid)
-                && Objects.nonNull(userNameOfSession) && userNameOfSession.equals(name)){
-                logger.info("login hit user in session req {} uidOfSession {} userNameOfSession {}",bo, uidOfSession, userNameOfSession);
-                return true;
+            String userInfo = (String)session.getAttribute(AccountConstant.SESSION_USER_INFO_KEY);
+            if (StringUtils.isNotBlank(userInfo)){
+                resp = JSONObject.parseObject(userInfo, LoginUserResp.class);
+                logger.info("login hit user in session req {} user {} ",bo, resp);
+                return resp;
             }
         }
 
-
         if(sessionExists && pwdMatched){
-            session.setAttribute(AccountConstant.SESSION_USER_ID_KEY, uid);
-            session.setAttribute(AccountConstant.SESSION_USER_NAME_KEY, name);
+            resp = LoginUserResp.builder()
+                    .uid(uid)
+                    .brandId(account.getBrandId())
+                    .userName(name)
+                    .build();
+            String userInfo = JSONObject.toJSONString(resp);
+            session.setAttribute(AccountConstant.SESSION_USER_INFO_KEY, userInfo);
             session.setMaxInactiveInterval(3600);
             //
             HttpSession oldSession = userIdSessionCache.get(uid);
             if (Objects.nonNull(oldSession)){
+                logger.info("find old session, do invalidate {}",bo);
                 oldSession.invalidate();
             }
             userIdSessionCache.put(uid, session);
         }
-        return true;
+        return resp;
+    }
+
+    public LoginUserResp getLoginUser(Integer uid){
+        HttpSession session = userIdSessionCache.get(uid);
+        if (Objects.isNull(session)){
+            return null;
+        }
+        String userInfoStr = (String) session.getAttribute(AccountConstant.SESSION_USER_INFO_KEY);
+        logger.info("getLoginUser {} - {}",uid, userInfoStr);
+        LoginUserResp resp = JSONObject.parseObject(userInfoStr, LoginUserResp.class);
+        return resp;
+    }
+
+    public boolean isAdmin(Integer uid,String userName){
+        return Objects.nonNull(uid) && uid == 1
+                && StringUtils.isNotBlank(userName) && "admin".equals(userName);
     }
 
 

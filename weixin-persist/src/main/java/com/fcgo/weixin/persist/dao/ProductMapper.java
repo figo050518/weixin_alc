@@ -16,12 +16,20 @@ public interface ProductMapper {
 
     int updateByPrimaryKeySelective(Product record);
 
-    int updateByPrimaryKey(Product record);
+    int updateAuditStatus(Product record);
 
-    int selectCnt(Product product);
+    int updateShelveStatus(Product record);
 
-    List<Product> selectAll(@Param("condition")Product condition,
+    int selectCntByBrandId(@Param("condition")Product product);
+
+    List<Product> selectAllByBrandId(@Param("condition")Product condition,
                             @Param("offset")int offset,
                             @Param("limit")int limit);
+
+    int selectCnt(@Param("condition")Product product);
+
+    List<Product> selectAll(@Param("condition")Product condition,
+                                     @Param("offset")int offset,
+                                     @Param("limit")int limit);
 
 }
