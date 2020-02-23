@@ -29,6 +29,7 @@
 			<mvc:mapping path="/**"/>
 			<bean class="com.fcgo.weixin.intercept.CrossOriginInterceptor"/>
 		</mvc:interceptor>
+		<ref bean="securityInterceptor"/>
 	</mvc:interceptors>
 	<!-- 注解配置结束 -->
 	<mvc:resources mapping="/image/**" location="/resources/images/" />

@@ -1,0 +1,19 @@
+<?xml  version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <bean id="securityInterceptor" class="com.fcgo.weixin.intercept.SecurityInterceptor">
+        <property name="isDebugEnable" value="${is_debug_enable:false}" />
+        <property name="excludeUrls">
+            <list>
+                <value>/html</value>
+            </list>
+        </property>
+        <property name="local">
+            <list>
+                <value>172.16.224.113</value>
+                <value>127.0.0.1</value>
+            </list>
+        </property>
+    </bean>
+</beans>

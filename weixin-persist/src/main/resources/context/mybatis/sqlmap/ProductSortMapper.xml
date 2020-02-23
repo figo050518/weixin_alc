@@ -84,4 +84,12 @@
       create_time = #{createTime,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="selectCntByCondition" resultType="int">
+    select count(*) from product_sort
+  </select>
+
+  <select id="selectAllByCondtion" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/> from product_sort order by weight
+  </select>
 </mapper>

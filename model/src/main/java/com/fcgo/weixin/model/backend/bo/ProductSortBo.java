@@ -16,4 +16,8 @@ public class ProductSortBo {
 
     private Integer weight;
 
+    private Byte status;
+
+    private String createTime;
+
 }

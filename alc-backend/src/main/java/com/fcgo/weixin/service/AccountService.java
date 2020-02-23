@@ -39,6 +39,8 @@ public class AccountService {
     @Autowired
     private BrandMapper brandMapper;
 
+    private static final Map<String,HttpSession> sidSessionCache = new HashMap<>(16);
+
     private static final Map<Integer,HttpSession> userIdSessionCache = new HashMap<>(16);
 
     public int add(AccountBo bo){
@@ -184,12 +186,19 @@ public class AccountService {
             //
             HttpSession oldSession = userIdSessionCache.get(uid);
             if (Objects.nonNull(oldSession)){
-                logger.info("find old session, do invalidate {}",bo);
+                String sessionId = oldSession.getId();
+                logger.info("find old session, do invalidate {}, sessionId {}",bo, sessionId);
                 oldSession.invalidate();
+                sidSessionCache.remove(sessionId);
             }
             userIdSessionCache.put(uid, session);
+            sidSessionCache.put(session.getId(), session);
         }
         return resp;
+    }
+
+    public static boolean isLoginBySession(String sessionId){
+        return sidSessionCache.containsKey(sessionId);
     }
 
     public LoginUserResp getLoginUser(Integer uid){

@@ -2,9 +2,7 @@ package com.fcgo.weixin.controller.product;
 
 import com.fcgo.weixin.model.ApiResponse;
 import com.fcgo.weixin.model.PageResponseBO;
-import com.fcgo.weixin.model.backend.bo.BrandBo;
 import com.fcgo.weixin.model.backend.bo.ProductBo;
-import com.fcgo.weixin.model.backend.req.BrandListReq;
 import com.fcgo.weixin.model.backend.req.ProductAuditReq;
 import com.fcgo.weixin.model.backend.req.ProductCtrlShelveReq;
 import com.fcgo.weixin.model.backend.req.ProductListReq;

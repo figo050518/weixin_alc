@@ -34,37 +34,47 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/alc-backend/src/main/java/com/fcgo/weixin/service/ProductService.java">
+        <entry file="file://$PROJECT_DIR$/alc-backend/src/main/java/com/fcgo/weixin/intercept/SecurityInterceptor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4239">
-              <caret line="205" column="33" selection-start-line="205" selection-start-column="33" selection-end-line="205" selection-end-column="33" />
+            <state relative-caret-position="19">
+              <caret line="55" selection-start-line="55" selection-end-line="55" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#844#845#0" expanded="true" />
+                <element signature="e#890#891#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/model/src/main/java/com/fcgo/weixin/model/backend/req/ProductCtrlShelveReq.java">
+        <entry file="file://$PROJECT_DIR$/alc-backend/src/main/java/com/fcgo/weixin/controller/system/user/AccountController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="346">
-              <caret line="20" column="27" selection-start-line="20" selection-start-column="27" selection-end-line="20" selection-end-column="27" />
+            <state relative-caret-position="-142">
+              <caret line="35" column="33" selection-start-line="35" selection-start-column="33" selection-end-line="35" selection-end-column="33" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/alc-backend/src/main/java/com/fcgo/weixin/service/AccountService.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="211">
+              <caret line="200" column="54" selection-start-line="200" selection-start-column="54" selection-end-line="200" selection-end-column="54" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#8026#8027#0" expanded="true" />
+                <element signature="e#8063#8064#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/alc-backend/src/main/java/com/fcgo/weixin/controller/product/ProductController.java">
+        <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-beans/4.3.8.RELEASE/spring-beans-4.3.8.RELEASE.jar!/org/springframework/beans/factory/xml/spring-beans-4.0.xsd">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="57">
-              <caret line="53" column="38" selection-start-line="53" selection-start-column="38" selection-end-line="53" selection-end-column="38" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state relative-caret-position="-647">
+              <caret line="765" column="4" selection-start-line="765" selection-start-column="4" selection-end-line="765" selection-end-column="4" />
             </state>
           </provider>
         </entry>
@@ -76,6 +86,8 @@
       <list>
         <option value="Enum" />
         <option value="Class" />
+        <option value="AnnotationType" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -117,25 +129,10 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/weixin-frontend/src/main/java/com/fcgo/weixin/controller/interfaces/ImageController.java" />
-        <option value="$PROJECT_DIR$/weixin-service/src/main/java/com/fcgo/weixin/application/interfaces/IImageService.java" />
-        <option value="$PROJECT_DIR$/weixin-service/src/main/java/com/fcgo/weixin/application/impl/interfaces/QiniuImageServiceImpl.java" />
-        <option value="$PROJECT_DIR$/weixin-persist/src/main/java/com/fcgo/weixin/persist/model/User.java" />
-        <option value="$PROJECT_DIR$/model/src/main/java/com/fcgo/weixin/model/backend/bo/UserBo.java" />
-        <option value="$PROJECT_DIR$/model/src/main/java/com/fcgo/weixin/model/backend/req/UserListReq.java" />
-        <option value="$PROJECT_DIR$/alc-backend/src/main/java/com/fcgo/weixin/controller/buyer/UserManageController.java" />
-        <option value="$PROJECT_DIR$/alc-backend/src/main/java/com/fcgo/weixin/convert/UserConvert.java" />
-        <option value="$PROJECT_DIR$/weixin-persist/src/main/java/com/fcgo/weixin/persist/dao/UserMapper.java" />
-        <option value="$PROJECT_DIR$/weixin-persist/src/main/resources/context/mybatis/sqlmap/UserMapper.xml" />
-        <option value="$PROJECT_DIR$/weixin-common/src/main/java/com/fcgo/weixin/common/exception/SessionExpireException.java" />
-        <option value="$PROJECT_DIR$/weixin-common/src/main/java/com/fcgo/weixin/common/util/HttpRequestUtils.java" />
-        <option value="$PROJECT_DIR$/weixin-common/src/main/java/com/fcgo/weixin/common/controller/GlobalDefaultExceptionHandler.java" />
-        <option value="$PROJECT_DIR$/weixin-persist/src/main/java/com/fcgo/weixin/persist/dao/AccountMapper.java" />
         <option value="$PROJECT_DIR$/weixin-persist/src/main/java/com/fcgo/weixin/persist/model/Account.java" />
         <option value="$PROJECT_DIR$/weixin-persist/src/main/resources/context/mybatis/sqlmap/AccountMapper.xml" />
         <option value="$PROJECT_DIR$/model/src/main/java/com/fcgo/weixin/model/constant/DelStatus.java" />
         <option value="$PROJECT_DIR$/alc-backend/src/main/java/com/fcgo/weixin/convert/AccountConvert.java" />
-        <option value="$PROJECT_DIR$/model/src/main/java/com/fcgo/weixin/model/backend/bo/ProductSortBo.java" />
         <option value="$PROJECT_DIR$/model/src/main/java/com/fcgo/weixin/model/backend/bo/ProductBo.java" />
         <option value="$PROJECT_DIR$/alc-backend/src/main/java/com/fcgo/weixin/service/UserManageService.java" />
         <option value="$PROJECT_DIR$/model/src/main/java/com/fcgo/weixin/model/backend/req/BrandListReq.java" />
@@ -146,18 +143,15 @@
         <option value="$PROJECT_DIR$/alc-backend/src/main/resources/context/spring/spring-web-context.xml" />
         <option value="$PROJECT_DIR$/weixin-common/pom.xml" />
         <option value="$PROJECT_DIR$/weixin-web-common/pom.xml" />
-        <option value="$PROJECT_DIR$/alc-backend/src/main/resources/context/spring/spring-webmvc.xml" />
         <option value="$PROJECT_DIR$/weixin-common/src/main/java/com/fcgo/weixin/common/util/logisticsTrack/TaskRequest.java" />
         <option value="$PROJECT_DIR$/alc-backend/src/main/java/com/fcgo/weixin/controller/seller/BrandController.java" />
         <option value="$PROJECT_DIR$/model/src/main/java/com/fcgo/weixin/model/backend/resp/LoginUserResp.java" />
         <option value="$PROJECT_DIR$/model/src/main/java/com/fcgo/weixin/model/backend/constant/AccountConstant.java" />
         <option value="$PROJECT_DIR$/model/src/main/java/com/fcgo/weixin/model/backend/bo/BrandBo.java" />
-        <option value="$PROJECT_DIR$/alc-backend/src/main/java/com/fcgo/weixin/controller/system/user/AccountController.java" />
         <option value="$PROJECT_DIR$/weixin-persist/src/main/java/com/fcgo/weixin/persist/model/Brand.java" />
         <option value="$PROJECT_DIR$/alc-backend/src/main/java/com/fcgo/weixin/convert/BrandConvert.java" />
         <option value="$PROJECT_DIR$/weixin-persist/src/main/resources/context/mybatis/sqlmap/BrandMapper.xml" />
         <option value="$PROJECT_DIR$/model/src/main/java/com/fcgo/weixin/model/backend/req/ProductListReq.java" />
-        <option value="$PROJECT_DIR$/alc-backend/src/main/java/com/fcgo/weixin/service/AccountService.java" />
         <option value="$PROJECT_DIR$/weixin-persist/src/main/resources/context/mybatis/sqlmap/ProductMapper.xml" />
         <option value="$PROJECT_DIR$/weixin-persist/src/main/java/com/fcgo/weixin/persist/model/Product.java" />
         <option value="$PROJECT_DIR$/alc-backend/src/main/java/com/fcgo/weixin/convert/ProductConvert.java" />
@@ -165,9 +159,27 @@
         <option value="$PROJECT_DIR$/model/src/main/java/com/fcgo/weixin/model/constant/PrdShelfStatus.java" />
         <option value="$PROJECT_DIR$/model/src/main/java/com/fcgo/weixin/model/backend/req/ProductAuditReq.java" />
         <option value="$PROJECT_DIR$/weixin-persist/src/main/java/com/fcgo/weixin/persist/dao/ProductMapper.java" />
-        <option value="$PROJECT_DIR$/alc-backend/src/main/java/com/fcgo/weixin/controller/product/ProductController.java" />
         <option value="$PROJECT_DIR$/model/src/main/java/com/fcgo/weixin/model/backend/req/ProductCtrlShelveReq.java" />
         <option value="$PROJECT_DIR$/alc-backend/src/main/java/com/fcgo/weixin/service/ProductService.java" />
+        <option value="$PROJECT_DIR$/weixin-persist/src/main/java/com/fcgo/weixin/persist/model/ProductSort.java" />
+        <option value="$PROJECT_DIR$/alc-backend/src/main/java/com/fcgo/weixin/controller/product/ProductController.java" />
+        <option value="$PROJECT_DIR$/model/src/main/java/com/fcgo/weixin/model/backend/req/ProductSortListReq.java" />
+        <option value="$PROJECT_DIR$/weixin-persist/src/main/resources/context/mybatis/sqlmap/ProductSortMapper.xml" />
+        <option value="$PROJECT_DIR$/weixin-persist/src/main/java/com/fcgo/weixin/persist/dao/ProductSortMapper.java" />
+        <option value="$PROJECT_DIR$/model/src/main/java/com/fcgo/weixin/model/backend/bo/ProductSortBo.java" />
+        <option value="$PROJECT_DIR$/alc-backend/src/main/java/com/fcgo/weixin/convert/ProductSortConvert.java" />
+        <option value="$PROJECT_DIR$/alc-backend/src/main/java/com/fcgo/weixin/service/ProductSortService.java" />
+        <option value="$PROJECT_DIR$/alc-backend/src/main/java/com/fcgo/weixin/controller/product/ProductSortController.java" />
+        <option value="$PROJECT_DIR$/alc-backend/pom.xml" />
+        <option value="$PROJECT_DIR$/alc-backend/src/main/resources/context/properties/conf-sys.properties" />
+        <option value="$PROJECT_DIR$/alc-backend/src/main/resources/context/spring/spring-context.xml" />
+        <option value="$PROJECT_DIR$/alc-backend/src/main/java/com/fcgo/weixin/annotation/IgnoreSession.java" />
+        <option value="$PROJECT_DIR$/model/src/main/java/com/fcgo/weixin/model/constant/HeadKey.java" />
+        <option value="$PROJECT_DIR$/weixin-common/src/main/java/com/fcgo/weixin/common/util/HttpRequestUtils.java" />
+        <option value="$PROJECT_DIR$/alc-backend/src/main/java/com/fcgo/weixin/service/AccountService.java" />
+        <option value="$PROJECT_DIR$/alc-backend/src/main/resources/context/spring/spring-webmvc.xml" />
+        <option value="$PROJECT_DIR$/alc-backend/src/main/java/com/fcgo/weixin/intercept/SecurityInterceptor.java" />
+        <option value="$PROJECT_DIR$/alc-backend/src/main/java/com/fcgo/weixin/controller/system/user/AccountController.java" />
       </list>
     </option>
   </component>
@@ -222,6 +234,25 @@
           <item name="Modules" type="87271259:MavenProjectsStructure$ModulesNode" />
           <item name="fcgo微信后台系统" type="9519ce18:MavenProjectsStructure$ProjectNode" />
           <item name="Lifecycle" type="58874e2:MavenProjectsStructure$LifecycleNode" />
+        </path>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="fcgo微信总项目" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+          <item name="Modules" type="87271259:MavenProjectsStructure$ModulesNode" />
+          <item name="fcgo微信数据持久化模块" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+        </path>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="fcgo微信总项目" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+          <item name="Modules" type="87271259:MavenProjectsStructure$ModulesNode" />
+          <item name="fcgo微信数据持久化模块" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+          <item name="Lifecycle" type="58874e2:MavenProjectsStructure$LifecycleNode" />
+        </path>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="fcgo微信总项目" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+          <item name="Modules" type="87271259:MavenProjectsStructure$ModulesNode" />
+          <item name="model" type="9519ce18:MavenProjectsStructure$ProjectNode" />
         </path>
       </expand>
       <select />
@@ -280,177 +311,6 @@
             <path>
               <item name="weixin_alc" type="b2602c69:ProjectViewProjectNode" />
               <item name="weixin_alc" type="462c0819:PsiDirectoryNode" />
-              <item name="alc-backend" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="weixin" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="weixin_alc" type="b2602c69:ProjectViewProjectNode" />
-              <item name="weixin_alc" type="462c0819:PsiDirectoryNode" />
-              <item name="alc-backend" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="weixin" type="462c0819:PsiDirectoryNode" />
-              <item name="controller" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="weixin_alc" type="b2602c69:ProjectViewProjectNode" />
-              <item name="weixin_alc" type="462c0819:PsiDirectoryNode" />
-              <item name="alc-backend" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="weixin" type="462c0819:PsiDirectoryNode" />
-              <item name="controller" type="462c0819:PsiDirectoryNode" />
-              <item name="product" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="weixin_alc" type="b2602c69:ProjectViewProjectNode" />
-              <item name="weixin_alc" type="462c0819:PsiDirectoryNode" />
-              <item name="alc-backend" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="weixin" type="462c0819:PsiDirectoryNode" />
-              <item name="controller" type="462c0819:PsiDirectoryNode" />
-              <item name="seller" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="weixin_alc" type="b2602c69:ProjectViewProjectNode" />
-              <item name="weixin_alc" type="462c0819:PsiDirectoryNode" />
-              <item name="alc-backend" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="weixin" type="462c0819:PsiDirectoryNode" />
-              <item name="controller" type="462c0819:PsiDirectoryNode" />
-              <item name="user" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="weixin_alc" type="b2602c69:ProjectViewProjectNode" />
-              <item name="weixin_alc" type="462c0819:PsiDirectoryNode" />
-              <item name="alc-backend" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="weixin" type="462c0819:PsiDirectoryNode" />
-              <item name="convert" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="weixin_alc" type="b2602c69:ProjectViewProjectNode" />
-              <item name="weixin_alc" type="462c0819:PsiDirectoryNode" />
-              <item name="alc-backend" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="weixin" type="462c0819:PsiDirectoryNode" />
-              <item name="service" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="weixin_alc" type="b2602c69:ProjectViewProjectNode" />
-              <item name="weixin_alc" type="462c0819:PsiDirectoryNode" />
-              <item name="model" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="weixin_alc" type="b2602c69:ProjectViewProjectNode" />
-              <item name="weixin_alc" type="462c0819:PsiDirectoryNode" />
-              <item name="model" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="weixin_alc" type="b2602c69:ProjectViewProjectNode" />
-              <item name="weixin_alc" type="462c0819:PsiDirectoryNode" />
-              <item name="model" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="weixin_alc" type="b2602c69:ProjectViewProjectNode" />
-              <item name="weixin_alc" type="462c0819:PsiDirectoryNode" />
-              <item name="model" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="weixin_alc" type="b2602c69:ProjectViewProjectNode" />
-              <item name="weixin_alc" type="462c0819:PsiDirectoryNode" />
-              <item name="model" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="model" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="weixin_alc" type="b2602c69:ProjectViewProjectNode" />
-              <item name="weixin_alc" type="462c0819:PsiDirectoryNode" />
-              <item name="model" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="model" type="462c0819:PsiDirectoryNode" />
-              <item name="backend" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="weixin_alc" type="b2602c69:ProjectViewProjectNode" />
-              <item name="weixin_alc" type="462c0819:PsiDirectoryNode" />
-              <item name="model" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="model" type="462c0819:PsiDirectoryNode" />
-              <item name="backend" type="462c0819:PsiDirectoryNode" />
-              <item name="bo" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="weixin_alc" type="b2602c69:ProjectViewProjectNode" />
-              <item name="weixin_alc" type="462c0819:PsiDirectoryNode" />
-              <item name="model" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="model" type="462c0819:PsiDirectoryNode" />
-              <item name="backend" type="462c0819:PsiDirectoryNode" />
-              <item name="constant" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="weixin_alc" type="b2602c69:ProjectViewProjectNode" />
-              <item name="weixin_alc" type="462c0819:PsiDirectoryNode" />
-              <item name="model" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="model" type="462c0819:PsiDirectoryNode" />
-              <item name="backend" type="462c0819:PsiDirectoryNode" />
-              <item name="req" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="weixin_alc" type="b2602c69:ProjectViewProjectNode" />
-              <item name="weixin_alc" type="462c0819:PsiDirectoryNode" />
-              <item name="model" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="model" type="462c0819:PsiDirectoryNode" />
-              <item name="backend" type="462c0819:PsiDirectoryNode" />
-              <item name="resp" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="weixin_alc" type="b2602c69:ProjectViewProjectNode" />
-              <item name="weixin_alc" type="462c0819:PsiDirectoryNode" />
-              <item name="model" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="model" type="462c0819:PsiDirectoryNode" />
-              <item name="constant" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="weixin_alc" type="b2602c69:ProjectViewProjectNode" />
-              <item name="weixin_alc" type="462c0819:PsiDirectoryNode" />
               <item name="weixin-common" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -485,25 +345,20 @@
             </path>
             <path>
               <item name="weixin_alc" type="b2602c69:ProjectViewProjectNode" />
-              <item name="weixin_alc" type="462c0819:PsiDirectoryNode" />
-              <item name="weixin-web-common" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="weixin_alc" type="b2602c69:ProjectViewProjectNode" />
               <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
       <pane id="Scope" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1582390364455" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1582453916752" />
     <property name="last_opened_file_path" value="D:/dev/mybatis-generator-core/pom.xml" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -731,6 +586,7 @@
       <workItem from="1582253317544" duration="29913000" />
       <workItem from="1582338962153" duration="26917000" />
       <workItem from="1582373278952" duration="16779000" />
+      <workItem from="1582431219092" duration="14091000" />
     </task>
     <servers />
   </component>
@@ -740,13 +596,13 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="112250000" />
+    <option name="totallyTimeSpent" value="126341000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.6834382" visible="true" weight="0.2685325" />
-      <window_info id="Structure" order="1" sideWeight="0.31656185" side_tool="true" weight="0.48562783" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.73260075" visible="true" weight="0.25037822" />
+      <window_info id="Structure" order="1" sideWeight="0.26739928" side_tool="true" visible="true" weight="0.25037822" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
       <window_info id="UI Designer" order="4" />
@@ -755,8 +611,8 @@
       <window_info id="Web" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32840723" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49924356" weight="0.09031199" />
-      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49924356" weight="0.5073892" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49924356" weight="0.111658454" />
+      <window_info active="true" anchor="bottom" id="Debug" order="3" sideWeight="0.49924356" visible="true" weight="0.55172414" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -765,7 +621,7 @@
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.50075644" side_tool="true" weight="0.39901477" />
       <window_info anchor="bottom" id="Java Enterprise" order="10" />
       <window_info anchor="bottom" id="Database Changes" order="11" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="12" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="12" weight="0.23316912" />
       <window_info anchor="bottom" id="Application Servers" order="13" weight="0.32840723" />
       <window_info anchor="bottom" id="Messages" order="14" sideWeight="0.49848714" weight="0.16748768" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -773,48 +629,24 @@
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.28366113" />
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="right" id="Capture Analysis" order="4" />
-      <window_info anchor="right" id="Maven Projects" order="5" weight="0.14447807" />
+      <window_info anchor="right" id="Maven Projects" order="5" visible="true" weight="0.04614221" />
       <window_info anchor="right" id="Database" order="6" />
       <window_info anchor="right" id="Palette&#9;" order="7" />
       <window_info anchor="right" id="Theme Preview" order="8" />
     </layout>
-    <layout-to-restore>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.6834382" visible="true" weight="0.24583964" />
-      <window_info id="Structure" order="1" sideWeight="0.31656185" side_tool="true" weight="0.48562783" />
-      <window_info id="Designer" order="2" />
-      <window_info id="Image Layers" order="3" />
-      <window_info id="UI Designer" order="4" />
-      <window_info id="Favorites" order="5" side_tool="true" />
-      <window_info id="Capture Tool" order="6" />
-      <window_info id="Web" order="7" side_tool="true" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.32840723" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49924356" visible="true" weight="0.09031199" />
-      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.49924356" weight="0.31527093" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Spring" order="7" />
-      <window_info anchor="bottom" id="Terminal" order="8" weight="0.36288998" />
-      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.50075644" side_tool="true" weight="0.39901477" />
-      <window_info anchor="bottom" id="Java Enterprise" order="10" />
-      <window_info anchor="bottom" id="Database Changes" order="11" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="12" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Application Servers" order="13" weight="0.32840723" />
-      <window_info anchor="bottom" id="Messages" order="14" sideWeight="0.49848714" weight="0.16748768" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" show_stripe_button="false" weight="0.24962178" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.28366113" />
-      <window_info anchor="right" id="Palette" order="3" />
-      <window_info anchor="right" id="Capture Analysis" order="4" />
-      <window_info anchor="right" id="Maven Projects" order="5" visible="true" weight="0.14447807" />
-      <window_info anchor="right" id="Database" order="6" />
-      <window_info anchor="right" id="Palette&#9;" order="7" />
-      <window_info anchor="right" id="Theme Preview" order="8" />
-    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ORDER">
+      <list>
+        <option value="0" />
+        <option value="2" />
+        <option value="3" />
+        <option value="1" />
+      </list>
+    </option>
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
@@ -834,6 +666,18 @@
           <properties />
           <option name="timeStamp" value="6" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/alc-backend/src/main/java/com/fcgo/weixin/intercept/SecurityInterceptor.java</url>
+          <line>55</line>
+          <properties />
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/alc-backend/src/main/java/com/fcgo/weixin/intercept/SecurityInterceptor.java</url>
+          <line>156</line>
+          <properties />
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
@@ -842,154 +686,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/weixin-common/src/main/java/com/fcgo/weixin/common/util/ApplicationContextHolder.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="24">
-          <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-web/4.3.8.RELEASE/spring-web-4.3.8.RELEASE.jar!/org/springframework/http/converter/AbstractHttpMessageConverter.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="27">
-          <caret line="68" selection-start-line="68" selection-end-line="68" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-webmvc/4.3.8.RELEASE/spring-webmvc-4.3.8.RELEASE.jar!/org/springframework/web/servlet/config/spring-mvc-4.0.xsd">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="36">
-          <caret line="110" column="24" selection-start-line="110" selection-start-column="24" selection-end-line="110" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/alc-backend/src/main/resources/context/properties/jdbc.properties">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-web/4.3.8.RELEASE/spring-web-4.3.8.RELEASE.jar!/org/springframework/http/converter/AbstractGenericHttpMessageConverter.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="108">
-          <caret line="16" column="22" selection-start-line="16" selection-start-column="22" selection-end-line="16" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/com/alibaba/fastjson/1.2.29/fastjson-1.2.29.jar!/com/alibaba/fastjson/support/spring/FastJsonHttpMessageConverter4.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="172">
-          <caret line="29" column="38" selection-start-line="29" selection-start-column="38" selection-end-line="29" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-web/4.3.8.RELEASE/spring-web-4.3.8.RELEASE.jar!/org/springframework/web/util/IntrospectorCleanupListener.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-131">
-          <caret line="12" column="13" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/weixin-web-common/src/main/java/com/fcgo/weixin/web/conf/SystemConfigListener.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="502">
-          <caret line="35" column="17" selection-start-line="35" selection-start-column="17" selection-end-line="35" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/com/alibaba/fastjson/1.2.29/fastjson-1.2.29.jar!/com/alibaba/fastjson/support/config/FastJsonConfig.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="17" column="13" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/weixin-common/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="117">
-          <caret line="121" selection-start-line="121" selection-end-line="121" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/weixin-web-common/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="5" column="46" lean-forward="true" selection-start-line="5" selection-start-column="46" selection-end-line="5" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/weixin-common/src/main/java/com/fcgo/weixin/common/util/logisticsTrack/Result.java" />
-    <entry file="file://$PROJECT_DIR$/weixin-common/src/main/java/com/fcgo/weixin/common/util/logisticsTrack/NoticeRequest.java" />
-    <entry file="file://$PROJECT_DIR$/alc-backend/src/main/resources/context/spring/spring-webmvc.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="378">
-          <caret line="14" lean-forward="true" selection-start-line="14" selection-end-line="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/weixin-common/src/main/java/com/fcgo/weixin/common/util/logisticsTrack/TaskRequest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-76">
-          <caret line="80" lean-forward="true" selection-start-line="80" selection-end-line="80" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="312">
-          <caret line="252" column="12" selection-start-line="252" selection-start-column="12" selection-end-line="252" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-webmvc/4.3.8.RELEASE/spring-webmvc-4.3.8.RELEASE.jar!/org/springframework/web/servlet/config/annotation/WebMvcConfigurationSupport.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2808">
-          <caret line="110" column="51" selection-start-line="110" selection-start-column="37" selection-end-line="110" selection-end-column="51" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-web/4.3.8.RELEASE/spring-web-4.3.8.RELEASE.jar!/org/springframework/http/converter/HttpMessageConverter.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="27">
-          <caret line="4" selection-start-line="4" selection-end-line="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/alc-backend/src/main/resources/context/spring/spring-web-context.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1107">
-          <caret line="41" column="11" selection-start-line="41" selection-start-column="11" selection-end-line="41" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/alc-backend/src/main/webapp/WEB-INF/web.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="6" column="22" selection-start-line="6" selection-start-column="16" selection-end-line="6" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/model/src/main/java/com/fcgo/weixin/model/backend/req/AccountListReq.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/model/src/main/java/com/fcgo/weixin/model/backend/req/BrandListReq.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="7" selection-start-line="7" selection-end-line="7" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/model/src/main/java/com/fcgo/weixin/model/backend/bo/AccountBo.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="108">
-          <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="9" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/model/src/main/java/com/fcgo/weixin/model/backend/resp/LoginUserResp.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="127">
@@ -1038,13 +734,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/alc-backend/src/main/java/com/fcgo/weixin/controller/system/user/AccountController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="34" column="28" lean-forward="true" selection-start-line="34" selection-start-column="28" selection-end-line="34" selection-end-column="28" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/alc-backend/src/main/java/com/fcgo/weixin/controller/seller/BrandController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="189">
@@ -1076,33 +765,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/alc-backend/src/main/java/com/fcgo/weixin/service/AccountService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="205" column="26" selection-start-line="205" selection-start-column="19" selection-end-line="205" selection-end-column="26" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/alc-backend/src/main/java/com/fcgo/weixin/convert/AccountConvert.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-216">
-          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/alc-backend/src/main/java/com/fcgo/weixin/convert/BrandConvert.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="297">
-          <caret line="41" column="96" lean-forward="true" selection-start-line="41" selection-start-column="8" selection-end-line="41" selection-end-column="96" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/model/src/main/java/com/fcgo/weixin/model/backend/bo/ProductBo.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-197">
@@ -1114,10 +776,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="329">
           <caret line="26" column="5" lean-forward="true" selection-start-line="19" selection-start-column="4" selection-end-line="26" selection-end-column="5" />
-          <folding>
-            <element signature="e#601#602#0" expanded="true" />
-            <element signature="e#634#635#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1132,17 +790,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="451">
           <caret line="25" column="32" selection-start-line="25" selection-start-column="32" selection-end-line="25" selection-end-column="32" />
-          <folding>
-            <element signature="e#470#471#0" expanded="true" />
-            <element signature="e#508#509#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/weixin-persist/src/main/java/com/fcgo/weixin/persist/model/Product.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="154">
-          <caret line="30" column="26" selection-start-line="30" selection-start-column="20" selection-end-line="30" selection-end-column="26" />
         </state>
       </provider>
     </entry>
@@ -1150,23 +797,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="137">
           <caret line="174" column="64" lean-forward="true" selection-start-line="174" selection-start-column="64" selection-end-line="174" selection-end-column="64" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/weixin-persist/src/main/java/com/fcgo/weixin/persist/dao/ProductMapper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="97">
-          <caret line="22" column="46" selection-start-line="22" selection-start-column="46" selection-end-line="22" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/alc-backend/src/main/java/com/fcgo/weixin/convert/ProductConvert.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="40">
-          <caret line="17" selection-start-line="17" selection-end-line="17" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1181,9 +811,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="84">
           <caret line="10" column="27" selection-start-line="10" selection-start-column="19" selection-end-line="10" selection-end-column="27" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1197,10 +824,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/alc-backend/src/main/java/com/fcgo/weixin/controller/product/ProductController.java">
+    <entry file="file://$PROJECT_DIR$/alc-backend/src/main/java/com/fcgo/weixin/service/ProductService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="57">
-          <caret line="53" column="38" selection-start-line="53" selection-start-column="38" selection-end-line="53" selection-end-column="38" />
+        <state relative-caret-position="540">
+          <caret line="44" column="48" lean-forward="true" selection-start-line="44" selection-start-column="48" selection-end-line="44" selection-end-column="48" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1217,12 +844,252 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/alc-backend/src/main/java/com/fcgo/weixin/service/ProductService.java">
+    <entry file="file://$PROJECT_DIR$/weixin-persist/src/main/java/com/fcgo/weixin/persist/model/Product.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4239">
-          <caret line="205" column="33" selection-start-line="205" selection-start-column="33" selection-end-line="205" selection-end-column="33" />
+        <state relative-caret-position="108">
+          <caret line="7" selection-start-line="7" selection-end-line="10" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/alc-backend/src/main/java/com/fcgo/weixin/controller/product/ProductController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="30" column="5" lean-forward="true" selection-start-line="24" selection-start-column="4" selection-end-line="30" selection-end-column="5" />
           <folding>
             <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/model/src/main/java/com/fcgo/weixin/model/backend/req/ProductSortListReq.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="6" column="31" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="31" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/weixin-persist/src/main/java/com/fcgo/weixin/persist/dao/ProductMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="205">
+          <caret line="26" column="52" selection-start-line="25" selection-start-column="27" selection-end-line="26" selection-end-column="52" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/weixin-persist/src/main/resources/context/mybatis/sqlmap/ProductSortMapper.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="274">
+          <caret line="91" column="2" selection-start-line="91" selection-start-column="2" selection-end-line="91" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/weixin-persist/src/main/java/com/fcgo/weixin/persist/dao/ProductSortMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="316">
+          <caret line="22" column="22" selection-start-line="22" selection-start-column="22" selection-end-line="22" selection-end-column="22" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/alc-backend/src/main/java/com/fcgo/weixin/convert/AccountConvert.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="27">
+          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/alc-backend/src/main/java/com/fcgo/weixin/convert/BrandConvert.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="297">
+          <caret line="41" column="96" lean-forward="true" selection-start-line="41" selection-start-column="8" selection-end-line="41" selection-end-column="96" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/weixin-persist/src/main/java/com/fcgo/weixin/persist/model/ProductSort.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="20" column="31" lean-forward="true" selection-start-line="12" selection-start-column="4" selection-end-line="20" selection-end-column="31" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/model/src/main/java/com/fcgo/weixin/model/backend/bo/ProductSortBo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="448">
+          <caret line="20" column="29" selection-start-line="20" selection-start-column="19" selection-end-line="20" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/alc-backend/src/main/java/com/fcgo/weixin/convert/ProductConvert.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="317">
+          <caret line="29" column="43" selection-start-line="28" selection-start-column="8" selection-end-line="29" selection-end-column="43" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/alc-backend/src/main/java/com/fcgo/weixin/convert/ProductSortConvert.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="397">
+          <caret line="29" column="63" selection-start-line="29" selection-start-column="63" selection-end-line="29" selection-end-column="63" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="51">
+          <caret line="247" column="8" selection-start-line="247" selection-start-column="8" selection-end-line="247" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="maven-properties://Environment.properties">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/alc-backend/src/main/java/com/fcgo/weixin/controller/product/ProductSortController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="139">
+          <caret line="42" column="30" selection-start-line="42" selection-start-column="30" selection-end-line="42" selection-end-column="30" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/alc-backend/src/main/java/com/fcgo/weixin/service/ProductSortService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1458">
+          <caret line="54" column="41" selection-start-line="54" selection-start-column="41" selection-end-line="54" selection-end-column="41" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/alc-backend/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="326">
+          <caret line="100" column="8" selection-start-line="100" selection-start-column="8" selection-end-line="100" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/alc-backend/src/main/java/com/fcgo/weixin/intercept/CrossOriginInterceptor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="108">
+          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/alc-backend/src/main/resources/context/properties/conf-sys.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="27">
+          <caret line="1" selection-start-line="1" selection-end-line="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/weixin-common/src/main/java/com/fcgo/weixin/common/controller/GlobalDefaultExceptionHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="55">
+          <caret line="34" column="76" selection-start-line="34" selection-start-column="43" selection-end-line="34" selection-end-column="76" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/alc-backend/src/main/java/com/fcgo/weixin/annotation/IgnoreSession.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="108">
+          <caret line="4" column="27" lean-forward="true" selection-start-line="4" selection-start-column="27" selection-end-line="4" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/weixin-common/src/main/java/com/fcgo/weixin/common/util/HttpRequestUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="86">
+          <caret line="28" column="60" selection-start-line="28" selection-start-column="38" selection-end-line="28" selection-end-column="60" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/javax/servlet/servlet-api/2.5/servlet-api-2.5.jar!/javax/servlet/http/HttpSession.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="10" column="17" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-beans/4.3.8.RELEASE/spring-beans-4.3.8.RELEASE.jar!/org/springframework/beans/factory/xml/spring-beans-4.0.xsd">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-647">
+          <caret line="765" column="4" selection-start-line="765" selection-start-column="4" selection-end-line="765" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/alc-backend/src/main/resources/context/spring/spring-webmvc.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="189">
+          <caret line="31" column="29" selection-start-line="31" selection-start-column="29" selection-end-line="31" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/alc-backend/src/main/resources/context/spring/spring-context.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="101">
+          <caret line="4" column="73" selection-start-line="4" selection-start-column="73" selection-end-line="4" selection-end-column="73" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-webmvc/4.3.8.RELEASE/spring-webmvc-4.3.8.RELEASE.jar!/org/springframework/web/servlet/DispatcherServlet.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="32">
+          <caret line="458" selection-start-line="458" selection-end-line="458" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/weixin-common/src/main/java/com/fcgo/weixin/common/constants/HeadKey.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="54">
+          <caret line="2" column="17" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/alc-backend/src/main/java/com/fcgo/weixin/service/AccountService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="211">
+          <caret line="200" column="54" selection-start-line="200" selection-start-column="54" selection-end-line="200" selection-end-column="54" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#8026#8027#0" expanded="true" />
+            <element signature="e#8063#8064#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/alc-backend/src/main/java/com/fcgo/weixin/controller/system/user/AccountController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-142">
+          <caret line="35" column="33" selection-start-line="35" selection-start-column="33" selection-end-line="35" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/alc-backend/src/main/java/com/fcgo/weixin/intercept/SecurityInterceptor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="19">
+          <caret line="55" selection-start-line="55" selection-end-line="55" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#844#845#0" expanded="true" />
+            <element signature="e#890#891#0" expanded="true" />
           </folding>
         </state>
       </provider>

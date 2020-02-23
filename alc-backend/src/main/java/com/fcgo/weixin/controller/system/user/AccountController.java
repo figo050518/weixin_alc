@@ -1,5 +1,6 @@
 package com.fcgo.weixin.controller.system.user;
 
+import com.fcgo.weixin.annotation.IgnoreSession;
 import com.fcgo.weixin.common.exception.ServiceException;
 import com.fcgo.weixin.model.ApiResponse;
 import com.fcgo.weixin.model.PageResponseBO;
@@ -26,12 +27,13 @@ public class AccountController {
     @Autowired
     private AccountService accountService;
     @RequestMapping(value="/login",method= RequestMethod.GET)
+    @IgnoreSession
     public ApiResponse login(HttpServletRequest request,
                              String name, String pwd){
         AccountBo bo = AccountBo.builder().name(name).pwd(pwd).build();
         logger.info("in account/login req {}", bo);
         HttpSession session = request.getSession();
-        LoginUserResp resp;
+        LoginUserResp resp = null;
         String msg = "登录失败";
         int code = 401;
         try {
@@ -52,7 +54,7 @@ public class AccountController {
         }
         return new ApiResponse.ApiResponseBuilder()
                 .code(code)
-                .data(session.getId())
+                .data(resp)
                 .message(msg)
                 .build();
     }
