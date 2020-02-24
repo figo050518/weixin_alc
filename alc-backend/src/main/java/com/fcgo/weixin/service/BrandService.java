@@ -15,8 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -78,5 +77,14 @@ public class BrandService {
         Brand condition = BrandConvert.bo2Do4Update(bo);
         int rows = brandMapper.updateByPrimaryKeySelective(condition);
         return rows;
+    }
+
+    public Map<Integer,Brand> getIdBrandMap(Set<Integer> brandIdSet){
+        final Map<Integer,Brand> idBrandMap = new HashMap<>(brandIdSet.size());
+        if (CollectionUtils.isNotEmpty(brandIdSet)) {
+            List<Brand> brandList = brandMapper.selectByIds(brandIdSet);
+            brandList.forEach(brand -> idBrandMap.put(brand.getId(), brand));
+        }
+        return idBrandMap;
     }
 }

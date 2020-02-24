@@ -1,7 +1,11 @@
 package com.fcgo.weixin.common.exception;
 
+import lombok.Getter;
+
 public class SessionExpireException extends  Exception {
+    @Getter
     private int code;
+    @Getter
     private String desc;
 
     public SessionExpireException() {

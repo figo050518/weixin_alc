@@ -11,6 +11,7 @@ import com.fcgo.weixin.model.backend.req.ProductListReq;
 import com.fcgo.weixin.model.constant.PrdAuditStatus;
 import com.fcgo.weixin.model.constant.PrdShelfStatus;
 import com.fcgo.weixin.persist.dao.ProductMapper;
+import com.fcgo.weixin.persist.model.Brand;
 import com.fcgo.weixin.persist.model.Product;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.StringUtils;
@@ -20,7 +21,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
@@ -34,8 +37,10 @@ public class ProductService {
     @Autowired
     private AccountService accountService;
 
-    public PageResponseBO<ProductBo> getList(ProductListReq req){
+    @Autowired
+    private BrandService brandService;
 
+    public PageResponseBO<ProductBo> getList(ProductListReq req){
         int page = req.getPage();
         int pageSize = req.getSize();
         PageResponseBO.PageResponseBOBuilder<ProductBo> pageBuilder =  PageResponseBO.builder();
@@ -76,12 +81,18 @@ public class ProductService {
         }
 
         List<Product> dolist = prdListSupplier.get();
-
-        List<ProductBo> bos = dolist.stream().map(ProductConvert::do2Bo).collect(Collectors.toList());
+        Set<Integer> brandIds = dolist.stream().map(Product::getBrandId).collect(Collectors.toSet());
+        Map<Integer, Brand> brandMap = brandService.getIdBrandMap(brandIds);
+        List<ProductBo> bos = dolist.stream().map(product->{
+            Brand brand = brandMap.get(product.getBrandId());
+            return ProductConvert.do2Bo(product, brand);
+        }).collect(Collectors.toList());
         int totalPage = PageHelper.getPageTotal(total, pageSize);
         pageBuilder.totalPage(totalPage).total(total).list(bos);
         return pageBuilder.build();
     }
+
+
 
 
     public int add(ProductBo req){

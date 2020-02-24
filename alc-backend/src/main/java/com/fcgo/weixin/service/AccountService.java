@@ -37,7 +37,7 @@ public class AccountService {
     private AccountMapper accountMapper;
 
     @Autowired
-    private BrandMapper brandMapper;
+    private BrandService brandService;
 
     private static final Map<String,HttpSession> sidSessionCache = new HashMap<>(16);
 
@@ -108,8 +108,7 @@ public class AccountService {
         Set<Integer> brandIdSet = list.stream().map(Account::getBrandId).collect(Collectors.toSet());
         final Map<Integer,Brand> idBrandMap = new HashMap<>(list.size());
         if (CollectionUtils.isNotEmpty(brandIdSet)) {
-            List<Brand> brandList = brandMapper.selectByIds(brandIdSet);
-            brandList.forEach(brand -> idBrandMap.put(brand.getId(), brand));
+            idBrandMap.putAll(brandService.getIdBrandMap(brandIdSet));
         }
         List<AccountBo> boList = list.stream().map(account -> {
             Brand brand = idBrandMap.get(account.getBrandId());
@@ -195,6 +194,46 @@ public class AccountService {
             sidSessionCache.put(session.getId(), session);
         }
         return resp;
+    }
+
+    public boolean logout(HttpSession session, AccountBo bo){
+        String name = bo.getName();
+        if (StringUtils.isBlank(name)){
+            throw new ServiceException(401,"用户名不能为空");
+        }
+        name = name.trim();
+        //get from DB
+        Account account = accountMapper.selectByName(name);
+        if (Objects.isNull(account)){
+            logger.warn("login user not exist {}", bo);
+            throw new ServiceException(401,"用户名错误");
+        }
+        //check status
+        boolean illegal = account.getStatus().equals(AccountStatus.USELESS.getCode());
+        if (illegal){
+            throw new ServiceException(401, "用户失效");
+        }
+
+        final Integer uid = account.getId();
+        LoginUserResp resp = null;
+        //hit in session
+        boolean sessionExists = Objects.nonNull(session);
+
+
+        if(sessionExists){
+            //
+            HttpSession oldSession = userIdSessionCache.get(uid);
+            if (Objects.nonNull(oldSession)){
+                String sessionId = oldSession.getId();
+                logger.info("log out,find old session, do invalidate {}, sessionId {}",bo, sessionId);
+                oldSession.invalidate();
+            }
+            session.invalidate();
+            userIdSessionCache.remove(uid);
+            sidSessionCache.remove(session.getId());
+            return true;
+        }
+        return false;
     }
 
     public static boolean isLoginBySession(String sessionId){

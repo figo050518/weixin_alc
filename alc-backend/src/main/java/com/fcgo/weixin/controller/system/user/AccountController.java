@@ -26,12 +26,12 @@ public class AccountController {
 
     @Autowired
     private AccountService accountService;
-    @RequestMapping(value="/login",method= RequestMethod.GET)
+
+    @RequestMapping(value="/login",method= RequestMethod.POST)
     @IgnoreSession
     public ApiResponse login(HttpServletRequest request,
-                             String name, String pwd){
-        AccountBo bo = AccountBo.builder().name(name).pwd(pwd).build();
-        logger.info("in account/login req {}", bo);
+                             @RequestBody AccountBo bo){
+        logger.info("in account login req {}", bo);
         HttpSession session = request.getSession();
         LoginUserResp resp = null;
         String msg = "登录失败";
@@ -55,6 +55,36 @@ public class AccountController {
         return new ApiResponse.ApiResponseBuilder()
                 .code(code)
                 .data(resp)
+                .message(msg)
+                .build();
+    }
+
+    @RequestMapping(value="/logout",method= RequestMethod.POST)
+    public ApiResponse logout(HttpServletRequest request,
+                             @RequestBody AccountBo bo){
+        logger.info("in account logout req {}", bo);
+        HttpSession session = request.getSession();
+        boolean result = false;
+        String msg = "退出失败";
+        int code = 401;
+        try {
+            result = accountService.logout(session, bo);
+            if (result){
+                code = 200;
+                msg = "退出成功";
+            }
+        }catch (Exception ex){
+            if (ex instanceof ServiceException){
+                code = ((ServiceException) ex).getCode();
+                msg = ((ServiceException) ex).getErrorMessage();
+            }else{
+                msg = "未知异常，请联系管理员";
+                logger.warn("logout occur unknown error,req {}", bo,ex);
+            }
+        }
+        return new ApiResponse.ApiResponseBuilder()
+                .code(code)
+                .data(result)
                 .message(msg)
                 .build();
     }

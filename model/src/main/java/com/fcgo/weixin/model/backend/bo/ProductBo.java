@@ -31,6 +31,8 @@ public class ProductBo {
 
     private Integer brandId;
 
+    private String brandName;
+
     private Integer status;
 
     private Integer verifyStatus;

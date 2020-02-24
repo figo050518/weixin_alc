@@ -119,7 +119,7 @@ public class ApiResponse {
             if (this.apiResponse.code <= 0) {
                 this.apiResponse.code = DEFAULT_CODE;
             }
-            if (Objects.nonNull(apiResponse.message)) {
+            if (Objects.isNull(apiResponse.message)) {
                 this.apiResponse.message = DEFAULT_MSG;
             }
 

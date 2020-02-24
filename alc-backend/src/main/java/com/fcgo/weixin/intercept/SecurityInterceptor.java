@@ -53,6 +53,12 @@ public class SecurityInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest,
                              HttpServletResponse httpServletResponse, Object o) throws Exception {
+        String method = httpServletRequest.getMethod();
+        if(method.equalsIgnoreCase("OPTIONS")){
+            logger.info("in CrossOriginInterceptor.preHandle do {} url {}",method, httpServletRequest.getRequestURL());
+            httpServletResponse.setStatus(HttpServletResponse.SC_OK);
+            return true;
+        }
         Map<String, Object> params = HttpRequestUtils.getRequestParams(httpServletRequest);
 
         //(1)不需要校验SESSION的场景.

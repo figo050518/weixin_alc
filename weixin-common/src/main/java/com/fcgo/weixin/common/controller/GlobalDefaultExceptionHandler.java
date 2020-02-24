@@ -38,8 +38,9 @@ public class GlobalDefaultExceptionHandler {
         //用户未登录,或登录 会话超时
         if (e instanceof SessionExpireException) {
             log.info("session expire at url:{}, params:{}", url, params);
-            response.setStatus(401);
-            return new ModelAndView();
+            SessionExpireException ex = (SessionExpireException)e;
+            response.setStatus(ex.getCode());
+            return getErrorJsonView(ex.getCode(), ex.getDesc());
         }
 
         //如果是请求URL匹配不了，则返回400

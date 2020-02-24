@@ -4,16 +4,18 @@ import com.fcgo.weixin.common.util.DateUtil;
 import com.fcgo.weixin.model.backend.bo.ProductBo;
 import com.fcgo.weixin.model.constant.PrdAuditStatus;
 import com.fcgo.weixin.model.constant.PrdShelfStatus;
+import com.fcgo.weixin.persist.model.Brand;
 import com.fcgo.weixin.persist.model.Product;
 import org.springframework.beans.BeanUtils;
 
 public class ProductConvert {
 
-    public static ProductBo do2Bo(Product product){
+    public static ProductBo do2Bo(Product product, Brand brand){
 
         ProductBo bo = ProductBo.builder().build();
         String[] ignoreProps = {"productSortId","createTime","updateTime"};
         BeanUtils.copyProperties(product, bo, ignoreProps);
+        bo.setBrandName(brand.getName());
         bo.setProductSortId(product.getProductSort());
         bo.setCreateTime(DateUtil.getDateStrFromUnixTime(product.getCreateTime(), DateUtil.Format_yyyy_MM_dd_HH_mm_ss));
         bo.setUpdateTime(DateUtil.getDateStrFromUnixTime(product.getUpdateTime(), DateUtil.Format_yyyy_MM_dd_HH_mm_ss));
