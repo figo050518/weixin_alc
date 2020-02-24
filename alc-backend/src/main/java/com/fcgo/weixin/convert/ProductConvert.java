@@ -6,15 +6,17 @@ import com.fcgo.weixin.model.constant.PrdAuditStatus;
 import com.fcgo.weixin.model.constant.PrdShelfStatus;
 import com.fcgo.weixin.persist.model.Brand;
 import com.fcgo.weixin.persist.model.Product;
+import com.fcgo.weixin.persist.model.ProductSort;
 import org.springframework.beans.BeanUtils;
 
 public class ProductConvert {
 
-    public static ProductBo do2Bo(Product product, Brand brand){
+    public static ProductBo do2Bo(Product product, Brand brand, ProductSort productSort){
 
         ProductBo bo = ProductBo.builder().build();
         String[] ignoreProps = {"productSortId","createTime","updateTime"};
         BeanUtils.copyProperties(product, bo, ignoreProps);
+        bo.setProductSortName(productSort.getName());
         bo.setBrandName(brand.getName());
         bo.setProductSortId(product.getProductSort());
         bo.setCreateTime(DateUtil.getDateStrFromUnixTime(product.getCreateTime(), DateUtil.Format_yyyy_MM_dd_HH_mm_ss));

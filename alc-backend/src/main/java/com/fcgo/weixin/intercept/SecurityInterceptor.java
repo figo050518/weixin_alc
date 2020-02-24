@@ -1,7 +1,7 @@
 package com.fcgo.weixin.intercept;
 
 
-import com.fcgo.weixin.annotation.IgnoreSession;
+import com.fcgo.weixin.common.annotation.IgnoreSession;
 import com.fcgo.weixin.common.constants.HeadKey;
 import com.fcgo.weixin.common.exception.SessionExpireException;
 import com.fcgo.weixin.common.util.HttpRequestUtils;

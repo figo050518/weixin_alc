@@ -19,6 +19,8 @@ public class ProductBo {
 
     private Integer productSortId;
 
+    private String productSortName;
+
     private ProductSortBo productSortBo;
 
     private String desc;

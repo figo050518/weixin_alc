@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/productSort")
 public class ProductSortController {
@@ -25,6 +27,13 @@ public class ProductSortController {
     public ApiResponse getList(@RequestBody ProductSortListReq req){
         logger.info("/productSort/getList req {}", req);
         PageResponseBO<ProductSortBo> pageResponseBO = productSortService.getList(req);
+        return new ApiResponse.ApiResponseBuilder().code(200).message("successful")
+                .data(pageResponseBO).build();
+    }
+
+    @RequestMapping("/getAll")
+    public ApiResponse getAll(){
+        List<ProductSortBo> pageResponseBO = productSortService.getAll();
         return new ApiResponse.ApiResponseBuilder().code(200).message("successful")
                 .data(pageResponseBO).build();
     }

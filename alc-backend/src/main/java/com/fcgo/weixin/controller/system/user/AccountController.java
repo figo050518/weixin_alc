@@ -1,6 +1,6 @@
 package com.fcgo.weixin.controller.system.user;
 
-import com.fcgo.weixin.annotation.IgnoreSession;
+import com.fcgo.weixin.common.annotation.IgnoreSession;
 import com.fcgo.weixin.common.exception.ServiceException;
 import com.fcgo.weixin.model.ApiResponse;
 import com.fcgo.weixin.model.PageResponseBO;
@@ -8,7 +8,6 @@ import com.fcgo.weixin.model.backend.bo.AccountBo;
 import com.fcgo.weixin.model.backend.req.AccountListReq;
 import com.fcgo.weixin.model.backend.resp.LoginUserResp;
 import com.fcgo.weixin.service.AccountService;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

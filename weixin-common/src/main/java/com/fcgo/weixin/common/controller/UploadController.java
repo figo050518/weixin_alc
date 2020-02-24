@@ -1,6 +1,9 @@
 package com.fcgo.weixin.common.controller;
 
+import com.aliyun.oss.model.Bucket;
+import com.fcgo.weixin.common.annotation.IgnoreSession;
 import com.fcgo.weixin.common.service.AliyunOssPictureService;
+import com.fcgo.weixin.model.ApiResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +22,20 @@ public class UploadController {
     private AliyunOssPictureService aliyunOssPictureService;
 
     @RequestMapping(value = "/uploadImage", method = RequestMethod.POST)
-    public String uploadImage(@RequestParam(value = "imageFileName") MultipartFile files,
-                              @RequestParam("bucket") String bucket) {
+    public ApiResponse uploadImage(@RequestParam(value = "imageFileName") MultipartFile files,
+                              @RequestParam(value = "bucket", defaultValue = "linkstyle2", required = false) String bucket) {
         logger.info("file upload image, bucket {}",bucket);
-        return aliyunOssPictureService.updateImage(files, bucket);
+        String url = aliyunOssPictureService.updateImage(files, bucket);
+        return new ApiResponse.ApiResponseBuilder().code(200)
+                .data(url).message("上传图片成功").build();
+    }
+
+    //@RequestMapping(value = "/createBucket", method = RequestMethod.GET)
+    //@IgnoreSession
+    public ApiResponse createBucket(@RequestParam("bucketName")String bucketName){
+        Bucket bucket = aliyunOssPictureService.createBucket(bucketName);
+        return new ApiResponse.ApiResponseBuilder().code(200)
+                .data(bucket).message("create bucket success")
+                .build();
     }
 }

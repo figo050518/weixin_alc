@@ -3,6 +3,7 @@ package com.fcgo.weixin.persist.dao;
 import com.fcgo.weixin.persist.model.ProductSort;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.Collection;
 import java.util.List;
 
 public interface ProductSortMapper {
@@ -23,4 +24,7 @@ public interface ProductSortMapper {
     List<ProductSort> selectAllByCondtion(@Param("condition")ProductSort condition,
                                           @Param("offset")int offset,
                                           @Param("limit")int limit);
+    List<ProductSort> selectAll();
+
+    List<ProductSort> selectAllByIds(@Param("ids") Collection<Integer> ids);
 }

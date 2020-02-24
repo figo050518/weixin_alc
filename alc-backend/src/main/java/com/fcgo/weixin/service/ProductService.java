@@ -13,6 +13,7 @@ import com.fcgo.weixin.model.constant.PrdShelfStatus;
 import com.fcgo.weixin.persist.dao.ProductMapper;
 import com.fcgo.weixin.persist.model.Brand;
 import com.fcgo.weixin.persist.model.Product;
+import com.fcgo.weixin.persist.model.ProductSort;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -20,10 +21,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
@@ -39,6 +37,9 @@ public class ProductService {
 
     @Autowired
     private BrandService brandService;
+
+    @Autowired
+    private ProductSortService productSortService;
 
     public PageResponseBO<ProductBo> getList(ProductListReq req){
         int page = req.getPage();
@@ -81,11 +82,18 @@ public class ProductService {
         }
 
         List<Product> dolist = prdListSupplier.get();
-        Set<Integer> brandIds = dolist.stream().map(Product::getBrandId).collect(Collectors.toSet());
+        Set<Integer> brandIds = new HashSet<>(dolist.size());
+        Set<Integer> sortIds = new HashSet<>(dolist.size());
+        dolist.stream().forEach(product -> {
+            brandIds.add(product.getBrandId());
+            sortIds.add(product.getProductSort());
+        });
+        Map<Integer, ProductSort> productSortMap = productSortService.buildIdProductSort(sortIds);
         Map<Integer, Brand> brandMap = brandService.getIdBrandMap(brandIds);
         List<ProductBo> bos = dolist.stream().map(product->{
             Brand brand = brandMap.get(product.getBrandId());
-            return ProductConvert.do2Bo(product, brand);
+            ProductSort productSort = productSortMap.get(product.getProductSort());
+            return ProductConvert.do2Bo(product, brand, productSort );
         }).collect(Collectors.toList());
         int totalPage = PageHelper.getPageTotal(total, pageSize);
         pageBuilder.totalPage(totalPage).total(total).list(bos);

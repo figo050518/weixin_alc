@@ -91,5 +91,18 @@
 
   <select id="selectAllByCondtion" resultMap="BaseResultMap">
     select <include refid="Base_Column_List"/> from product_sort order by weight
+    limit #{offset},#{limit}
+  </select>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/> from product_sort order by weight
+  </select>
+
+
+  <select id="selectAllByIds" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/> from product_sort
+    where id in <foreach collection="ids" item="id" open="(" close=")">
+    #{id}
+  </foreach>
   </select>
 </mapper>

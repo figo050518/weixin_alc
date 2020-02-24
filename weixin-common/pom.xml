@@ -144,6 +144,11 @@
 			<groupId>com.aliyun.oss</groupId>
 			<artifactId>aliyun-sdk-oss</artifactId>
 		</dependency>
+
+		<dependency>
+			<groupId>com.fcgo.weixin</groupId>
+			<artifactId>model</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>

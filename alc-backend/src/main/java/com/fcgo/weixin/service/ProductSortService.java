@@ -8,12 +8,17 @@ import com.fcgo.weixin.model.backend.bo.ProductSortBo;
 import com.fcgo.weixin.model.backend.req.ProductSortListReq;
 import com.fcgo.weixin.persist.dao.ProductSortMapper;
 import com.fcgo.weixin.persist.model.ProductSort;
+import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
@@ -22,6 +27,24 @@ public class ProductSortService {
 
     @Autowired
     private ProductSortMapper productSortMapper;
+
+    public Map<Integer, ProductSort> buildIdProductSort(Set<Integer> ids){
+        List<ProductSort> list =productSortMapper.selectAllByIds(ids);
+        if (Objects.isNull(list)){
+            return null;
+        }
+        return list.stream().collect(Collectors.toMap(ProductSort::getId, Function.identity()));
+    }
+
+    public List<ProductSortBo> getAll(){
+
+        List<ProductSort> list = productSortMapper.selectAll();
+        if (CollectionUtils.isEmpty(list)){
+            return null;
+        }
+        List<ProductSortBo> boList = list.stream().map(ProductSortConvert::do2Bo4Select).collect(Collectors.toList());
+        return boList;
+    }
 
     public PageResponseBO<ProductSortBo> getList(ProductSortListReq req){
         int page = req.getPage();

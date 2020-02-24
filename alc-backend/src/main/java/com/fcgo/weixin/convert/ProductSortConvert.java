@@ -15,6 +15,13 @@ public final class ProductSortConvert {
         return bo;
     }
 
+    public static ProductSortBo do2Bo4Select(ProductSort productSort){
+        ProductSortBo bo = new ProductSortBo();
+        bo.setId(productSort.getId());
+        bo.setName(productSort.getName());
+        return bo;
+    }
+
     public static ProductSort bo2Do4Insert(ProductSortBo bo){
         ProductSort productSort = new ProductSort();
         String[] ignoreProps = {"id","createTime"};

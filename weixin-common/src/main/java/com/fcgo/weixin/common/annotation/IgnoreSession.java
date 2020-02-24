@@ -1,4 +1,4 @@
-package com.fcgo.weixin.annotation;
+package com.fcgo.weixin.common.annotation;
 
 import java.lang.annotation.*;
 

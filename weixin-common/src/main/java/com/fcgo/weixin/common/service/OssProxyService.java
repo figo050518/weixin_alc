@@ -5,6 +5,7 @@ import com.aliyun.oss.model.Bucket;
 import com.aliyun.oss.model.CannedAccessControlList;
 import com.aliyun.oss.model.ObjectMetadata;
 import com.aliyun.oss.model.PutObjectResult;
+import com.fcgo.weixin.model.constant.PictureType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,11 +19,11 @@ import java.util.UUID;
 public class OssProxyService {
     private final static Logger log = LoggerFactory.getLogger(OssProxyService.class);
 
-    private static String END_POINT = "https://oss.aliyuncs.com";
-    private static String ACCESS_KEY_ID = "LTAI4FrEVoQgS9xXsz8qmkZF";
-    private static String ACCESS_KEY_SECRET = "haXYQY7KU3FF3VCzMsnoARSjnAhofZ";
+    private static String END_POINT = "http://oss-cn-hangzhou.aliyuncs.com";
+    private static String ACCESS_KEY_ID = "";
+    private static String ACCESS_KEY_SECRET = "";
 
-    public static final String DOMAIN = "oss.aliyuncs.com";
+    public static final String DOMAIN = "linkstyle2.oss-cn-hangzhou.aliyuncs.com";
 
     public static String createNameByUUID(){
         String uuid = UUID.randomUUID().toString();
@@ -107,19 +108,33 @@ public class OssProxyService {
         PutObjectResult res = ossClient.putObject(bucket, newName, in, content);
         return newName;
     }
+    public static String buildImgUrl(String name,String type){
+
+        return new StringBuilder("http://")
+                .append(DOMAIN)
+                .append("/")
+                .append(name)
+                .append(".")
+                .append(type)
+                .toString();
+    }
 
     public static String putImgStreamIntoBucket(String bucket,
                                                 String name,
+                                                String type,
                                                 InputStream in)  {
 
         OSS ossClient = getOssClient();
         try {
+            PictureType pictureType = PictureType.getPictureType(type);
             ObjectMetadata content = new ObjectMetadata();
             content.setContentLength(in.available());
             content.setContentDisposition("inline");
-            content.setContentType("image/jpeg");
-            ossClient.putObject(bucket, name + ".jpg", in, content);
-            return name + ".jpg";
+            content.setContentType(pictureType.getMediaType());
+            ossClient.putObject(bucket, name + "." + type, in, content);
+            String absUrl = buildImgUrl(name, type);
+            log.info("update img success, {}",absUrl);
+            return absUrl;
         } catch (OSSException oe) {
             log.error("putImgStreamIntoBucket occur OSSException",oe);
         } catch (ClientException ce) {
@@ -133,6 +148,10 @@ public class OssProxyService {
         return null;
     }
 
+    public static Bucket createBucket( String bucketName){
+        OSS ossClient = getOssClient();
+        return ensureBucket(ossClient, bucketName );
+    }
     // 创建Bucket.
     private static Bucket ensureBucket(OSS client, String bucketName)
             throws OSSException, ClientException {
@@ -140,6 +159,7 @@ public class OssProxyService {
         try {
             // 创建bucket
             bucket = client.createBucket(bucketName);
+            log.info("createBucket successful,bucketName {}", bucketName);
         } catch (ServiceException e) {
             if (!OSSErrorCode.BUCKET_ALREADY_EXISTS.equals(e.getErrorCode())) {
                 // 如果Bucket已经存在，则忽略
