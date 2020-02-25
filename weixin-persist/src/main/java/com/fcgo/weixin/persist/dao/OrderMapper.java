@@ -1,9 +1,12 @@
 package com.fcgo.weixin.persist.dao;
 
 import com.fcgo.weixin.persist.model.Order;
+import com.fcgo.weixin.persist.model.dto.OrderListQueryDto;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface OrderMapper {
-    int deleteByPrimaryKey(Integer id);
 
     int insert(Order record);
 
@@ -14,4 +17,12 @@ public interface OrderMapper {
     int updateByPrimaryKeySelective(Order record);
 
     int updateByPrimaryKey(Order record);
+
+    int selectCnt(@Param("dto")OrderListQueryDto dto);
+
+    List<Order> selectAll(@Param("dto") OrderListQueryDto dto,
+                          @Param("offset")int offset, @Param("limit")int limit);
+
+    Order selectByOrderCode(Order record);
+
 }

@@ -495,6 +495,16 @@ public abstract class DateUtil {
         return (int) (System.currentTimeMillis() / 1000);
     }
 
+    public static int getTimeSecondsFromStr(String dateStr){
+        try {
+            Date date = parse(dateStr, Format_yyyy_MM_dd_HH_mm_ss);
+            return (int)date.getTime() / 1000;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
     public static void main(String[] args) {
         Date date = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("hh.mm aa 'EST' MMM d , yyyy", Locale.US);

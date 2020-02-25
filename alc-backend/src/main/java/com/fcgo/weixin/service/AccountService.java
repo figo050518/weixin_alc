@@ -1,6 +1,7 @@
 package com.fcgo.weixin.service;
 
 import com.alibaba.fastjson.JSONObject;
+import com.fcgo.weixin.common.constants.HeadKey;
 import com.fcgo.weixin.common.exception.ServiceException;
 import com.fcgo.weixin.common.util.DateUtil;
 import com.fcgo.weixin.common.util.MD5;
@@ -16,12 +17,15 @@ import com.fcgo.weixin.model.constant.DelStatus;
 import com.fcgo.weixin.persist.dao.AccountMapper;
 import com.fcgo.weixin.persist.model.Account;
 import com.fcgo.weixin.persist.model.Brand;
+import com.fcgo.weixin.util.LoggerManager;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -30,8 +34,9 @@ import java.util.stream.Collectors;
 
 @Service
 public class AccountService {
+    private static Logger loginLog = LoggerManager.getLoginLog();
 
-    private Logger logger = LoggerFactory.getLogger(getClass());
+    private static Logger logger = LoggerFactory.getLogger(AccountService.class);
 
     @Autowired
     private AccountMapper accountMapper;
@@ -132,6 +137,7 @@ public class AccountService {
 
 
     public LoginUserResp login(HttpServletRequest request, AccountBo bo){
+        loginLog.info("login {}", bo);
         String name = bo.getName();
         if (StringUtils.isBlank(name)){
             throw new ServiceException(401,"用户名不能为空");
@@ -145,7 +151,7 @@ public class AccountService {
         //get from DB
         Account account = accountMapper.selectByName(name);
         if (Objects.isNull(account)){
-            logger.warn("login user not exist {}", bo);
+            loginLog.warn("login user not exist {}", bo);
             throw new ServiceException(401,"用户名或密码错误");
         }
         //check status
@@ -157,7 +163,7 @@ public class AccountService {
         String pwdAfterEncrypt = MD5.md5(pwd);
         boolean pwdMatched = pwdAfterEncrypt.equals(pwdInDB);
         if (!pwdMatched){
-            logger.warn("login pwd not match req {} pwdAfterEncrypt {} pwdInDB {}", bo, pwdAfterEncrypt, pwdInDB);
+            loginLog.warn("login pwd not match req {} pwdAfterEncrypt {} pwdInDB {}", bo, pwdAfterEncrypt, pwdInDB);
             throw new ServiceException(401,"用户名或密码错误");
         }
         final Integer uid = account.getId();
@@ -169,7 +175,7 @@ public class AccountService {
             String userInfo = (String)session.getAttribute(AccountConstant.SESSION_USER_INFO_KEY);
             if (StringUtils.isNotBlank(userInfo)){
                 resp = JSONObject.parseObject(userInfo, LoginUserResp.class);
-                logger.info("login hit user in session req {} user {} ",bo, resp);
+                loginLog.info("login hit user in session req {} user {} ",bo, resp);
                 return resp;
             }
         }
@@ -191,7 +197,7 @@ public class AccountService {
             HttpSession oldSession = userIdSessionCache.get(uid);
             if (Objects.nonNull(oldSession)){
                 String sessionId = oldSession.getId();
-                logger.info("find old session, do invalidate {}, sessionId {}",bo, sessionId);
+                loginLog.info("find old session, do invalidate {}, sessionId {}",bo, sessionId);
                 sidSessionCache.remove(sessionId);
             }
             userIdSessionCache.put(uid, session);
@@ -209,7 +215,7 @@ public class AccountService {
         //get from DB
         Account account = accountMapper.selectByName(name);
         if (Objects.isNull(account)){
-            logger.warn("login user not exist {}", bo);
+            loginLog.warn("login user not exist {}", bo);
             throw new ServiceException(401,"用户名错误");
         }
         //check status
@@ -228,7 +234,7 @@ public class AccountService {
             HttpSession oldSession = userIdSessionCache.get(uid);
             if (Objects.nonNull(oldSession)){
                 String sessionId = oldSession.getId();
-                logger.info("log out,find old session, do invalidate {}, sessionId {}",bo, sessionId);
+                loginLog.info("log out,find old session, do invalidate {}, sessionId {}",bo, sessionId);
                 oldSession.invalidate();
             }
             session.invalidate();
@@ -245,11 +251,18 @@ public class AccountService {
 
     public LoginUserResp getLoginUser(Integer uid){
         HttpSession session = userIdSessionCache.get(uid);
+
+
+        LoginUserResp resp = convertFromSession(session);
+        return resp;
+    }
+
+    private static LoginUserResp convertFromSession(HttpSession session){
         if (Objects.isNull(session)){
             return null;
         }
         String userInfoStr = (String) session.getAttribute(AccountConstant.SESSION_USER_INFO_KEY);
-        logger.info("getLoginUser {} - {}",uid, userInfoStr);
+        logger.info("getLoginUser from session {}", userInfoStr);
         LoginUserResp resp = JSONObject.parseObject(userInfoStr, LoginUserResp.class);
         return resp;
     }
@@ -259,5 +272,14 @@ public class AccountService {
                 && StringUtils.isNotBlank(userName) && "admin".equals(userName);
     }
 
+    public LoginUserResp getLoginUser(){
+        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        HttpServletRequest request = attributes.getRequest();
+        String sessionKey = request.getHeader(HeadKey.token);
+        HttpSession session =  sidSessionCache.get(sessionKey);
+        LoginUserResp resp = convertFromSession(session);
+        logger.info("get login user {}", resp);
+        return resp;
+    }
 
 }

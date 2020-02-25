@@ -151,9 +151,9 @@
     </appender>
     
     <!-- 腾讯智能推荐：商品信息上传log -->
-    <appender name="TENCENT_LOG_APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <appender name="UPLOAD_LOG_APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${catalina.home}/logs/%d{yyyy-MM-dd}/tencent-upload.log</fileNamePattern>
+            <fileNamePattern>${catalina.home}/logs/%d{yyyy-MM-dd}/img-upload.log</fileNamePattern>
             <!-- 日志最大的保存天数 -->
             <maxHistory>${maxHistory}</maxHistory>
         </rollingPolicy>
@@ -241,8 +241,6 @@
     <logger name="org.quartz.core.QuartzSchedulerThread" level="WARN" />
     <!-- root级别   DEBUG -->
     <root level="INFO">
-        <!-- 控制台输出 -->
-        <appender-ref ref="STDOUT" />
         <!-- 文件输出 -->
         <appender-ref ref="DEBUG" />
 		<appender-ref ref="WARN" />
@@ -279,9 +277,9 @@
     </logger>
     
     <!--info级别重点部分单独记录-->
-    <logger name="tencentUpload"   additivity="true">
+    <logger name="fileUpload"   additivity="true">
         <level value="INFO"/>
-        <appender-ref ref="TENCENT_LOG_APPENDER"/>
+        <appender-ref ref="UPLOAD_LOG_APPENDER"/>
     </logger>
     <!-- 商家端操作日志，记录关键操作 -->
     <logger name="sellerOperateLog" additivity="true">

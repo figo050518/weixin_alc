@@ -39,7 +39,7 @@ public class GlobalDefaultExceptionHandler {
         if (e instanceof SessionExpireException) {
             log.info("session expire at url:{}, params:{}", url, params);
             SessionExpireException ex = (SessionExpireException)e;
-            response.setStatus(ex.getCode());
+            response.setStatus(HttpStatus.SC_OK);
             return getErrorJsonView(ex.getCode(), ex.getDesc());
         }
 

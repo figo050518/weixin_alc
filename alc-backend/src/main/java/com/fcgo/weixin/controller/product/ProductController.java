@@ -1,9 +1,11 @@
 package com.fcgo.weixin.controller.product;
 
+import com.fcgo.weixin.common.exception.SessionExpireException;
 import com.fcgo.weixin.model.ApiResponse;
 import com.fcgo.weixin.model.PageResponseBO;
 import com.fcgo.weixin.model.backend.bo.ProductBo;
 import com.fcgo.weixin.model.backend.req.ProductAuditReq;
+import com.fcgo.weixin.model.backend.req.ProductBatchReq;
 import com.fcgo.weixin.model.backend.req.ProductCtrlShelveReq;
 import com.fcgo.weixin.model.backend.req.ProductListReq;
 import com.fcgo.weixin.service.ProductService;
@@ -23,7 +25,7 @@ public class ProductController {
     private ProductService productService;
 
     @RequestMapping("/getList")
-    public ApiResponse getList(@RequestBody ProductListReq req){
+    public ApiResponse getList(@RequestBody ProductListReq req) throws SessionExpireException {
         logger.info("/product/getList req {}", req);
         PageResponseBO<ProductBo> pageResponseBO = productService.getList(req);
         return new ApiResponse.ApiResponseBuilder().code(200).message("successful")
@@ -31,7 +33,7 @@ public class ProductController {
     }
 
     @RequestMapping("/add")
-    public ApiResponse add(@RequestBody ProductBo req){
+    public ApiResponse add(@RequestBody ProductBo req) throws SessionExpireException {
         logger.info("/product/add req {}", req);
         int result = productService.add(req);
         return new ApiResponse.ApiResponseBuilder().code(200).message("successful")
@@ -39,7 +41,7 @@ public class ProductController {
     }
 
     @RequestMapping("/update")
-    public ApiResponse update(@RequestBody ProductBo req){
+    public ApiResponse update(@RequestBody ProductBo req) throws SessionExpireException {
         logger.info("/product/update req {}", req);
         int result = productService.update(req);
         return new ApiResponse.ApiResponseBuilder().code(200).message("successful")
@@ -47,9 +49,17 @@ public class ProductController {
     }
 
     @RequestMapping("/audit")
-    public ApiResponse audit(@RequestBody ProductAuditReq req){
+    public ApiResponse audit(@RequestBody ProductAuditReq req) throws SessionExpireException {
         logger.info("/product/audit req {}", req);
         int result = productService.audit(req);
+        return new ApiResponse.ApiResponseBuilder().code(200).message("successful")
+                .data(result>0).build();
+    }
+
+    @RequestMapping("/auditBatch")
+    public ApiResponse audit(@RequestBody ProductBatchReq req) throws SessionExpireException {
+        logger.info("product auditBatch req {}", req);
+        int result = productService.auditBatch(req);
         return new ApiResponse.ApiResponseBuilder().code(200).message("successful")
                 .data(result>0).build();
     }

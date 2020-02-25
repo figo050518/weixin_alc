@@ -1,12 +1,10 @@
 package com.fcgo.weixin.model.backend.bo;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Data
 @Builder
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserBo {

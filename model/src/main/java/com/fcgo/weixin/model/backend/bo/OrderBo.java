@@ -1,20 +1,23 @@
-package com.fcgo.weixin.persist.model;
+package com.fcgo.weixin.model.backend.bo;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
+import java.util.List;
 
 @Data
+@ToString
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Order {
+public class OrderBo {
+
     private Integer id;
 
     private String code;
 
     private Integer brandId;
+
+    private String brandName;
 
     private String brandPhone;
 
@@ -30,11 +33,11 @@ public class Order {
 
     private Short payType;
 
-    private Integer payTime;
+    private String payTime;
 
-    private Integer createTime;
+    private String createTime;
 
-    private Integer updateTime;
+    private String updateTime;
 
-
+    private List<OrderGoodsBo> orderGoodsList;
 }

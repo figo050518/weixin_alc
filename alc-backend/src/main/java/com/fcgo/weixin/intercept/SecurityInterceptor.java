@@ -183,12 +183,12 @@ public class SecurityInterceptor implements HandlerInterceptor {
         }
 
         if (jSessionID == null){
+            //重新登录
             logger.warn("check session fail from request head, url {}", url);
             throw new SessionExpireException(); //重新登录
         }
 
         if (AccountService.isLoginBySession(jSessionID)){
-            //重新登录
             logger.warn("match session in local cache, url {} jSessionID {}", url, jSessionID);
             return;
         }

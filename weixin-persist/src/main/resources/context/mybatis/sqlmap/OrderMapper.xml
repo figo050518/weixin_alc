@@ -3,7 +3,7 @@
 <mapper namespace="com.fcgo.weixin.persist.dao.OrderMapper">
   <resultMap id="BaseResultMap" type="com.fcgo.weixin.persist.model.Order">
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="code" jdbcType="BIGINT" property="code" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
     <result column="brand_id" jdbcType="INTEGER" property="brandId" />
     <result column="brand_phone" jdbcType="CHAR" property="brandPhone" />
     <result column="buyer_id" jdbcType="INTEGER" property="buyerId" />
@@ -17,26 +17,33 @@
     <result column="update_time" jdbcType="INTEGER" property="updateTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, code, brand_id, brand_phone, buyer_id, buyer_phone, status, pay_status, amount, 
+    id, `code`, brand_id, brand_phone, buyer_id, buyer_phone, status, pay_status, amount,
     pay_type, pay_time, create_time, update_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from order
+    from `order`
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from order
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
+
+  <select id="selectByOrderCode" parameterType="com.fcgo.weixin.persist.model.Order" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from `order`
+    where `code` = #{code,jdbcType=VARCHAR}
+    <if test="brandId != null">
+      and brand_id = #{brandId,jdbcType=INTEGER}
+    </if>
+  </select>
+
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.fcgo.weixin.persist.model.Order" useGeneratedKeys="true">
     insert into order (code, brand_id, brand_phone, 
       buyer_id, buyer_phone, status, 
       pay_status, amount, pay_type, 
       pay_time, create_time, update_time
       )
-    values (#{code,jdbcType=BIGINT}, #{brandId,jdbcType=INTEGER}, #{brandPhone,jdbcType=CHAR}, 
+    values (#{code,jdbcType=VARCHAR}, #{brandId,jdbcType=INTEGER}, #{brandPhone,jdbcType=CHAR},
       #{buyerId,jdbcType=INTEGER}, #{buyerPhone,jdbcType=VARCHAR}, #{status,jdbcType=CHAR}, 
       #{payStatus,jdbcType=CHAR}, #{amount,jdbcType=DOUBLE}, #{payType,jdbcType=SMALLINT}, 
       #{payTime,jdbcType=INTEGER}, #{createTime,jdbcType=INTEGER}, #{updateTime,jdbcType=INTEGER}
@@ -84,7 +91,7 @@
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="code != null">
-        #{code,jdbcType=BIGINT},
+        #{code,jdbcType=VARCHAR},
       </if>
       <if test="brandId != null">
         #{brandId,jdbcType=INTEGER},
@@ -125,7 +132,7 @@
     update order
     <set>
       <if test="code != null">
-        code = #{code,jdbcType=BIGINT},
+        code = #{code,jdbcType=VARCHAR},
       </if>
       <if test="brandId != null">
         brand_id = #{brandId,jdbcType=INTEGER},
@@ -164,8 +171,8 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.fcgo.weixin.persist.model.Order">
-    update order
-    set code = #{code,jdbcType=BIGINT},
+    update `order`
+    set code = #{code,jdbcType=VARCHAR},
       brand_id = #{brandId,jdbcType=INTEGER},
       brand_phone = #{brandPhone,jdbcType=CHAR},
       buyer_id = #{buyerId,jdbcType=INTEGER},
@@ -179,4 +186,34 @@
       update_time = #{updateTime,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="selectCnt" resultType="int">
+    select count(*) from `order` where 1=1 <include refid="where_select_all" />
+  </select>
+
+  <sql id="where_select_all">
+    <if test="dto.orderCode !=null">
+      and code = #{dto.orderCode,jdbcType=VARCHAR}
+    </if>
+    <if test="dto.brandId !=null">
+      and brand_id = #{dto.brandId,jdbcType=INTEGER}
+    </if>
+    <if test="dto.buyerPhone !=null">
+      and buyer_phone = #{dto.buyerPhone,jdbcType=VARCHAR}
+    </if>
+    <if test="dto.status !=null">
+      and status = #{dto.status,jdbcType=CHAR}
+    </if>
+    <if test="dto.startTime !=null and dto.endTime !=null">
+      and (
+      create_time <![CDATA[ >= ]]> #{dto.startTime,jdbcType=INTEGER} and create_time <![CDATA[ < ]]> #{dto.endTime,jdbcType=INTEGER}
+      or update_time <![CDATA[ >= ]]> #{dto.startTime,jdbcType=INTEGER} and update_time <![CDATA[ < ]]> #{dto.endTime,jdbcType=INTEGER}
+      )
+    </if>
+  </sql>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" /> from `order` where 1=1 <include refid="where_select_all"/> limit #{offset}, #{limit}
+  </select>
+
 </mapper>

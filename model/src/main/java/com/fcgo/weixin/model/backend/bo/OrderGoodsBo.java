@@ -1,14 +1,13 @@
-package com.fcgo.weixin.persist.model;
+package com.fcgo.weixin.model.backend.bo;
 
-import lombok.Data;
+import lombok.*;
 
 @Data
-public class OrderProduct {
-    private Integer id;
-
-    private Integer orderId;
-
-    private String orderCode;
+@ToString
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class OrderGoodsBo {
 
     private Integer productTypeId;
 
@@ -22,6 +21,5 @@ public class OrderProduct {
 
     private Integer productNumber;
 
-    private Long createTime;
-
+    private String productUnit;
 }

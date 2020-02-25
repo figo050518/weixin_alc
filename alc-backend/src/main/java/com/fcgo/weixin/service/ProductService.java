@@ -1,13 +1,16 @@
 package com.fcgo.weixin.service;
 
 import com.fcgo.weixin.common.exception.ServiceException;
+import com.fcgo.weixin.common.exception.SessionExpireException;
 import com.fcgo.weixin.common.util.PageHelper;
 import com.fcgo.weixin.convert.ProductConvert;
 import com.fcgo.weixin.model.PageResponseBO;
 import com.fcgo.weixin.model.backend.bo.ProductBo;
 import com.fcgo.weixin.model.backend.req.ProductAuditReq;
+import com.fcgo.weixin.model.backend.req.ProductBatchReq;
 import com.fcgo.weixin.model.backend.req.ProductCtrlShelveReq;
 import com.fcgo.weixin.model.backend.req.ProductListReq;
+import com.fcgo.weixin.model.backend.resp.LoginUserResp;
 import com.fcgo.weixin.model.constant.PrdAuditStatus;
 import com.fcgo.weixin.model.constant.PrdShelfStatus;
 import com.fcgo.weixin.persist.dao.ProductMapper;
@@ -15,6 +18,7 @@ import com.fcgo.weixin.persist.model.Brand;
 import com.fcgo.weixin.persist.model.Product;
 import com.fcgo.weixin.persist.model.ProductSort;
 import com.google.common.collect.Lists;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,18 +45,22 @@ public class ProductService {
     @Autowired
     private ProductSortService productSortService;
 
-    public PageResponseBO<ProductBo> getList(ProductListReq req){
+    public PageResponseBO<ProductBo> getList(ProductListReq req) throws SessionExpireException {
         int page = req.getPage();
         int pageSize = req.getSize();
         PageResponseBO.PageResponseBOBuilder<ProductBo> pageBuilder =  PageResponseBO.builder();
         pageBuilder.currentPage(page);
         pageBuilder.pageSize(pageSize);
-        Integer uid;
-        if (Objects.isNull(uid = req.getUid())){
+        LoginUserResp userResp = accountService.getLoginUser();
+        if (Objects.isNull(userResp)){
+            throw new SessionExpireException();
+        }
+        Integer uid = userResp.getUid();
+        if (Objects.isNull(uid)){
             throw new ServiceException(401,"uid不正确");
         }
-        String userName;
-        if (StringUtils.isBlank(userName=req.getUserName())){
+        String userName = userResp.getUserName();
+        if (StringUtils.isBlank(userName)){
             throw new ServiceException(401, "用户名不正确");
         }
         boolean isAdmin = accountService.isAdmin(uid, userName);
@@ -67,13 +75,13 @@ public class ProductService {
             prdListSupplier = () -> productMapper.selectAll(condition, offset, pageSize);
         }else{
             Integer brandId;
-            if (Objects.isNull(brandId=req.getBrandId()) || brandId<1){
+            if (Objects.isNull(brandId=userResp.getBrandId()) || brandId<1){
                 throw new ServiceException(401, "品牌ID不正确");
             }
             logger.info("get product list user is brand, req {}", req);
-            Product condition = Product.builder().brandId(req.getBrandId()).name(prdName).build();
-            totalSupplier = ()->  productMapper.selectCnt(condition);
-            prdListSupplier = () -> productMapper.selectAll(condition, offset, pageSize);
+            Product condition = Product.builder().brandId(brandId).name(prdName).build();
+            totalSupplier = ()->  productMapper.selectCntByBrandId(condition);
+            prdListSupplier = () -> productMapper.selectAllByBrandId(condition, offset, pageSize);
         }
 
         int total = totalSupplier.get();
@@ -101,15 +109,35 @@ public class ProductService {
     }
 
 
+    LoginUserResp checkLoginUserIsAdmin() throws SessionExpireException {
+        LoginUserResp userResp = accountService.getLoginUser();
+        if (Objects.isNull(userResp)){
+            throw new SessionExpireException();
+        }
+        Integer uid = userResp.getUid();
+        if (Objects.isNull(uid)){
+            throw new ServiceException(401,"uid不正确");
+        }
+        String userName = userResp.getUserName();
+        if (StringUtils.isBlank(userName)){
+            throw new ServiceException(401, "用户名不正确");
+        }
+        boolean isAdmin = accountService.isAdmin(uid, userName);
+        if (!isAdmin){
+            throw new ServiceException(401, "非法用户");
+        }
+        return userResp;
+    }
 
-
-    public int add(ProductBo req){
+    public int add(ProductBo req) throws SessionExpireException {
+        checkLoginUserIsAdmin();
         Product condition = ProductConvert.bo2Do4Insert(req);
         int rows = productMapper.insertSelective(condition);
         return condition.getId();
     }
 
-    public int update(ProductBo req){
+    public int update(ProductBo req) throws SessionExpireException {
+        checkLoginUserIsAdmin();
         Integer id;
         if (Objects.isNull(id=req.getId()) || id<1){
             throw new ServiceException(401,"id不正确");
@@ -119,24 +147,38 @@ public class ProductService {
         return rows;
     }
 
-    public int audit(ProductAuditReq req){
-        Integer uid;
-        if (Objects.isNull(uid = req.getUid())){
-            throw new ServiceException(401,"uid不正确");
+    public int auditBatch(ProductBatchReq req) throws SessionExpireException {
+        List<Integer> ids;
+        if (CollectionUtils.isEmpty(ids = req.getIds())){
+            throw new ServiceException(401, "没有传入商品ID");
         }
-        String userName;
-        if (StringUtils.isBlank(userName=req.getUserName())){
-            throw new ServiceException(401, "用户名不正确");
+        if (ids.size()>20){
+            throw new ServiceException(401, "最多支持20个");
         }
-        boolean isAdmin = accountService.isAdmin(uid, userName);
-        if (!isAdmin){
-            throw new ServiceException(401, "非法用户");
+        checkLoginUserIsAdmin();
+        Integer verifyStatusCode = req.getVerifyStatus();
+        int result = 0;
+        for (Integer id: ids){
+            result += doAudit(id, verifyStatusCode);
         }
+        return result;
+    }
+
+    public int audit(ProductAuditReq req) throws SessionExpireException {
+        checkLoginUserIsAdmin();
         Integer productId;
         if (Objects.isNull(productId=req.getProductId()) || productId<1){
             throw new ServiceException(401,"商品id不正确");
         }
         Integer verifyStatusCode = req.getVerifyStatus();
+        return doAudit( productId, verifyStatusCode);
+    }
+
+    private int doAudit(Integer productId,Integer verifyStatusCode) throws SessionExpireException {
+
+        if (Objects.isNull(productId) || productId<1){
+            throw new ServiceException(401,"商品id不正确");
+        }
         PrdAuditStatus prdAuditStatus ;
         if (Objects.isNull(verifyStatusCode)
                 || Objects.isNull(prdAuditStatus = PrdAuditStatus.getStatus(verifyStatusCode))){
@@ -147,13 +189,11 @@ public class ProductService {
             case PASS:
                 exceptAuditStatus = PrdAuditStatus.INIT;
                 break;
-
             case REJECT:
                 exceptAuditStatus = PrdAuditStatus.INIT;
                 break;
             default:
                 throw new ServiceException(401,"审核状态数值不对");
-
         }
         Product condition = Product.builder()
                 .id(productId)
@@ -161,6 +201,7 @@ public class ProductService {
                 .exceptVerifyStatus(exceptAuditStatus.getCode()).build();
         int row = productMapper.updateAuditStatus(condition);
         return row;
+
     }
 
     public int onOffShelve(ProductCtrlShelveReq req){

@@ -1,6 +1,4 @@
-package com.fcgo.weixin.uitl;
-
-import javax.servlet.http.HttpServletRequest;
+package com.fcgo.weixin.util;
 
 import com.fcgo.weixin.common.dto.Page;
 
