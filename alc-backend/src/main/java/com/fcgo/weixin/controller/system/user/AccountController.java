@@ -31,14 +31,13 @@ public class AccountController {
     public ApiResponse login(HttpServletRequest request,
                              @RequestBody AccountBo bo){
         logger.info("in account login req {}", bo);
-        HttpSession session = request.getSession();
+
         LoginUserResp resp = null;
         String msg = "登录失败";
         int code = 401;
         try {
-            resp = accountService.login(session, bo);
+            resp = accountService.login(request, bo);
             if (Objects.nonNull(resp)){
-                resp.setSessionKey(session.getId());
                 code = 200;
                 msg = "登录成功";
             }

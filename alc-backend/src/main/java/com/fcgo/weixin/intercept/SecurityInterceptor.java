@@ -193,7 +193,7 @@ public class SecurityInterceptor implements HandlerInterceptor {
             return;
         }
         logger.warn("not match session in local cache, url {} jSessionID {}", url, jSessionID);
-        HttpSession currentSession = httpServletRequest.getSession();
+        HttpSession currentSession = httpServletRequest.getSession(false);
         if (Objects.nonNull(currentSession) && currentSession.getId().equals(jSessionID)){
             return;
         }

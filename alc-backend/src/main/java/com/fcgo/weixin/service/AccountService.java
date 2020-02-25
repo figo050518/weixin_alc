@@ -14,7 +14,6 @@ import com.fcgo.weixin.model.backend.resp.LoginUserResp;
 import com.fcgo.weixin.model.constant.AccountStatus;
 import com.fcgo.weixin.model.constant.DelStatus;
 import com.fcgo.weixin.persist.dao.AccountMapper;
-import com.fcgo.weixin.persist.dao.BrandMapper;
 import com.fcgo.weixin.persist.model.Account;
 import com.fcgo.weixin.persist.model.Brand;
 import org.apache.commons.collections.CollectionUtils;
@@ -24,6 +23,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -131,7 +131,7 @@ public class AccountService {
     }
 
 
-    public LoginUserResp login(HttpSession session, AccountBo bo){
+    public LoginUserResp login(HttpServletRequest request, AccountBo bo){
         String name = bo.getName();
         if (StringUtils.isBlank(name)){
             throw new ServiceException(401,"用户名不能为空");
@@ -163,6 +163,7 @@ public class AccountService {
         final Integer uid = account.getId();
         LoginUserResp resp = null;
         //hit in session
+        HttpSession session = request.getSession(false);
         boolean sessionExists;
         if (sessionExists = Objects.nonNull(session)){
             String userInfo = (String)session.getAttribute(AccountConstant.SESSION_USER_INFO_KEY);
@@ -172,12 +173,16 @@ public class AccountService {
                 return resp;
             }
         }
+        //no session, first login
 
-        if(sessionExists && pwdMatched){
+        if(pwdMatched){
+            //create session
+            session = request.getSession();
             resp = LoginUserResp.builder()
                     .uid(uid)
                     .brandId(account.getBrandId())
                     .userName(name)
+                    .sessionKey(session.getId())
                     .build();
             String userInfo = JSONObject.toJSONString(resp);
             session.setAttribute(AccountConstant.SESSION_USER_INFO_KEY, userInfo);
@@ -187,7 +192,6 @@ public class AccountService {
             if (Objects.nonNull(oldSession)){
                 String sessionId = oldSession.getId();
                 logger.info("find old session, do invalidate {}, sessionId {}",bo, sessionId);
-                oldSession.invalidate();
                 sidSessionCache.remove(sessionId);
             }
             userIdSessionCache.put(uid, session);
@@ -215,7 +219,6 @@ public class AccountService {
         }
 
         final Integer uid = account.getId();
-        LoginUserResp resp = null;
         //hit in session
         boolean sessionExists = Objects.nonNull(session);
 
