@@ -28,11 +28,11 @@ public class GlobalDefaultExceptionHandler {
     private static String YH_ERR_CODE_HEADER = "X-Alc-Code";
     @ExceptionHandler(value = Exception.class)
     public ModelAndView defaultErrorHandler(HttpServletRequest request,
-                                            HttpServletResponse response, Exception e) throws Exception {
+                                            HttpServletResponse response, Exception e)  {
 
 
         final String url = request.getRequestURI();
-        final Map<String, Object> params = HttpRequestUtils.getRequestParams(request);
+        final Map<String, String> params = HttpRequestUtils.getRequestParamsOfHead(request);
         response.addHeader(YH_ERR_CODE_HEADER, "500");
 
         //用户未登录,或登录 会话超时

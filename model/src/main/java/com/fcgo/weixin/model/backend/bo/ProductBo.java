@@ -13,6 +13,8 @@ public class ProductBo {
 
     private String name;
 
+    private String enName;
+
     private String unit;
 
     private Integer productSortId;

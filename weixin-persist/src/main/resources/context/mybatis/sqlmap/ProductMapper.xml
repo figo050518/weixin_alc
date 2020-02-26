@@ -4,6 +4,7 @@
   <resultMap id="BaseResultMap" type="com.fcgo.weixin.persist.model.Product">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="en_name" jdbcType="VARCHAR" property="enName" />
     <result column="unit" jdbcType="VARCHAR" property="unit" />
     <result column="product_sort" jdbcType="INTEGER" property="productSort" />
     <result column="desc" jdbcType="VARCHAR" property="desc" />
@@ -17,7 +18,7 @@
     <result column="update_time" jdbcType="INTEGER" property="updateTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, `name`, unit, product_sort, `desc`, pic_url, price, price_unit, brand_id, status,
+    id, `name`,en_name, unit, product_sort, `desc`, pic_url, price, price_unit, brand_id, status,
     verify_status, create_time, update_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -47,6 +48,9 @@
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="name != null">
         `name`,
+      </if>
+      <if test="enName != null">
+        `en_name`,
       </if>
       <if test="unit != null">
         unit,
@@ -85,6 +89,9 @@
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="enName != null">
+        #{enName,jdbcType=VARCHAR},
       </if>
       <if test="unit != null">
         #{unit,jdbcType=VARCHAR},
@@ -125,7 +132,10 @@
     update product
     <set>
       <if test="name != null">
-        name = #{name,jdbcType=VARCHAR},
+        `name` = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="eNname != null">
+        en_name = #{eNname,jdbcType=VARCHAR},
       </if>
       <if test="unit != null">
         unit = #{unit,jdbcType=VARCHAR},

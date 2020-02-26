@@ -130,14 +130,12 @@ public class ProductService {
     }
 
     public int add(ProductBo req) throws SessionExpireException {
-        checkLoginUserIsAdmin();
         Product condition = ProductConvert.bo2Do4Insert(req);
         int rows = productMapper.insertSelective(condition);
         return condition.getId();
     }
 
     public int update(ProductBo req) throws SessionExpireException {
-        checkLoginUserIsAdmin();
         Integer id;
         if (Objects.isNull(id=req.getId()) || id<1){
             throw new ServiceException(401,"id不正确");

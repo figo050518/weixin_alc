@@ -12,6 +12,8 @@ public class ProductSortBo {
 
     private String name;
 
+    private String enName;
+
     private Integer weight;
 
     private Byte status;

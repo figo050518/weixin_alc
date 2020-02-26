@@ -23,6 +23,8 @@ public class OrderBo {
 
     private Integer buyerId;
 
+    private String buyerName;
+
     private String buyerPhone;
 
     private String status;

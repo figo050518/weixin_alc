@@ -15,9 +15,11 @@ import com.fcgo.weixin.model.backend.resp.LoginUserResp;
 import com.fcgo.weixin.persist.dao.BrandMapper;
 import com.fcgo.weixin.persist.dao.OrderMapper;
 import com.fcgo.weixin.persist.dao.OrderProductMapper;
+import com.fcgo.weixin.persist.dao.UserMapper;
 import com.fcgo.weixin.persist.model.Brand;
 import com.fcgo.weixin.persist.model.Order;
 import com.fcgo.weixin.persist.model.OrderProduct;
+import com.fcgo.weixin.persist.model.User;
 import com.fcgo.weixin.persist.model.dto.OrderListQueryDto;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -49,6 +51,12 @@ public class OrderService {
 
     @Autowired
     private OrderMapper orderMapper;
+
+    @Autowired
+    private UserManageService userManageService;
+
+    @Autowired
+    private UserMapper userMapper;
 
     OrderListQueryDto check(OrderListReq req){
          String orderCode = req.getOrderCode();
@@ -125,14 +133,17 @@ public class OrderService {
 
         List<Order> dolist = prdListSupplier.get();
         Set<Integer> brandIds = new HashSet<>(dolist.size());
-        Set<Integer> sortIds = new HashSet<>(dolist.size());
-        dolist.stream().forEach(product -> {
-            brandIds.add(product.getBrandId());
+        Set<Integer> userIds = new HashSet<>(dolist.size());
+        dolist.stream().forEach(order -> {
+            brandIds.add(order.getBrandId());
+            userIds.add(order.getBuyerId());
         });
         Map<Integer, Brand> brandMap = brandService.getIdBrandMap(brandIds);
-        List<OrderBo> bos = dolist.stream().map(product->{
-            Brand brand = brandMap.get(product.getBrandId());
-            return OrderConvert.do2Bo(product, brand);
+        Map<Integer, User> userMap = userManageService.getUserMap(userIds);
+        List<OrderBo> bos = dolist.stream().map(order->{
+            Brand brand = brandMap.get(order.getBrandId());
+            User buyer = userMap.get(order.getBuyerId());
+            return OrderConvert.do2Bo(order, brand, buyer);
         }).collect(Collectors.toList());
         int totalPage = PageHelper.getPageTotal(total, pageSize);
         pageBuilder.totalPage(totalPage).total(total).list(bos);
@@ -172,7 +183,8 @@ public class OrderService {
             return null;
         }
         Brand brand = brandMapper.selectByPrimaryKey(order.getBrandId());
-        OrderBo orderBo = OrderConvert.do2Bo(order, brand);
+        User buyer = userMapper.selectByPrimaryKey(order.getBuyerId());
+        OrderBo orderBo = OrderConvert.do2Bo(order, brand, buyer);
         List<OrderProduct> orderProducts =  orderProductMapper.selectByOrderCode(orderCode);
         if (CollectionUtils.isNotEmpty(orderProducts)){
             List<OrderGoodsBo> orderGoodsBos = orderProducts.stream().map(OrderGoodsConvert::do2Bo)

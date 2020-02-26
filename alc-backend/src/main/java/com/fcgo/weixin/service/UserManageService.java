@@ -10,12 +10,17 @@ import com.fcgo.weixin.model.backend.req.UserListReq;
 import com.fcgo.weixin.persist.dao.UserMapper;
 import com.fcgo.weixin.persist.model.Brand;
 import com.fcgo.weixin.persist.model.User;
+import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
@@ -42,5 +47,14 @@ public class UserManageService {
         int totalPage = PageHelper.getPageTotal(total, pageSize);
         pageBuilder.totalPage(totalPage).total(total).list(bos);
         return pageBuilder.build();
+    }
+
+
+    public Map<Integer,User> getUserMap(Set<Integer> uids){
+        List<User> users = userMapper.selectByIds(uids);
+        if (CollectionUtils.isEmpty(users)){
+            return Collections.emptyMap();
+        }
+        return users.stream().collect(Collectors.toMap(User::getId, Function.identity()));
     }
 }

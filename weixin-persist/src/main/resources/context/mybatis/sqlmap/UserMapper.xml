@@ -133,4 +133,12 @@
     select <include refid="Base_Column_List"/>
     from `user` where 1=1 limit #{offset},#{limit}
   </select>
+
+  <select id="selectByIds" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/>
+    from `user` where id in
+    <foreach collection="ids" item="id" open="(" separator="," close=")">
+      #{id,jdbcType=INTEGER}
+    </foreach>
+  </select>
 </mapper>

@@ -4,12 +4,13 @@
   <resultMap id="BaseResultMap" type="com.fcgo.weixin.persist.model.ProductSort">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="en_name" jdbcType="VARCHAR" property="enName" />
     <result column="weight" jdbcType="INTEGER" property="weight" />
     <result column="status" jdbcType="TINYINT" property="status" />
     <result column="create_time" jdbcType="INTEGER" property="createTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, name, weight, status, create_time
+    id, `name`,en_name, weight, status, create_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -31,7 +32,10 @@
     insert into product_sort
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="name != null">
-        name,
+        `name`,
+      </if>
+      <if test="enName != null">
+        en_name,
       </if>
       <if test="weight != null">
         weight,
@@ -46,6 +50,9 @@
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="enName != null">
+        #{enName,jdbcType=VARCHAR},
       </if>
       <if test="weight != null">
         #{weight,jdbcType=INTEGER},
@@ -63,6 +70,9 @@
     <set>
       <if test="name != null">
         name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="enName != null">
+        en_name = #{enName,jdbcType=VARCHAR},
       </if>
       <if test="weight != null">
         weight = #{weight,jdbcType=INTEGER},
@@ -101,8 +111,9 @@
 
   <select id="selectAllByIds" resultMap="BaseResultMap">
     select <include refid="Base_Column_List"/> from product_sort
-    where id in <foreach collection="ids" item="id" open="(" close=")">
-    #{id}
-  </foreach>
+    where id in
+    <foreach collection="ids" item="id" separator="," open="(" close=")">
+      #{id}
+    </foreach>
   </select>
 </mapper>

@@ -20,8 +20,8 @@ public class OssProxyService {
     private final static Logger log = LoggerFactory.getLogger(OssProxyService.class);
 
     private static String END_POINT = "http://oss-cn-hangzhou.aliyuncs.com";
-    private static String ACCESS_KEY_ID = "";
-    private static String ACCESS_KEY_SECRET = "";
+    private static String ACCESS_KEY_ID = "LTAI4FrEVoQgS9xXsz8qmkZF";
+    private static String ACCESS_KEY_SECRET = "haXYQY7KU3FF3VCzMsnoARSjnAhofZ";
 
     public static final String DOMAIN = "linkstyle2.oss-cn-hangzhou.aliyuncs.com";
 

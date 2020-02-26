@@ -14,6 +14,8 @@ public class Product {
 
     private String name;
 
+    private String enName;
+
     private String unit;
 
     private Integer productSort;

@@ -2,6 +2,7 @@ package com.fcgo.weixin.intercept;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -14,8 +15,9 @@ public class CrossOriginInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest req, HttpServletResponse resp, Object o) throws Exception {
         //两种解决方案
         String method = req.getMethod();
-        String url = req.getHeader("origin");
-        logger.info("CrossOriginInterceptor preHandle getHeader(origin), url {} method {}",url,method);
+        String url = req.getRequestURI();
+        String origin = req.getHeader("origin");
+        logger.info("CrossOriginInterceptor preHandle getHeader(origin), url {} origin {} method {}",url, origin, method);
         resp.setHeader("Access-Control-Allow-Origin", "*");
         resp.setHeader("Access-Control-Allow-Credentials", "true");
         resp.setHeader("Access-Control-Allow-Methods","*");
@@ -35,10 +37,6 @@ public class CrossOriginInterceptor implements HandlerInterceptor {
 
     @Override
     public void afterCompletion(HttpServletRequest req, HttpServletResponse resp, Object o, Exception e) throws Exception {
-        //两种解决方案
-        String method = req.getMethod();
-        String url = req.getHeader("origin");
-        logger.info("CrossOriginInterceptor afterCompletion getHeader(origin), url {} method {}",url,method);
 
     }
 }
