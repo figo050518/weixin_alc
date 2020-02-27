@@ -37,7 +37,7 @@ public class ProductService {
     private ProductMapper productMapper;
 
     @Autowired
-    private AccountService accountService;
+    private LoginService loginService;
 
     @Autowired
     private BrandService brandService;
@@ -51,7 +51,7 @@ public class ProductService {
         PageResponseBO.PageResponseBOBuilder<ProductBo> pageBuilder =  PageResponseBO.builder();
         pageBuilder.currentPage(page);
         pageBuilder.pageSize(pageSize);
-        LoginUserResp userResp = accountService.getLoginUser();
+        LoginUserResp userResp = loginService.getLoginUser();
         if (Objects.isNull(userResp)){
             throw new SessionExpireException();
         }
@@ -63,7 +63,7 @@ public class ProductService {
         if (StringUtils.isBlank(userName)){
             throw new ServiceException(401, "用户名不正确");
         }
-        boolean isAdmin = accountService.isAdmin(uid, userName);
+        boolean isAdmin = AccountService.isAdmin(uid, userName);
         final String prdName = StringUtils.isBlank(req.getProductName()) ? null : req.getProductName().trim();
         int offset = PageHelper.getOffsetOfMysql(page,pageSize);
         Supplier<Integer> totalSupplier;
@@ -110,7 +110,7 @@ public class ProductService {
 
 
     LoginUserResp checkLoginUserIsAdmin() throws SessionExpireException {
-        LoginUserResp userResp = accountService.getLoginUser();
+        LoginUserResp userResp = loginService.getLoginUser();
         if (Objects.isNull(userResp)){
             throw new SessionExpireException();
         }
@@ -122,7 +122,7 @@ public class ProductService {
         if (StringUtils.isBlank(userName)){
             throw new ServiceException(401, "用户名不正确");
         }
-        boolean isAdmin = accountService.isAdmin(uid, userName);
+        boolean isAdmin = AccountService.isAdmin(uid, userName);
         if (!isAdmin){
             throw new ServiceException(401, "非法用户");
         }

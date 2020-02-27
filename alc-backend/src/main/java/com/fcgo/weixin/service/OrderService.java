@@ -11,7 +11,9 @@ import com.fcgo.weixin.model.backend.bo.OrderBo;
 import com.fcgo.weixin.model.backend.bo.OrderGoodsBo;
 import com.fcgo.weixin.model.backend.req.OrderDetailReq;
 import com.fcgo.weixin.model.backend.req.OrderListReq;
+import com.fcgo.weixin.model.backend.req.OrderProcessReq;
 import com.fcgo.weixin.model.backend.resp.LoginUserResp;
+import com.fcgo.weixin.model.constant.OrderStatus;
 import com.fcgo.weixin.persist.dao.BrandMapper;
 import com.fcgo.weixin.persist.dao.OrderMapper;
 import com.fcgo.weixin.persist.dao.OrderProductMapper;
@@ -38,7 +40,7 @@ public class OrderService {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     @Autowired
-    private AccountService accountService;
+    private LoginService loginService;
 
     @Autowired
     private BrandService brandService;
@@ -94,7 +96,7 @@ public class OrderService {
         PageResponseBO.PageResponseBOBuilder<OrderBo> pageBuilder =  PageResponseBO.builder();
         pageBuilder.currentPage(page);
         pageBuilder.pageSize(pageSize);
-        LoginUserResp userResp = accountService.getLoginUser();
+        LoginUserResp userResp = loginService.getLoginUser();
         if (Objects.isNull(userResp)){
             throw new SessionExpireException();
         }
@@ -106,7 +108,7 @@ public class OrderService {
         if (StringUtils.isBlank(userName)){
             throw new ServiceException(401, "用户名不正确");
         }
-        boolean isAdmin = accountService.isAdmin(uid, userName);
+        boolean isAdmin = AccountService.isAdmin(uid, userName);
         OrderListQueryDto condition = check(req);
         int offset = PageHelper.getOffsetOfMysql(page,pageSize);
         Supplier<Integer> totalSupplier;
@@ -158,7 +160,7 @@ public class OrderService {
         //trim
         orderCode = orderCode.trim();
         //
-        LoginUserResp userResp = accountService.getLoginUser();
+        LoginUserResp userResp = loginService.getLoginUser();
         if (Objects.isNull(userResp)){
             throw new SessionExpireException();
         }
@@ -170,7 +172,7 @@ public class OrderService {
         if (StringUtils.isBlank(userName)){
             throw new ServiceException(401, "用户名不正确");
         }
-        boolean isAdmin = accountService.isAdmin(uid, userName);
+        boolean isAdmin = AccountService.isAdmin(uid, userName);
 
         Order condition = new Order();
         condition.setCode(orderCode);
@@ -192,6 +194,19 @@ public class OrderService {
             orderBo.setOrderGoodsList(orderGoodsBos);
         }
         return orderBo;
+    }
+
+
+    public boolean process(OrderProcessReq req){
+        Integer statusCode = req.getStatus();
+        if (Objects.isNull(statusCode)){
+            throw new ServiceException(401, "status 错误");
+        }
+
+
+        OrderStatus targetOrderStatus = OrderStatus.getOrderStatus(statusCode);
+
+        return false;
     }
 
 }

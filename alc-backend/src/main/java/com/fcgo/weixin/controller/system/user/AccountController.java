@@ -2,12 +2,14 @@ package com.fcgo.weixin.controller.system.user;
 
 import com.fcgo.weixin.common.annotation.IgnoreSession;
 import com.fcgo.weixin.common.exception.ServiceException;
+import com.fcgo.weixin.common.exception.SessionExpireException;
 import com.fcgo.weixin.model.ApiResponse;
 import com.fcgo.weixin.model.PageResponseBO;
 import com.fcgo.weixin.model.backend.bo.AccountBo;
 import com.fcgo.weixin.model.backend.req.AccountListReq;
 import com.fcgo.weixin.model.backend.resp.LoginUserResp;
 import com.fcgo.weixin.service.AccountService;
+import com.fcgo.weixin.service.LoginService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,9 @@ public class AccountController {
     @Autowired
     private AccountService accountService;
 
+    @Autowired
+    private LoginService loginService;
+
     @RequestMapping(value="/login",method= RequestMethod.POST)
     @IgnoreSession
     public ApiResponse login(HttpServletRequest request,
@@ -36,7 +41,7 @@ public class AccountController {
         String msg = "登录失败";
         int code = 401;
         try {
-            resp = accountService.login(request, bo);
+            resp = loginService.login(request, bo);
             if (Objects.nonNull(resp)){
                 code = 200;
                 msg = "登录成功";
@@ -59,26 +64,15 @@ public class AccountController {
 
     @RequestMapping(value="/logout",method= RequestMethod.POST)
     public ApiResponse logout(HttpServletRequest request,
-                             @RequestBody AccountBo bo){
+                             @RequestBody AccountBo bo) throws SessionExpireException {
         logger.info("in account logout req {}", bo);
-        HttpSession session = request.getSession();
-        boolean result = false;
+        HttpSession session = request.getSession(false);
         String msg = "退出失败";
         int code = 401;
-        try {
-            result = accountService.logout(session, bo);
-            if (result){
-                code = 200;
-                msg = "退出成功";
-            }
-        }catch (Exception ex){
-            if (ex instanceof ServiceException){
-                code = ((ServiceException) ex).getCode();
-                msg = ((ServiceException) ex).getErrorMessage();
-            }else{
-                msg = "未知异常，请联系管理员";
-                logger.warn("logout occur unknown error,req {}", bo,ex);
-            }
+        boolean result = loginService.logout(session);
+        if (result){
+            code = 200;
+            msg = "退出成功";
         }
         return new ApiResponse.ApiResponseBuilder()
                 .code(code)

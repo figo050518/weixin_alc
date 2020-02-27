@@ -37,7 +37,7 @@ public class GlobalDefaultExceptionHandler {
 
         //用户未登录,或登录 会话超时
         if (e instanceof SessionExpireException) {
-            log.info("session expire at url:{}, params:{}", url, params);
+            log.warn("catch SessionExpireException session expire at url:{}, params:{}", url, params,e);
             SessionExpireException ex = (SessionExpireException)e;
             response.setStatus(HttpStatus.SC_OK);
             return getErrorJsonView(ex.getCode(), ex.getDesc());
@@ -47,7 +47,7 @@ public class GlobalDefaultExceptionHandler {
         if (e instanceof UnsatisfiedServletRequestParameterException
                 || e instanceof MissingServletRequestParameterException
                 || e instanceof MethodArgumentTypeMismatchException) {
-            log.warn("can not find validate request mapping at {}, params is {}", request.getRequestURI(), params);
+            log.warn("can not find validate request mapping at {}, params is {}", request.getRequestURI(), params, e);
             response.setStatus(HttpStatus.SC_BAD_REQUEST);
             return new ModelAndView();
         }
@@ -64,7 +64,7 @@ public class GlobalDefaultExceptionHandler {
                 desc = codeMsgPair.getRight();
 
                 log.info("service exception happened at:{}, code:{}, desc:{},  params is: {}",
-                        url, code, desc, params);
+                        url, code, desc, params,e);
             } else {
                 code = 500;
                 desc = "服务暂时异常,请稍等";
@@ -75,7 +75,7 @@ public class GlobalDefaultExceptionHandler {
             ModelAndView mv = getErrorJsonView(code, desc);
             return mv;
         }
-        log.warn("gateway other exception happened at uri:{}, request: {}, params is: {}, e  {}",
+        log.warn("other exception happened at uri:{}, request: {}, params is: {}, e  {}",
                  url, params, e);
 
         //其他异常，返回500

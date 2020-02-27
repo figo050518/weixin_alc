@@ -5,13 +5,14 @@ import com.fcgo.weixin.common.annotation.IgnoreSession;
 import com.fcgo.weixin.common.constants.HeadKey;
 import com.fcgo.weixin.common.exception.SessionExpireException;
 import com.fcgo.weixin.common.util.HttpRequestUtils;
-import com.fcgo.weixin.service.AccountService;
+import com.fcgo.weixin.service.LoginService;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -32,6 +33,8 @@ public class SecurityInterceptor implements HandlerInterceptor {
 
     private final Logger logger = LoggerFactory.getLogger(SecurityInterceptor.class);
 
+    @Autowired
+    private LoginService loginService;
 
     //限制本地IP访问
     @Setter
@@ -161,7 +164,7 @@ public class SecurityInterceptor implements HandlerInterceptor {
                                  Map<String, Object> params,Map<String, String> paramsOfHead) throws SessionExpireException {
         // params为空,说明接口无参数, 无需校验
         String url = httpServletRequest.getRequestURI();
-
+        logger.info("in validateSession url {} paramsOfHead {}",url, paramsOfHead);
         //5 解析客户端传入的COOKIE中的session值
         Cookie[] cookies = httpServletRequest.getCookies();
         String jSessionID = null;
@@ -175,7 +178,7 @@ public class SecurityInterceptor implements HandlerInterceptor {
             }
         }
 
-        //如果cookie中没有jSessionID , 但接口又必须校验会话, 则返回 HTTP 401, 需要重新登录.
+        //如果cookie中没有jSessionID , 但接口又必须校验会话, 则返回 HTTP 411, 需要重新登录.
         if (jSessionID == null) {
             jSessionID = paramsOfHead.get(HeadKey.token);
             logger.warn("check session failed, can not find session id in cookies, check session info failed, url {}, get from local {}",
@@ -188,13 +191,16 @@ public class SecurityInterceptor implements HandlerInterceptor {
             throw new SessionExpireException(); //重新登录
         }
 
-        if (AccountService.isLoginBySession(jSessionID)){
-            logger.warn("match session in local cache, url {} jSessionID {}", url, jSessionID);
-            return;
-        }
         logger.warn("not match session in local cache, url {} jSessionID {}", url, jSessionID);
         HttpSession currentSession = httpServletRequest.getSession(false);
-        if (Objects.nonNull(currentSession) && currentSession.getId().equals(jSessionID)){
+        boolean sessionExist;
+        if (sessionExist=Objects.nonNull(currentSession) && currentSession.getId().equals(jSessionID)){
+            logger.info("match session id {}", jSessionID);
+            return;
+        }
+        logger.warn("check session,jSessionID {} sessionExist {}", jSessionID, sessionExist);
+        if(loginService.isLogin(jSessionID)){
+            logger.warn("check session, hit cache or DB,jSessionID {} ", jSessionID);
             return;
         }
         throw new SessionExpireException();

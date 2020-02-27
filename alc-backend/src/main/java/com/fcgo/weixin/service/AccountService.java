@@ -1,7 +1,5 @@
 package com.fcgo.weixin.service;
 
-import com.alibaba.fastjson.JSONObject;
-import com.fcgo.weixin.common.constants.HeadKey;
 import com.fcgo.weixin.common.exception.ServiceException;
 import com.fcgo.weixin.common.util.DateUtil;
 import com.fcgo.weixin.common.util.MD5;
@@ -9,34 +7,26 @@ import com.fcgo.weixin.common.util.PageHelper;
 import com.fcgo.weixin.convert.AccountConvert;
 import com.fcgo.weixin.model.PageResponseBO;
 import com.fcgo.weixin.model.backend.bo.AccountBo;
-import com.fcgo.weixin.model.backend.constant.AccountConstant;
 import com.fcgo.weixin.model.backend.req.AccountListReq;
-import com.fcgo.weixin.model.backend.resp.LoginUserResp;
 import com.fcgo.weixin.model.constant.AccountStatus;
 import com.fcgo.weixin.model.constant.DelStatus;
 import com.fcgo.weixin.persist.dao.AccountMapper;
 import com.fcgo.weixin.persist.model.Account;
 import com.fcgo.weixin.persist.model.Brand;
-import com.fcgo.weixin.util.LoggerManager;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
 public class AccountService {
-    private static Logger loginLog = LoggerManager.getLoginLog();
 
-    private static Logger logger = LoggerFactory.getLogger(AccountService.class);
+    private static Logger logger = LoggerFactory.getLogger(LoginService.class);
 
     @Autowired
     private AccountMapper accountMapper;
@@ -44,9 +34,6 @@ public class AccountService {
     @Autowired
     private BrandService brandService;
 
-    private static final Map<String,HttpSession> sidSessionCache = new HashMap<>(16);
-
-    private static final Map<Integer,HttpSession> userIdSessionCache = new HashMap<>(16);
 
     public int add(AccountBo bo){
         logger.info("in add account, {}", bo);
@@ -136,150 +123,14 @@ public class AccountService {
     }
 
 
-    public LoginUserResp login(HttpServletRequest request, AccountBo bo){
-        loginLog.info("login {}", bo);
-        String name = bo.getName();
-        if (StringUtils.isBlank(name)){
-            throw new ServiceException(401,"用户名不能为空");
-        }
-        String pwd = bo.getPwd();
-        if (StringUtils.isBlank(pwd)){
-            throw new ServiceException(401,"密码不能为空");
-        }
-        name = name.trim();
-        pwd = pwd.trim();
-        //get from DB
-        Account account = accountMapper.selectByName(name);
-        if (Objects.isNull(account)){
-            loginLog.warn("login user not exist {}", bo);
-            throw new ServiceException(401,"用户名或密码错误");
-        }
-        //check status
-        boolean illegal = account.getStatus().equals(AccountStatus.USELESS.getCode());
-        if (illegal){
-            throw new ServiceException(401, "用户失效");
-        }
-        String pwdInDB = account.getPwd();
-        String pwdAfterEncrypt = MD5.md5(pwd);
-        boolean pwdMatched = pwdAfterEncrypt.equals(pwdInDB);
-        if (!pwdMatched){
-            loginLog.warn("login pwd not match req {} pwdAfterEncrypt {} pwdInDB {}", bo, pwdAfterEncrypt, pwdInDB);
-            throw new ServiceException(401,"用户名或密码错误");
-        }
-        final Integer uid = account.getId();
-        LoginUserResp resp = null;
-        //hit in session
-        HttpSession session = request.getSession(false);
-        boolean sessionExists;
-        if (sessionExists = Objects.nonNull(session)){
-            String userInfo = (String)session.getAttribute(AccountConstant.SESSION_USER_INFO_KEY);
-            if (StringUtils.isNotBlank(userInfo)){
-                resp = JSONObject.parseObject(userInfo, LoginUserResp.class);
-                loginLog.info("login hit user in session req {} user {} ",bo, resp);
-                return resp;
-            }
-        }
-        //no session, first login
-
-        if(pwdMatched){
-            //create session
-            session = request.getSession();
-            resp = LoginUserResp.builder()
-                    .uid(uid)
-                    .brandId(account.getBrandId())
-                    .userName(name)
-                    .sessionKey(session.getId())
-                    .build();
-            String userInfo = JSONObject.toJSONString(resp);
-            session.setAttribute(AccountConstant.SESSION_USER_INFO_KEY, userInfo);
-            session.setMaxInactiveInterval(3600);
-            //
-            HttpSession oldSession = userIdSessionCache.get(uid);
-            if (Objects.nonNull(oldSession)){
-                String sessionId = oldSession.getId();
-                loginLog.info("find old session, do invalidate {}, sessionId {}",bo, sessionId);
-                sidSessionCache.remove(sessionId);
-            }
-            userIdSessionCache.put(uid, session);
-            sidSessionCache.put(session.getId(), session);
-        }
-        return resp;
-    }
-
-    public boolean logout(HttpSession session, AccountBo bo){
-        String name = bo.getName();
-        if (StringUtils.isBlank(name)){
-            throw new ServiceException(401,"用户名不能为空");
-        }
-        name = name.trim();
-        //get from DB
-        Account account = accountMapper.selectByName(name);
-        if (Objects.isNull(account)){
-            loginLog.warn("login user not exist {}", bo);
-            throw new ServiceException(401,"用户名错误");
-        }
-        //check status
-        boolean illegal = account.getStatus().equals(AccountStatus.USELESS.getCode());
-        if (illegal){
-            throw new ServiceException(401, "用户失效");
-        }
-
-        final Integer uid = account.getId();
-        //hit in session
-        boolean sessionExists = Objects.nonNull(session);
 
 
-        if(sessionExists){
-            //
-            HttpSession oldSession = userIdSessionCache.get(uid);
-            if (Objects.nonNull(oldSession)){
-                String sessionId = oldSession.getId();
-                loginLog.info("log out,find old session, do invalidate {}, sessionId {}",bo, sessionId);
-                oldSession.invalidate();
-            }
-            session.invalidate();
-            userIdSessionCache.remove(uid);
-            sidSessionCache.remove(session.getId());
-            return true;
-        }
-        return false;
-    }
-
-    public static boolean isLoginBySession(String sessionId){
-        return sidSessionCache.containsKey(sessionId);
-    }
-
-    public LoginUserResp getLoginUser(Integer uid){
-        HttpSession session = userIdSessionCache.get(uid);
-
-
-        LoginUserResp resp = convertFromSession(session);
-        return resp;
-    }
-
-    private static LoginUserResp convertFromSession(HttpSession session){
-        if (Objects.isNull(session)){
-            return null;
-        }
-        String userInfoStr = (String) session.getAttribute(AccountConstant.SESSION_USER_INFO_KEY);
-        logger.info("getLoginUser from session {}", userInfoStr);
-        LoginUserResp resp = JSONObject.parseObject(userInfoStr, LoginUserResp.class);
-        return resp;
-    }
-
-    public boolean isAdmin(Integer uid,String userName){
+    public static boolean isAdmin(Integer uid,String userName){
         return Objects.nonNull(uid) && uid == 1
                 && StringUtils.isNotBlank(userName) && "admin".equals(userName);
     }
 
-    public LoginUserResp getLoginUser(){
-        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        HttpServletRequest request = attributes.getRequest();
-        String sessionKey = request.getHeader(HeadKey.token);
-        HttpSession session =  sidSessionCache.get(sessionKey);
-        LoginUserResp resp = convertFromSession(session);
-        logger.info("get login user {}", resp);
-        return resp;
-    }
+
+
 
 }

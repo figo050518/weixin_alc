@@ -6,12 +6,14 @@ import com.fcgo.weixin.model.PageResponseBO;
 import com.fcgo.weixin.model.backend.bo.OrderBo;
 import com.fcgo.weixin.model.backend.req.OrderDetailReq;
 import com.fcgo.weixin.model.backend.req.OrderListReq;
+import com.fcgo.weixin.model.backend.req.OrderProcessReq;
 import com.fcgo.weixin.service.OrderService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -39,4 +41,13 @@ public class OrderController {
                 .data(pageResponseBO).build();
     }
 
+    @RequestMapping("/process")
+    public ApiResponse process(@RequestBody OrderProcessReq req){
+        logger.info("order process req {}", req);
+        boolean result = orderService.process(req);
+        return new ApiResponse.ApiResponseBuilder()
+                .code(200)
+                .message("successful")
+                .data(result).build();
+    }
 }
