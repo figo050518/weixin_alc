@@ -22,7 +22,11 @@ public class Order {
 
     private String buyerPhone;
 
-    private String status;
+    private String status,
+    /**
+     * 期望值（当前），用于更新状态
+     */
+            exceptStatus;
 
     private String payStatus;
 

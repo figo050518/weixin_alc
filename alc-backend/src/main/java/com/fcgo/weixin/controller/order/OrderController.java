@@ -42,7 +42,7 @@ public class OrderController {
     }
 
     @RequestMapping("/process")
-    public ApiResponse process(@RequestBody OrderProcessReq req){
+    public ApiResponse process(@RequestBody OrderProcessReq req) throws SessionExpireException {
         logger.info("order process req {}", req);
         boolean result = orderService.process(req);
         return new ApiResponse.ApiResponseBuilder()

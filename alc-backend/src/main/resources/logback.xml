@@ -241,9 +241,9 @@
     <logger name="org.quartz.core.QuartzSchedulerThread" level="WARN" />
     <!-- root级别   DEBUG -->
     <root level="INFO">
-        <!--
+        <!-- -->
         <appender-ref ref="STDOUT" />
-        -->
+
         <!-- 文件输出 -->
         <appender-ref ref="DEBUG" />
 		<appender-ref ref="WARN" />

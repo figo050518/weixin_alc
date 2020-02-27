@@ -128,6 +128,19 @@
       </if>
     </trim>
   </insert>
+
+
+  <update id="updateOrderStatusByOrderCode" parameterType="com.fcgo.weixin.persist.model.Order">
+    update order
+    <set>
+        status = #{status,jdbcType=CHAR},
+        update_time = #{updateTime,jdbcType=INTEGER}
+    </set>
+    where code = #{code,jdbcType=VARCHAR}
+    and status = #{exceptStatus,jdbcType=CHAR}
+  </update>
+
+
   <update id="updateByPrimaryKeySelective" parameterType="com.fcgo.weixin.persist.model.Order">
     update order
     <set>

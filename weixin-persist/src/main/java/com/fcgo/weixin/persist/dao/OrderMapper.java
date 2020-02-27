@@ -25,4 +25,5 @@ public interface OrderMapper {
 
     Order selectByOrderCode(Order record);
 
+    int updateOrderStatusByOrderCode(Order record);
 }

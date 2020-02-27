@@ -13,6 +13,7 @@ import com.fcgo.weixin.model.backend.req.OrderDetailReq;
 import com.fcgo.weixin.model.backend.req.OrderListReq;
 import com.fcgo.weixin.model.backend.req.OrderProcessReq;
 import com.fcgo.weixin.model.backend.resp.LoginUserResp;
+import com.fcgo.weixin.model.constant.OrderPayStatus;
 import com.fcgo.weixin.model.constant.OrderStatus;
 import com.fcgo.weixin.persist.dao.BrandMapper;
 import com.fcgo.weixin.persist.dao.OrderMapper;
@@ -197,16 +198,78 @@ public class OrderService {
     }
 
 
-    public boolean process(OrderProcessReq req){
+    public boolean process(OrderProcessReq req) throws SessionExpireException {
+        String orderCode;
+        if (StringUtils.isBlank(orderCode=req.getOrderCode())){
+            logger.warn("process order fail, order code empty");
+            throw new ServiceException(401, "订单号错误");
+        }
         Integer statusCode = req.getStatus();
         if (Objects.isNull(statusCode)){
-            throw new ServiceException(401, "status 错误");
+            logger.warn("process order status illegal, {}", req);
+            throw new ServiceException(401, "参数[status]错误");
         }
-
-
         OrderStatus targetOrderStatus = OrderStatus.getOrderStatus(statusCode);
+        if (Objects.isNull(targetOrderStatus)){
+            logger.warn("process order status illegal not in Enum, {}", req);
+            throw new ServiceException(401, "参数[status]错误");
+        }
+        LoginUserResp loginUserResp = loginService.getLoginUser();
+        Order orderCondition = Order.builder().code(orderCode).brandId(loginUserResp.getBrandId()).build();
+        Order order = orderMapper.selectByOrderCode(orderCondition);
+        if (Objects.isNull(order)){
+            logger.warn("process order fail not find order, req {} user {}", req, loginUserResp);
+            throw new ServiceException(401, "订单非你所属");
+        }
+        String payStatus;
+        if (Objects.isNull(payStatus=order.getPayStatus())){
+            logger.warn("process order fail order pay status illegal, req {} user {}", req, loginUserResp);
+            throw new ServiceException(401, "订单支付状态异常");
+        }
+        if(!Integer.valueOf(payStatus).equals(OrderPayStatus.PAID.getCode())){
+            logger.warn("process order fail order pay status illegal,pay status {} req {} user {}", payStatus, req, loginUserResp);
+            throw new ServiceException(401, "订单支付状态异常");
+        }
+        OrderStatus exceptStatus = null;
+        switch (targetOrderStatus){
+            case RECEIVED:
+                exceptStatus = OrderStatus.WAITING_CONFIRM;
+                break;
+            case MAKE_SUCCESS:
+                exceptStatus = OrderStatus.RECEIVED;
+                break;
+            case DELIVER:
+                exceptStatus = OrderStatus.MAKE_SUCCESS;
+                break;
+            case DONE:
+                exceptStatus = OrderStatus.DELIVER;
+                break;
+            case SELLER_PLAY_BUYER:
+                logger.info("process order is cancel,  exceptStatus {} targetOrderStatus {} req {} login user {}",
+                        exceptStatus, targetOrderStatus, req, loginUserResp);
+                return cacelBySeller(order, loginUserResp) > 0;
+            default:
+                throw new ServiceException(401, "订单不支持修改");
+        }
+        logger.info("process order exceptStatus {} targetOrderStatus {} req {} login user {}",
+                exceptStatus, targetOrderStatus, req, loginUserResp);
+        int cdt = DateUtil.getCurrentTimeSeconds();
+        Order updateCondition = Order.builder().code(orderCode)
+                .updateTime(cdt)
+                .exceptStatus(String.valueOf(exceptStatus.getCode()))
+                .status(String.valueOf(targetOrderStatus.getCode()))
+                .build();
+        int result = orderMapper.updateOrderStatusByOrderCode(updateCondition);
+        logger.info("process order result {} req {} login user {}", result, req, loginUserResp);
+        return result>0;
+    }
 
-        return false;
+
+    public int cacelBySeller(Order order,LoginUserResp loginUserResp){
+        logger.info("cacelBySeller {} ,order {}", loginUserResp, order);
+
+
+        return -1;
     }
 
 }
