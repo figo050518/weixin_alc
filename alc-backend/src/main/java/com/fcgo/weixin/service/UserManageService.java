@@ -11,6 +11,7 @@ import com.fcgo.weixin.persist.dao.UserMapper;
 import com.fcgo.weixin.persist.model.Brand;
 import com.fcgo.weixin.persist.model.User;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,12 +37,15 @@ public class UserManageService {
         PageResponseBO.PageResponseBOBuilder<UserBo> pageBuilder =  PageResponseBO.builder();
         pageBuilder.currentPage(page);
         pageBuilder.pageSize(pageSize);
-        int total = userMapper.selectCnt();
+        String nickName = StringUtils.isBlank(req.getNickName()) ? null : req.getNickName().trim();
+        String phone = StringUtils.isBlank(req.getPhone()) ? null : req.getPhone().trim();
+        User condition = User.builder().nickName(nickName).phone(phone).build();
+        int total = userMapper.selectCnt(condition);
         if (total==0){
             return pageBuilder.build();
         }
         int offset = PageHelper.getOffsetOfMysql(page,pageSize);
-        List<User> dolist = userMapper.selectAll(offset, pageSize);
+        List<User> dolist = userMapper.selectAll(condition,offset, pageSize);
 
         List<UserBo> bos = dolist.stream().map(UserConvert::do2Bo).collect(Collectors.toList());
         int totalPage = PageHelper.getPageTotal(total, pageSize);

@@ -8,11 +8,13 @@ import lombok.ToString;
 @ToString
 public class ProductListReq extends PageRequestBO {
 
-    private Integer uid;
-
-    private String userName;
-
     private Integer brandId;
+
+    private Integer productSortId;
+
+    private Integer status;
+
+    private Integer verifyStatus;
 
     private String productName;
 }

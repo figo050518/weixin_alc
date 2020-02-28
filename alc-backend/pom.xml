@@ -9,7 +9,7 @@
 		<version>SNAPSHOT-0.0.1</version>
 	</parent>
 	<artifactId>alc-backend</artifactId>
-	<name>fcgo微信后台系统</name>
+	<name>后台系统</name>
 	<packaging>war</packaging>
 	<dependencies>
 
@@ -125,6 +125,11 @@
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.fcgo.weixin</groupId>
+			<artifactId>http-client</artifactId>
 		</dependency>
 
 		<dependency>

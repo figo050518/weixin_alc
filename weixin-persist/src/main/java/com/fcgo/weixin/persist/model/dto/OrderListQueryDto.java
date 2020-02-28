@@ -21,4 +21,6 @@ public class OrderListQueryDto {
     private String buyerPhone;
 
     private String status;
+
+    private String payStatus;
 }

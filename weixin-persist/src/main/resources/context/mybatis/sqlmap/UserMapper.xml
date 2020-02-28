@@ -127,11 +127,20 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <select id="selectCnt" resultType="int">
-    select count(*) from `user`
+    select count(*) from `user` where 1=1 <include refid="where_select_all" />
   </select>
+  <sql id="where_select_all">
+    <if test="condition.nickName != null">
+      and nick_name like concat('%',#{condition.nickName,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="condition.phone != null">
+     and phone = #{condition.phone,jdbcType=VARCHAR}
+    </if>
+  </sql>
   <select id="selectAll" resultMap="BaseResultMap">
     select <include refid="Base_Column_List"/>
-    from `user` where 1=1 limit #{offset},#{limit}
+    from `user` where 1=1 <include refid="where_select_all" />
+    limit #{offset},#{limit}
   </select>
 
   <select id="selectByIds" resultMap="BaseResultMap">

@@ -18,8 +18,12 @@ public class OrderListReq extends PageRequestBO {
 
     private String endTime;
 
+    private Integer brandId;
+
     private String buyerPhone;
 
     private String status;
+
+    private String payStatus;
 
 }

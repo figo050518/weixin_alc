@@ -1,0 +1,48 @@
+<?xml  version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+    <!-- rest template -->
+    <bean id="service-httpClient" class="com.fcgo.weixin.httpclient.HttpClientsFactory">
+        <property name="connectionRequestTimeout" value="${httpclient.connectReqTimeout:6000}"/>
+        <property name="socketTimeout" value="${httpclient.socketTimeout:1900}"/>
+        <property name="connectionTimeout" value="${httpclient.connectTimeout:6000}"/>
+        <property name="maxTotal" value="${httpclient.maxTotal:200}"/>
+        <property name="defaultMaxPerRoute" value="${httpclient.defaultMaxPerRoute:100}"/>
+        <!-- 检测http client 连接池中连接一定时间内的有效性 -->
+        <property name="validateAfterInactivity" value="${httpclient.validateAfterInactivity:0}"/>
+    </bean>
+    <bean id="service-clientHttpRequestFactory"
+          class="org.springframework.http.client.HttpComponentsClientHttpRequestFactory">
+        <constructor-arg ref="service-httpClient"/>
+    </bean>
+    
+    <bean id="errorHandler" class="com.fcgo.weixin.httpclient.RestClientErrorHandler"/>
+    <bean id="service-restTemplate" class="org.springframework.web.client.RestTemplate" primary="true">
+        <constructor-arg ref="service-clientHttpRequestFactory"/>
+        <property name="messageConverters">
+            <list>
+                <bean class="org.springframework.http.converter.ByteArrayHttpMessageConverter"/>
+                <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                  <property name="supportedMediaTypes">
+                     <list>
+                        <value>text/plain;charset=UTF-8</value>
+                		<value>text/html;charset=UTF-8</value>
+                		<value>text/xml;charset=GBK</value>
+                     </list>
+                  </property>
+                </bean>
+                <bean class="org.springframework.http.converter.ResourceHttpMessageConverter"/>
+                <bean class="org.springframework.http.converter.FormHttpMessageConverter"/>
+                <bean class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
+                    <property name="supportedMediaTypes" value="application/json;charset=UTF-8"/>
+                </bean>
+            </list>
+        </property>
+        <property name="errorHandler" ref="errorHandler"/>
+    </bean>
+    
+
+</beans>

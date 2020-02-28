@@ -188,28 +188,40 @@
   <select id="selectAllByBrandId" resultMap="BaseResultMap">
     select <include refid="Base_Column_List"/> from product
     where <include refid="where_select_all_by_brand"/>
+    order by create_time desc
     limit #{offset},#{limit}
   </select>
   <sql id="where_select_all_by_brand">
-    brand_id = #{condition.brandId,jdbcType=INTEGER}
-    <if test="condition.name != null">
-      and `name` like concat('%',#{condition.name},'%')
-    </if>
+    1=1
+    <include refid="where_select_all"/>
   </sql>
 
   <select id="selectCnt" parameterType="com.fcgo.weixin.persist.model.Product" resultType="int">
-    select count(*) from product where <include refid="where_select_all"/>
+    select count(*) from product where 1=1 <include refid="where_select_all"/>
   </select>
 
   <select id="selectAll" resultMap="BaseResultMap">
     select <include refid="Base_Column_List"/> from product
-    where <include refid="where_select_all"/>
+    where 1=1 <include refid="where_select_all"/>
+    order by create_time desc
     limit #{offset},#{limit}
   </select>
+
   <sql id="where_select_all">
-    1=1
     <if test="condition.name != null">
       and `name` like concat('%',#{condition.name},'%')
+    </if>
+    <if test="condition.productSort != null">
+      and product_sort = #{condition.productSort,jdbcType=INTEGER}
+    </if>
+    <if test="condition.brandId != null">
+      and brand_id = #{condition.brandId,jdbcType=INTEGER},
+    </if>
+    <if test="condition.status != null">
+      and status = #{condition.status,jdbcType=INTEGER}
+    </if>
+    <if test="condition.verifyStatus != null">
+      and verify_status = #{condition.verifyStatus,jdbcType=INTEGER}
     </if>
   </sql>
 

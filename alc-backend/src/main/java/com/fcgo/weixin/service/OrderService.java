@@ -1,11 +1,14 @@
 package com.fcgo.weixin.service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.fcgo.weixin.common.exception.ServiceException;
 import com.fcgo.weixin.common.exception.SessionExpireException;
 import com.fcgo.weixin.common.util.DateUtil;
 import com.fcgo.weixin.common.util.PageHelper;
+import com.fcgo.weixin.common.util.SHA256;
 import com.fcgo.weixin.convert.OrderConvert;
 import com.fcgo.weixin.convert.OrderGoodsConvert;
+import com.fcgo.weixin.httpclient.RestTemplateUtils;
 import com.fcgo.weixin.model.PageResponseBO;
 import com.fcgo.weixin.model.backend.bo.OrderBo;
 import com.fcgo.weixin.model.backend.bo.OrderGoodsBo;
@@ -29,7 +32,10 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.*;
 import java.util.function.Supplier;
@@ -61,6 +67,19 @@ public class OrderService {
     @Autowired
     private UserMapper userMapper;
 
+    @Value("${alc.service.order.url}")
+    private String orderServiceUrl;
+
+    private static final String API_CANCLE_ORDER_BY_SELLER = "/order/api/refundFromBackend";
+
+    public String getCancleOrderUrl(){
+        return new StringBuilder(orderServiceUrl).append(API_CANCLE_ORDER_BY_SELLER).toString();
+    }
+
+    @Autowired
+    @Qualifier("service-restTemplate")
+    private RestTemplate restTemplate;
+
     OrderListQueryDto check(OrderListReq req){
          String orderCode = req.getOrderCode();
          if (StringUtils.isNotBlank(orderCode)){
@@ -83,11 +102,17 @@ public class OrderService {
              status = status.trim();
          }
 
+         String payStatus = req.getPayStatus();
+        if (StringUtils.isNotBlank(payStatus)){
+            payStatus = payStatus.trim();
+        }
+
          return OrderListQueryDto.builder().orderCode(orderCode)
                  .status(status)
                  .startTime(startTime)
                  .endTime(endTime)
                  .buyerPhone(buyerPhone)
+                 .payStatus(payStatus)
                  .build();
     }
 
@@ -116,6 +141,8 @@ public class OrderService {
         Supplier<List<Order>> prdListSupplier;
         if (isAdmin){
             logger.info("get product list user is admin, req {}", req);
+            Integer brandId = req.getBrandId();
+            condition.setBrandId(brandId);
             totalSupplier = ()-> orderMapper.selectCnt(condition);
             prdListSupplier = () -> orderMapper.selectAll(condition, offset, pageSize);
         }else{
@@ -247,7 +274,7 @@ public class OrderService {
             case SELLER_PLAY_BUYER:
                 logger.info("process order is cancel,  exceptStatus {} targetOrderStatus {} req {} login user {}",
                         exceptStatus, targetOrderStatus, req, loginUserResp);
-                return cacelBySeller(order, loginUserResp) > 0;
+                return cancelBySeller(order, loginUserResp) > 0;
             default:
                 throw new ServiceException(401, "订单不支持修改");
         }
@@ -265,11 +292,28 @@ public class OrderService {
     }
 
 
-    public int cacelBySeller(Order order,LoginUserResp loginUserResp){
+    public int cancelBySeller(Order order,LoginUserResp loginUserResp){
         logger.info("cacelBySeller {} ,order {}", loginUserResp, order);
+        String url = getCancleOrderUrl();
+        Map<String,Object> params = new HashMap<>(2);
+        params.put("orderId", order.getId());
+        params.put("accessCode", SHA256.getAccessCode());
 
+        int result = -1;
+        try {
+            JSONObject resp = RestTemplateUtils.post(restTemplate, url, params, JSONObject.class);
+            Integer businessCode = resp.getInteger("businessCode");
+            logger.info("cancel order url {} params {} resp {}", url, params, resp);
+            if (Objects.nonNull(businessCode)&& businessCode.equals(100)){
+                result = 1;
+            }
 
-        return -1;
+        } catch (Exception e) {
+
+            logger.warn("call order cancel fail, url {} params {}", url, params, e);
+        }finally {
+            return result;
+        }
     }
 
 }

@@ -5,7 +5,10 @@ import lombok.Data;
 import lombok.ToString;
 
 @Data
-@ToString
 public class UserListReq extends PageRequestBO {
+
+    private String nickName;
+
+    private String phone;
 
 }

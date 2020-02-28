@@ -68,9 +68,15 @@ public class ProductService {
         int offset = PageHelper.getOffsetOfMysql(page,pageSize);
         Supplier<Integer> totalSupplier;
         Supplier<List<Product>> prdListSupplier;
+        Product condition = Product.builder()
+                .name(prdName)
+                .productSort(req.getProductSortId())
+                .status(req.getStatus())
+                .verifyStatus(req.getVerifyStatus())
+                .build();
         if (isAdmin){
             logger.info("get product list user is admin, req {}", req);
-            Product condition = Product.builder().name(prdName).build();
+            condition.setBrandId(req.getBrandId());
             totalSupplier = ()-> productMapper.selectCnt(condition);
             prdListSupplier = () -> productMapper.selectAll(condition, offset, pageSize);
         }else{
@@ -79,7 +85,7 @@ public class ProductService {
                 throw new ServiceException(401, "品牌ID不正确");
             }
             logger.info("get product list user is brand, req {}", req);
-            Product condition = Product.builder().brandId(brandId).name(prdName).build();
+            condition.setBrandId(brandId);
             totalSupplier = ()->  productMapper.selectCntByBrandId(condition);
             prdListSupplier = () -> productMapper.selectAllByBrandId(condition, offset, pageSize);
         }

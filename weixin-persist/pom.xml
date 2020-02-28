@@ -10,7 +10,7 @@
 
 	<artifactId>weixin-persist</artifactId>
 
-	<name>fcgo微信数据持久化模块</name>
+	<name>数据持久化模块</name>
 
 	<packaging>jar</packaging>
 

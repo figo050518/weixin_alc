@@ -131,18 +131,18 @@
 
 
   <update id="updateOrderStatusByOrderCode" parameterType="com.fcgo.weixin.persist.model.Order">
-    update order
+    update `order`
     <set>
-        status = #{status,jdbcType=CHAR},
+        `status` = #{status,jdbcType=CHAR},
         update_time = #{updateTime,jdbcType=INTEGER}
     </set>
-    where code = #{code,jdbcType=VARCHAR}
-    and status = #{exceptStatus,jdbcType=CHAR}
+    where `code` = #{code,jdbcType=VARCHAR}
+    and `status` = #{exceptStatus,jdbcType=CHAR}
   </update>
 
 
   <update id="updateByPrimaryKeySelective" parameterType="com.fcgo.weixin.persist.model.Order">
-    update order
+    update `order`
     <set>
       <if test="code != null">
         code = #{code,jdbcType=VARCHAR},
@@ -206,7 +206,7 @@
 
   <sql id="where_select_all">
     <if test="dto.orderCode !=null">
-      and code = #{dto.orderCode,jdbcType=VARCHAR}
+      and `code` = #{dto.orderCode,jdbcType=VARCHAR}
     </if>
     <if test="dto.brandId !=null">
       and brand_id = #{dto.brandId,jdbcType=INTEGER}
@@ -217,6 +217,9 @@
     <if test="dto.status !=null">
       and status = #{dto.status,jdbcType=CHAR}
     </if>
+    <if test="dto.payStatus !=null">
+      and pay_status = #{dto.payStatus,jdbcType=CHAR}
+    </if>
     <if test="dto.startTime !=null and dto.endTime !=null">
       and (
       create_time <![CDATA[ >= ]]> #{dto.startTime,jdbcType=INTEGER} and create_time <![CDATA[ < ]]> #{dto.endTime,jdbcType=INTEGER}
@@ -226,7 +229,9 @@
   </sql>
 
   <select id="selectAll" resultMap="BaseResultMap">
-    select <include refid="Base_Column_List" /> from `order` where 1=1 <include refid="where_select_all"/> limit #{offset}, #{limit}
+    select <include refid="Base_Column_List" /> from `order` where 1=1 <include refid="where_select_all"/>
+    order by create_time desc
+    limit #{offset}, #{limit}
   </select>
 
 </mapper>

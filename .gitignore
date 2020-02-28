@@ -17,3 +17,4 @@ weixin-persist/target/
 weixin-web-common/target
 weixin-web-common/.settings/
 model/target/
+http-client/target/
