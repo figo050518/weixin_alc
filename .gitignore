@@ -6,6 +6,7 @@
 *.iml
 *.classpath
 */.classpath
+.idea/workspace.xml
 weixin-backend/.settings/
 weixin-backend/target
 weixin-common/.settings/
