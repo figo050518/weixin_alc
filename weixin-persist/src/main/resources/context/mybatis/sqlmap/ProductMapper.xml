@@ -134,8 +134,8 @@
       <if test="name != null">
         `name` = #{name,jdbcType=VARCHAR},
       </if>
-      <if test="eNname != null">
-        en_name = #{eNname,jdbcType=VARCHAR},
+      <if test="enName != null">
+        en_name = #{enName,jdbcType=VARCHAR},
       </if>
       <if test="unit != null">
         unit = #{unit,jdbcType=VARCHAR},
@@ -215,7 +215,7 @@
       and product_sort = #{condition.productSort,jdbcType=INTEGER}
     </if>
     <if test="condition.brandId != null">
-      and brand_id = #{condition.brandId,jdbcType=INTEGER},
+      and brand_id = #{condition.brandId,jdbcType=INTEGER}
     </if>
     <if test="condition.status != null">
       and status = #{condition.status,jdbcType=INTEGER}
