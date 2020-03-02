@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 @RestController
@@ -121,7 +123,29 @@ public class AccountController {
         return new ApiResponse.ApiResponseBuilder()
                 .code(200)
                 .data(row)
-                .message("get account list successful")
+                .message("delete account  successful")
+                .build();
+    }
+
+    @RequestMapping(value = "/getSessionFromCache")
+    public ApiResponse getSessionFromCache(){
+        Map<String,Map> result = new HashMap<>(2);
+        result.put("sessionId", LoginService.getSidSessionCache());
+        result.put("uid", LoginService.getUserIdSessionCache());
+        return new ApiResponse.ApiResponseBuilder()
+                .code(200)
+                .data(result)
+                .message("get account list in cache successful")
+                .build();
+    }
+
+    @RequestMapping(value = "/cleanSessionFromCache")
+    public ApiResponse cleanSessionFromCache(){
+        LoginService.getSidSessionCache().clear();
+        LoginService.getUserIdSessionCache().clear();
+        return new ApiResponse.ApiResponseBuilder()
+                .code(200)
+                .message("clean account list in cache successful")
                 .build();
     }
 }

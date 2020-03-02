@@ -15,6 +15,7 @@ import com.fcgo.weixin.persist.dao.AccountMapper;
 import com.fcgo.weixin.persist.model.Account;
 import com.fcgo.weixin.persist.model.AccountLoginRecord;
 import com.fcgo.weixin.util.LoggerManager;
+import lombok.Getter;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,8 +40,10 @@ public class LoginService {
     @Autowired
     private AccountLoginRecordMapper accountLoginRecordMapper;
 
+    @Getter
     private static final Map<String,LoginUserResp> sidSessionCache = new HashMap<>(16);
 
+    @Getter
     private static final Map<Integer,LoginUserResp> userIdSessionCache = new HashMap<>(16);
 
 
@@ -232,6 +235,5 @@ public class LoginService {
         logger.info("finally get login user  {}",  resp);
         return resp;
     }
-
 
 }

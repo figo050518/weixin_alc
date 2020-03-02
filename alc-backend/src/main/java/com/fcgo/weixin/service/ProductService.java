@@ -141,12 +141,13 @@ public class ProductService {
         return condition.getId();
     }
 
-    public int update(ProductBo req) throws SessionExpireException {
+    public int update(ProductBo req) {
         Integer id;
         if (Objects.isNull(id=req.getId()) || id<1){
             throw new ServiceException(401,"id不正确");
         }
         Product condition = ProductConvert.bo2Do4Update(req);
+        condition.setVerifyStatus(PrdAuditStatus.INIT.getCode());
         int rows = productMapper.updateByPrimaryKeySelective(condition);
         return rows;
     }
