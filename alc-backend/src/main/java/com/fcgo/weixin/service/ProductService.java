@@ -141,13 +141,38 @@ public class ProductService {
         return condition.getId();
     }
 
-    public int update(ProductBo req) {
+    public int update(ProductBo req) throws SessionExpireException {
         Integer id;
         if (Objects.isNull(id=req.getId()) || id<1){
             throw new ServiceException(401,"id不正确");
         }
+        LoginUserResp userResp = loginService.getLoginUser();
+        if (Objects.isNull(userResp)){
+            throw new SessionExpireException();
+        }
+        Integer uid = userResp.getUid();
+        if (Objects.isNull(uid)){
+            throw new ServiceException(401,"uid不正确");
+        }
+        String userName = userResp.getUserName();
+        if (StringUtils.isBlank(userName)){
+            throw new ServiceException(401, "用户名不正确");
+        }
+        boolean isAdmin = AccountService.isAdmin(uid, userName);
+        Product product = productMapper.selectByPrimaryKey(id);
+        if (Objects.isNull(product)){
+            throw new ServiceException(401, "商品不存在");
+        }
+        Integer statusInDB = product.getStatus();
+        if (!isAdmin){
+            if(Objects.nonNull(statusInDB) && PrdShelfStatus.ON.getCode() == statusInDB.intValue()){
+                throw new ServiceException(401, "商品下架后才可以修改");
+            }
+        }
         Product condition = ProductConvert.bo2Do4Update(req);
-        condition.setVerifyStatus(PrdAuditStatus.INIT.getCode());
+        if(!isAdmin){
+            condition.setVerifyStatus(PrdAuditStatus.INIT.getCode());
+        }
         int rows = productMapper.updateByPrimaryKeySelective(condition);
         return rows;
     }
@@ -255,6 +280,10 @@ public class ProductService {
         }
         Integer productId = product.getId();
         PrdAuditStatus exceptAuditStatus = PrdAuditStatus.PASS;
+        Integer verifyStatus;
+        if(Objects.nonNull(verifyStatus = product.getVerifyStatus()) && !verifyStatus.equals(exceptAuditStatus.getCode()) ){
+            throw new ServiceException(400, "审批通过的商品才能上架");
+        }
 
         Product condition = Product.builder().id(productId)
                 .verifyStatus(exceptAuditStatus.getCode())
@@ -284,7 +313,10 @@ public class ProductService {
         }
 
         PrdAuditStatus exceptAuditStatus = PrdAuditStatus.PASS;
-
+        Integer verifyStatus;
+        if(Objects.nonNull(verifyStatus = product.getVerifyStatus()) && !verifyStatus.equals(exceptAuditStatus.getCode()) ){
+            throw new ServiceException(400, "审批通过的商品才能下架");
+        }
         Product condition = Product.builder().id(productId)
                 .verifyStatus(exceptAuditStatus.getCode())
                 .status(target.getCode())
