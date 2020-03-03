@@ -6,10 +6,12 @@ import com.fcgo.weixin.common.exception.SessionExpireException;
 import com.fcgo.weixin.common.util.DateUtil;
 import com.fcgo.weixin.common.util.PageHelper;
 import com.fcgo.weixin.common.util.SHA256;
+import com.fcgo.weixin.convert.OrderAddressConvert;
 import com.fcgo.weixin.convert.OrderConvert;
 import com.fcgo.weixin.convert.OrderGoodsConvert;
 import com.fcgo.weixin.httpclient.RestTemplateUtils;
 import com.fcgo.weixin.model.PageResponseBO;
+import com.fcgo.weixin.model.backend.bo.OrderAddressBo;
 import com.fcgo.weixin.model.backend.bo.OrderBo;
 import com.fcgo.weixin.model.backend.bo.OrderGoodsBo;
 import com.fcgo.weixin.model.backend.req.OrderDetailReq;
@@ -18,14 +20,8 @@ import com.fcgo.weixin.model.backend.req.OrderProcessReq;
 import com.fcgo.weixin.model.backend.resp.LoginUserResp;
 import com.fcgo.weixin.model.constant.OrderPayStatus;
 import com.fcgo.weixin.model.constant.OrderStatus;
-import com.fcgo.weixin.persist.dao.BrandMapper;
-import com.fcgo.weixin.persist.dao.OrderMapper;
-import com.fcgo.weixin.persist.dao.OrderProductMapper;
-import com.fcgo.weixin.persist.dao.UserMapper;
-import com.fcgo.weixin.persist.model.Brand;
-import com.fcgo.weixin.persist.model.Order;
-import com.fcgo.weixin.persist.model.OrderProduct;
-import com.fcgo.weixin.persist.model.User;
+import com.fcgo.weixin.persist.dao.*;
+import com.fcgo.weixin.persist.model.*;
 import com.fcgo.weixin.persist.model.dto.OrderListQueryDto;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -69,6 +65,9 @@ public class OrderService {
 
     @Value("${alc.service.order.url}")
     private String orderServiceUrl;
+
+    @Autowired
+    private OrderAddressMapper orderAddressMapper;
 
     private static final String API_CANCLE_ORDER_BY_SELLER = "/order/api/refundFromBackend";
 
@@ -220,6 +219,12 @@ public class OrderService {
             List<OrderGoodsBo> orderGoodsBos = orderProducts.stream().map(OrderGoodsConvert::do2Bo)
                     .collect(Collectors.toList());
             orderBo.setOrderGoodsList(orderGoodsBos);
+        }
+
+        OrderAddress orderAddress = orderAddressMapper.selectByOrderCode(orderCode);
+        if (Objects.nonNull(orderAddress)){
+            OrderAddressBo orderAddressBo = OrderAddressConvert.do2Bo(orderAddress);
+            orderBo.setOrderAddress(orderAddressBo);
         }
         return orderBo;
     }

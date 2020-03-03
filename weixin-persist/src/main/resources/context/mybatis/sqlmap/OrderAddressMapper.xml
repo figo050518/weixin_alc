@@ -3,7 +3,7 @@
 <mapper namespace="com.fcgo.weixin.persist.dao.OrderAddressMapper">
   <resultMap id="BaseResultMap" type="com.fcgo.weixin.persist.model.OrderAddress">
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="order_code" jdbcType="BIGINT" property="orderCode" />
+    <result column="order_code" jdbcType="VARCHAR" property="orderCode" />
     <result column="contact_user" jdbcType="VARCHAR" property="contactUser" />
     <result column="phone" jdbcType="VARCHAR" property="phone" />
     <result column="province" jdbcType="VARCHAR" property="province" />
@@ -20,6 +20,14 @@
     from order_address
     where id = #{id,jdbcType=INTEGER}
   </select>
+
+  <select id="selectByOrderCode" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from order_address
+    where order_code = #{orderCode,jdbcType=VARCHAR}
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from order_address
     where id = #{id,jdbcType=INTEGER}
@@ -28,7 +36,7 @@
     insert into order_address (order_code, contact_user, phone, 
       province, city, area, 
       address_detail)
-    values (#{orderCode,jdbcType=BIGINT}, #{contactUser,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
+    values (#{orderCode,jdbcType=VARCHAR}, #{contactUser,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR},
       #{province,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, #{area,jdbcType=VARCHAR}, 
       #{addressDetail,jdbcType=VARCHAR})
   </insert>
@@ -59,7 +67,7 @@
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="orderCode != null">
-        #{orderCode,jdbcType=BIGINT},
+        #{orderCode,jdbcType=VARCHAR},
       </if>
       <if test="contactUser != null">
         #{contactUser,jdbcType=VARCHAR},
@@ -85,7 +93,7 @@
     update order_address
     <set>
       <if test="orderCode != null">
-        order_code = #{orderCode,jdbcType=BIGINT},
+        order_code = #{orderCode,jdbcType=VARCHAR},
       </if>
       <if test="contactUser != null">
         contact_user = #{contactUser,jdbcType=VARCHAR},
@@ -110,7 +118,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.fcgo.weixin.persist.model.OrderAddress">
     update order_address
-    set order_code = #{orderCode,jdbcType=BIGINT},
+    set order_code = #{orderCode,jdbcType=VARCHAR},
       contact_user = #{contactUser,jdbcType=VARCHAR},
       phone = #{phone,jdbcType=VARCHAR},
       province = #{province,jdbcType=VARCHAR},

@@ -10,6 +10,8 @@ public interface OrderAddressMapper {
 
     OrderAddress selectByPrimaryKey(Integer id);
 
+    OrderAddress selectByOrderCode(String orderCode);
+
     int updateByPrimaryKeySelective(OrderAddress record);
 
     int updateByPrimaryKey(OrderAddress record);

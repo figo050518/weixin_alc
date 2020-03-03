@@ -183,6 +183,29 @@
     and status = #{exceptStatus,jdbcType=INTEGER}
   </update>
 
+  <select id="selectByIds" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" /> from product
+    where id in
+    <foreach collection="ids" item="id" open="(" close=")" separator=",">
+      #{id,jdbcType=INTEGER}
+  </foreach>
+  </select>
+
+  <update id="updateBatchShelveStatus">
+    update product
+    set status = #{status,jdbcType=INTEGER}
+    where id in
+    <foreach collection="ids" item="id" open="(" close=")" separator=",">
+    #{id,jdbcType=INTEGER}
+  </foreach>
+    and verify_status = #{verifyStatus,jdbcType=INTEGER}
+    and status in
+    <foreach collection="exceptStatusList" item="exceptStatus" open="(" separator="," close=")">
+      #{exceptStatus,jdbcType=INTEGER}
+    </foreach>
+
+  </update>
+
   <select id="selectCntByBrandId" parameterType="com.fcgo.weixin.persist.model.Product" resultType="int">
     select count(*) from product where <include refid="where_select_all_by_brand"/>
   </select>

@@ -1,12 +1,12 @@
-package com.fcgo.weixin.persist.model;
+package com.fcgo.weixin.model.backend.bo;
 
 import lombok.Data;
 
 @Data
-public class OrderAddress {
+public class OrderAddressBo {
     private Integer id;
 
-    private String orderCode;
+    private Long orderCode;
 
     private String contactUser;
 
@@ -19,6 +19,4 @@ public class OrderAddress {
     private String area;
 
     private String addressDetail;
-
-
 }

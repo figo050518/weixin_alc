@@ -3,7 +3,6 @@ package com.fcgo.weixin.model.backend.req;
 import lombok.*;
 
 @Data
-@ToString
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor

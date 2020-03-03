@@ -4,10 +4,7 @@ import com.fcgo.weixin.common.exception.SessionExpireException;
 import com.fcgo.weixin.model.ApiResponse;
 import com.fcgo.weixin.model.PageResponseBO;
 import com.fcgo.weixin.model.backend.bo.ProductBo;
-import com.fcgo.weixin.model.backend.req.ProductAuditReq;
-import com.fcgo.weixin.model.backend.req.ProductBatchReq;
-import com.fcgo.weixin.model.backend.req.ProductCtrlShelveReq;
-import com.fcgo.weixin.model.backend.req.ProductListReq;
+import com.fcgo.weixin.model.backend.req.*;
 import com.fcgo.weixin.service.ProductService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -69,6 +66,14 @@ public class ProductController {
         logger.info("product.onOffShelve req {}", req);
         int result = productService.onOffShelve(req);
         return new ApiResponse.ApiResponseBuilder().code(200).message("successful")
+                .data(result>0).build();
+    }
+
+    @RequestMapping("/batchOnOffShelve")
+    public ApiResponse batchOnOffShelve(@RequestBody ProductCtrlShelveBatchReq req){
+        logger.info("product.batchOnOffShelve req {}", req);
+        int result = productService.batchOnOffShelve(req);
+        return new ApiResponse.ApiResponseBuilder().code(200).message("batchOnOffShelve successful")
                 .data(result>0).build();
     }
 }

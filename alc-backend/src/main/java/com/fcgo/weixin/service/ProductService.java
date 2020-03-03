@@ -6,10 +6,7 @@ import com.fcgo.weixin.common.util.PageHelper;
 import com.fcgo.weixin.convert.ProductConvert;
 import com.fcgo.weixin.model.PageResponseBO;
 import com.fcgo.weixin.model.backend.bo.ProductBo;
-import com.fcgo.weixin.model.backend.req.ProductAuditReq;
-import com.fcgo.weixin.model.backend.req.ProductBatchReq;
-import com.fcgo.weixin.model.backend.req.ProductCtrlShelveReq;
-import com.fcgo.weixin.model.backend.req.ProductListReq;
+import com.fcgo.weixin.model.backend.req.*;
 import com.fcgo.weixin.model.backend.resp.LoginUserResp;
 import com.fcgo.weixin.model.constant.PrdAuditStatus;
 import com.fcgo.weixin.model.constant.PrdShelfStatus;
@@ -18,6 +15,7 @@ import com.fcgo.weixin.persist.model.Brand;
 import com.fcgo.weixin.persist.model.Product;
 import com.fcgo.weixin.persist.model.ProductSort;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -234,6 +232,60 @@ public class ProductService {
 
     }
 
+    public int batchOnOffShelve(ProductCtrlShelveBatchReq batchReq){
+        List<Integer> ids = batchReq.getProductIds();
+        if (CollectionUtils.isEmpty(ids)){
+            logger.warn("batchOnOffShelve getProductIds empty {}", batchReq);
+            return -1;
+        }
+        List<Product> products = productMapper.selectByIds(ids);
+        if (CollectionUtils.isEmpty(products)){
+            logger.warn("batchOnOffShelve selectByIds from DB empty, {}", batchReq);
+            return -1;
+        }
+        PrdShelfStatus target = PrdShelfStatus.getStatus(batchReq.getStatus());
+        int result = 0;
+        switch (target){
+            case ON:{
+                result = batchOnShelve(products, ids, target);
+                break;
+            }
+            case OFF:{
+                result = batchOffShelve(products, ids, target);
+                break;
+            }
+            default:
+                throw new ServiceException(400,"请正确设置状态");
+
+        }
+        return result;
+    }
+    private int batchOnShelve(List<Product> products, List<Integer> ids,
+                              PrdShelfStatus target){
+        PrdAuditStatus exceptAuditStatus = PrdAuditStatus.PASS;
+        Set<Integer> exceptStatusList = Sets.newHashSet();
+        for(Product prd : products){
+            checkOnShelve(target, prd, exceptAuditStatus);
+            exceptStatusList.add(prd.getStatus());
+        }
+        int rows = productMapper.updateBatchShelveStatus(ids, target.getCode(), exceptStatusList, exceptAuditStatus.getCode());
+        logger.info("batch OnShelve ids {} targetStatus {} rows {}", ids, target, rows);
+        return rows;
+    }
+
+    private int batchOffShelve(List<Product> products, List<Integer> ids,
+                              PrdShelfStatus target){
+        PrdAuditStatus exceptAuditStatus = PrdAuditStatus.PASS;
+        Set<Integer> exceptStatusList = Sets.newHashSet();
+        for(Product prd : products){
+            checkOffShelve(target, prd, exceptAuditStatus);
+            exceptStatusList.add(prd.getStatus());
+        }
+        int rows = productMapper.updateBatchShelveStatus(ids, target.getCode(), exceptStatusList, exceptAuditStatus.getCode());
+        logger.info("batch OffShelve ids {} targetStatus {} rows {}", ids, target, rows);
+        return rows;
+    }
+
     public int onOffShelve(ProductCtrlShelveReq req){
         Integer productId;
         if (Objects.isNull(productId=req.getProductId()) || productId<1){
@@ -261,29 +313,35 @@ public class ProductService {
         return result;
     }
 
+    private void checkOnShelve(PrdShelfStatus target,
+                               Product product,
+                               PrdAuditStatus exceptAuditStatus){
+        if (target.getCode() == product.getStatus()){
+            throw new ServiceException(400, String.format("商品[%d]不需要再次上架", product.getId()));
+        }
+        PrdShelfStatus exceptShelfStatus = PrdShelfStatus.getStatus(product.getStatus());
+        if (exceptShelfStatus==null){
+            throw new ServiceException(400, String.format("商品[%d]状态异常", product.getId()));
+        }
+        List<PrdShelfStatus> legalStatus = Lists.newArrayList(PrdShelfStatus.INIT,
+                PrdShelfStatus.OFF);
+        if (!legalStatus.contains(exceptShelfStatus)){
+            throw new ServiceException(400, String.format("商品[%d]状态异常", product.getId()));
+        }
+
+        Integer verifyStatus;
+        if(Objects.nonNull(verifyStatus = product.getVerifyStatus()) && !verifyStatus.equals(exceptAuditStatus.getCode()) ){
+            throw new ServiceException(400, String.format("审批通过的商品[%d]才能上架", product.getId()));
+        }
+    }
 
     public int onShelve(ProductCtrlShelveReq req,
                         PrdShelfStatus target,
                         Product product){
         logger.info("in onShelve {} {}", req,target);
-        if (target.getCode() == product.getStatus()){
-            throw new ServiceException(400, "商品不需要再次上架");
-        }
-        PrdShelfStatus exceptShelfStatus = PrdShelfStatus.getStatus(product.getStatus());
-        if (exceptShelfStatus==null){
-            throw new ServiceException(400, "商品状态异常");
-        }
-        List<PrdShelfStatus> legalStatus = Lists.newArrayList(PrdShelfStatus.INIT,
-                PrdShelfStatus.OFF);
-        if (!legalStatus.contains(exceptShelfStatus)){
-            throw new ServiceException(400, "商品状态异常");
-        }
-        Integer productId = product.getId();
         PrdAuditStatus exceptAuditStatus = PrdAuditStatus.PASS;
-        Integer verifyStatus;
-        if(Objects.nonNull(verifyStatus = product.getVerifyStatus()) && !verifyStatus.equals(exceptAuditStatus.getCode()) ){
-            throw new ServiceException(400, "审批通过的商品才能上架");
-        }
+        checkOnShelve(target, product, exceptAuditStatus);
+        Integer productId = product.getId();
 
         Product condition = Product.builder().id(productId)
                 .verifyStatus(exceptAuditStatus.getCode())
@@ -294,29 +352,38 @@ public class ProductService {
         return productMapper.updateShelveStatus(condition);
     }
 
+    private void checkOffShelve(PrdShelfStatus target,
+                                Product product,
+                                PrdAuditStatus exceptAuditStatus){
+        if (target.getCode() == product.getStatus()){
+            throw new ServiceException(400, String.format("商品[%d]不需要再次下架", product.getId()));
+        }
+        PrdShelfStatus exceptShelfStatus = PrdShelfStatus.getStatus(product.getStatus());
+        if (exceptShelfStatus==null){
+            throw new ServiceException(400, String.format("商品[%d]状态异常", product.getId()));
+        }
+        List<PrdShelfStatus> legalStatus = Lists.newArrayList(PrdShelfStatus.ON);
+        if (!legalStatus.contains(exceptShelfStatus)){
+            throw new ServiceException(400, String.format("商品[%d]状态异常", product.getId()));
+        }
+        Integer verifyStatus;
+        if(Objects.nonNull(verifyStatus = product.getVerifyStatus()) && !verifyStatus.equals(exceptAuditStatus.getCode()) ){
+            throw new ServiceException(400, String.format("审批通过的商品[%d]才能下架", product.getId()));
+        }
+    }
+
     public int offShelve(ProductCtrlShelveReq req,
                          PrdShelfStatus target,
                          Product product){
         logger.info("in offShelve {} {}", req,target);
-        Integer productId = req.getProductId();
-
-        if (target.getCode() == product.getStatus()){
-            throw new ServiceException(400, "商品不需要再次下架");
-        }
-        PrdShelfStatus exceptShelfStatus = PrdShelfStatus.getStatus(product.getStatus());
-        if (exceptShelfStatus==null){
-            throw new ServiceException(400, "商品状态异常");
-        }
-        List<PrdShelfStatus> legalStatus = Lists.newArrayList(PrdShelfStatus.ON);
-        if (!legalStatus.contains(exceptShelfStatus)){
-            throw new ServiceException(400, "商品状态异常");
-        }
 
         PrdAuditStatus exceptAuditStatus = PrdAuditStatus.PASS;
+        checkOffShelve(target, product, exceptAuditStatus);
         Integer verifyStatus;
         if(Objects.nonNull(verifyStatus = product.getVerifyStatus()) && !verifyStatus.equals(exceptAuditStatus.getCode()) ){
             throw new ServiceException(400, "审批通过的商品才能下架");
         }
+        Integer productId = req.getProductId();
         Product condition = Product.builder().id(productId)
                 .verifyStatus(exceptAuditStatus.getCode())
                 .status(target.getCode())

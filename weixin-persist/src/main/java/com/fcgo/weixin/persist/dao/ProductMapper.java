@@ -3,6 +3,7 @@ package com.fcgo.weixin.persist.dao;
 import com.fcgo.weixin.persist.model.Product;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.Collection;
 import java.util.List;
 
 public interface ProductMapper {
@@ -19,6 +20,13 @@ public interface ProductMapper {
     int updateAuditStatus(Product record);
 
     int updateShelveStatus(Product record);
+
+    List<Product> selectByIds(@Param("ids")Collection<Integer> ids);
+
+    int updateBatchShelveStatus(@Param("ids")Collection<Integer> ids,
+                                @Param("status")Integer status,
+                                @Param("exceptStatusList") Collection<Integer> exceptStatusList,
+                                @Param("verifyStatus")Integer verifyStatus);
 
     int selectCntByBrandId(@Param("condition")Product product);
 

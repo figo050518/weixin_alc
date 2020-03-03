@@ -41,5 +41,7 @@ public class OrderBo {
 
     private String updateTime;
 
+    private OrderAddressBo orderAddress;
+
     private List<OrderGoodsBo> orderGoodsList;
 }
