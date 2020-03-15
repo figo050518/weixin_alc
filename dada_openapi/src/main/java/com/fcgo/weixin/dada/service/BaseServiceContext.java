@@ -1,5 +1,7 @@
 package com.fcgo.weixin.dada.service;
 
+import com.fcgo.weixin.dada.utils.JSONUtil;
+
 /**
  * DATE: 18/9/3
  *
@@ -17,6 +19,11 @@ public class BaseServiceContext {
     public BaseServiceContext(String url, String params){
         this.url = url;
         this.params = params;
+    }
+
+    public BaseServiceContext(String url, Object req){
+        this.url = url;
+        this.params = JSONUtil.toJson(req);
     }
 
     public String getUrl() {

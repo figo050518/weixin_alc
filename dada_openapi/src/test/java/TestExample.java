@@ -1,7 +1,7 @@
 import com.fcgo.weixin.dada.client.DadaApiResponse;
 import com.fcgo.weixin.dada.client.DadaRequestClient;
 import com.fcgo.weixin.dada.config.AppConfig;
-import com.fcgo.weixin.dada.domain.merchant.ShopAddModel;
+import com.fcgo.weixin.dada.domain.merchant.ShopModel;
 import com.fcgo.weixin.dada.domain.order.OrderAddModel;
 import com.fcgo.weixin.dada.service.CityCodeContext;
 import com.fcgo.weixin.dada.service.merchant.ShopAddContext;
@@ -55,7 +55,7 @@ public class TestExample {
         AppConfig appConfig = new AppConfig(false);
 
         // 2.初始化model
-        ShopAddModel shopAddModel = new ShopAddModel();
+        ShopModel shopAddModel = new ShopModel();
         // 根据实际信息来填写门店地址
         shopAddModel.setOriginShopId("xxxxxxxxxxxxxxxx");
         shopAddModel.setStationName("xxxxxxxxxxxxxxxx");
@@ -69,7 +69,7 @@ public class TestExample {
         shopAddModel.setPhone("xxxxxxxxxxxxxxxx");
 
         // 3.初始化service (门店新增比较特殊,是一个批量新增接口)
-        List<ShopAddModel> shopAddList = new ArrayList<ShopAddModel>();
+        List<ShopModel> shopAddList = new ArrayList<ShopModel>();
         shopAddList.add(shopAddModel);
         ShopAddContext shopAddService = new ShopAddContext(JSONUtil.toJson(shopAddList));
 

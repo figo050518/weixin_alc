@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fcgo.weixin.persist.dao.OrderDeliveryMapper">
+  <resultMap id="BaseResultMap" type="com.fcgo.weixin.persist.model.OrderDelivery">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="order_code" jdbcType="VARCHAR" property="orderCode" />
+    <result column="delivery_num" jdbcType="VARCHAR" property="deliveryNum" />
+    <result column="fee" jdbcType="DECIMAL" property="fee" />
+    <result column="deliver_fee" jdbcType="DECIMAL" property="deliverFee" />
+    <result column="coupon_fee" jdbcType="DECIMAL" property="couponFee" />
+    <result column="tips" jdbcType="DECIMAL" property="tips" />
+    <result column="insurance_fee" jdbcType="DECIMAL" property="insuranceFee" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="create_time" jdbcType="INTEGER" property="createTime" />
+    <result column="update_time" jdbcType="INTEGER" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, order_code, delivery_num, fee, deliver_fee, coupon_fee, tips, insurance_fee, 
+    status, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from order_delivery
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.fcgo.weixin.persist.model.OrderDelivery" useGeneratedKeys="true">
+    insert into order_delivery (order_code, delivery_num, fee, 
+      deliver_fee, coupon_fee, tips, 
+      insurance_fee, status, create_time, 
+      update_time)
+    values (#{orderCode,jdbcType=VARCHAR}, #{deliveryNum,jdbcType=VARCHAR}, #{fee,jdbcType=DECIMAL}, 
+      #{deliverFee,jdbcType=DECIMAL}, #{couponFee,jdbcType=DECIMAL}, #{tips,jdbcType=DECIMAL}, 
+      #{insuranceFee,jdbcType=DECIMAL}, #{status,jdbcType=INTEGER}, #{createTime,jdbcType=INTEGER}, 
+      #{updateTime,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.fcgo.weixin.persist.model.OrderDelivery" useGeneratedKeys="true">
+    insert into order_delivery
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="orderCode != null">
+        order_code,
+      </if>
+      <if test="deliveryNum != null">
+        delivery_num,
+      </if>
+      <if test="fee != null">
+        fee,
+      </if>
+      <if test="deliverFee != null">
+        deliver_fee,
+      </if>
+      <if test="couponFee != null">
+        coupon_fee,
+      </if>
+      <if test="tips != null">
+        tips,
+      </if>
+      <if test="insuranceFee != null">
+        insurance_fee,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="orderCode != null">
+        #{orderCode,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryNum != null">
+        #{deliveryNum,jdbcType=VARCHAR},
+      </if>
+      <if test="fee != null">
+        #{fee,jdbcType=DECIMAL},
+      </if>
+      <if test="deliverFee != null">
+        #{deliverFee,jdbcType=DECIMAL},
+      </if>
+      <if test="couponFee != null">
+        #{couponFee,jdbcType=DECIMAL},
+      </if>
+      <if test="tips != null">
+        #{tips,jdbcType=DECIMAL},
+      </if>
+      <if test="insuranceFee != null">
+        #{insuranceFee,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=INTEGER},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fcgo.weixin.persist.model.OrderDelivery">
+    update order_delivery
+    <set>
+      <if test="orderCode != null">
+        order_code = #{orderCode,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryNum != null">
+        delivery_num = #{deliveryNum,jdbcType=VARCHAR},
+      </if>
+      <if test="fee != null">
+        fee = #{fee,jdbcType=DECIMAL},
+      </if>
+      <if test="deliverFee != null">
+        deliver_fee = #{deliverFee,jdbcType=DECIMAL},
+      </if>
+      <if test="couponFee != null">
+        coupon_fee = #{couponFee,jdbcType=DECIMAL},
+      </if>
+      <if test="tips != null">
+        tips = #{tips,jdbcType=DECIMAL},
+      </if>
+      <if test="insuranceFee != null">
+        insurance_fee = #{insuranceFee,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=INTEGER},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fcgo.weixin.persist.model.OrderDelivery">
+    update order_delivery
+    set order_code = #{orderCode,jdbcType=VARCHAR},
+      delivery_num = #{deliveryNum,jdbcType=VARCHAR},
+      fee = #{fee,jdbcType=DECIMAL},
+      deliver_fee = #{deliverFee,jdbcType=DECIMAL},
+      coupon_fee = #{couponFee,jdbcType=DECIMAL},
+      tips = #{tips,jdbcType=DECIMAL},
+      insurance_fee = #{insuranceFee,jdbcType=DECIMAL},
+      status = #{status,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=INTEGER},
+      update_time = #{updateTime,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

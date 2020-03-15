@@ -33,4 +33,6 @@ public class BrandBo {
     private String createTime;
 
     private String updateTime;
+
+    private BrandAddressBo brandAddress;
 }

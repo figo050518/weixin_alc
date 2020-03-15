@@ -10,11 +10,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class DeliverFeeReq {
-    private int shop_no;
+    private String shop_no;
     private String origin_id;
     private String city_code;
     private String cargo_price;
-    private String is_prepay;
+    /**
+     * 是否需要垫付 1:是 0:否 (垫付订单金额，非运费)
+     */
+    private Integer is_prepay;
     private String receiver_name;
     private String receiver_address;
     private String receiver_lat;

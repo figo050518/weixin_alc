@@ -32,12 +32,13 @@ public class DadaRequestClient {
         String requestParams = this.getRequestParams();
 
         try {
+            logger.info("ready 2 call dada api,app config {},apiService {}", appConfig, apiService);
             String resp = HttpClientUtil.postRequest(requestUrl, requestParams);
-            logger.info("call dada api,app config {},apiService {} resp {}", appConfig, apiService, resp);
+            logger.info("finish call dada api,app config {},apiService {} resp {}", appConfig, apiService, resp);
             return JSONUtil.fromJson(resp, DadaApiResponse.class);
         }catch (Exception e){
-            logger.warn("call dada api fail,app config {},apiService {}", appConfig, apiService);
-            return DadaApiResponse.except();
+            logger.warn("call dada api fail,app config {},apiService {}", appConfig, apiService,e);
+            throw e;
         }
     }
 

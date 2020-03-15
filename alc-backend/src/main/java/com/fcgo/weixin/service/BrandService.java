@@ -2,12 +2,15 @@ package com.fcgo.weixin.service;
 
 import com.fcgo.weixin.common.exception.ServiceException;
 import com.fcgo.weixin.common.util.PageHelper;
+import com.fcgo.weixin.convert.BrandAddressConvert;
 import com.fcgo.weixin.convert.BrandConvert;
 import com.fcgo.weixin.model.PageResponseBO;
+import com.fcgo.weixin.model.backend.bo.BrandAddressBo;
 import com.fcgo.weixin.model.backend.bo.BrandBo;
 import com.fcgo.weixin.model.backend.req.BrandListReq;
 import com.fcgo.weixin.persist.dao.BrandMapper;
 import com.fcgo.weixin.persist.model.Brand;
+import com.fcgo.weixin.persist.model.BrandAddress;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -24,6 +27,9 @@ public class BrandService {
 
     @Autowired
     private BrandMapper brandMapper;
+
+    @Autowired
+    private BrandAddressService brandAddressService;
 
     public List<BrandBo> getAll(){
         List<Brand> dolist = brandMapper.selectAllBrand();
@@ -47,11 +53,24 @@ public class BrandService {
         }
         int offset = PageHelper.getOffsetOfMysql(page,pageSize);
         List<Brand> dolist = brandMapper.selectAll(offset, pageSize);
-
-        List<BrandBo> bos = dolist.stream().map(BrandConvert::do2Bo).collect(Collectors.toList());
+        Set<Integer> brandIds = dolist.stream().map(Brand::getId).collect(Collectors.toSet());
+        Map<Integer,BrandAddress> brandAddressMap = brandAddressService.buildBrandAddressMap(brandIds);
+        List<BrandBo> bos = dolist.stream()
+                .map(brand->convertList(brand, brandAddressMap))
+                .collect(Collectors.toList());
         int totalPage = PageHelper.getPageTotal(total, pageSize);
         pageBuilder.totalPage(totalPage).total(total).list(bos);
         return pageBuilder.build();
+    }
+
+    static BrandBo convertList(Brand brand, Map<Integer, BrandAddress> brandAddressMap){
+        BrandAddress brandAddress = brandAddressMap.get(brand.getId());
+        BrandBo bo = BrandConvert.do2Bo(brand);
+        if (Objects.nonNull(brandAddress)){
+            BrandAddressBo brandAddressBo = BrandAddressConvert.do2Bo(brandAddress);
+            bo.setBrandAddress(brandAddressBo);
+        }
+        return bo;
     }
 
 

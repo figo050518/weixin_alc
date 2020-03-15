@@ -1,9 +1,11 @@
 package com.fcgo.weixin.controller.order;
 
+import com.fcgo.weixin.common.exception.SessionExpireException;
 import com.fcgo.weixin.dada.domain.req.DeliverFeeReq;
 import com.fcgo.weixin.model.backend.constant.OrderConstant;
 import com.fcgo.weixin.dada.domain.order.OrderCallBackReq;
 import com.fcgo.weixin.model.ApiResponse;
+import com.fcgo.weixin.model.backend.req.OrderProcessReq;
 import com.fcgo.weixin.service.LogisticsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/logistics")
-public class LogisticsController {
+@RequestMapping("/logistics/dada")
+public class DadaLogisticsController {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -45,6 +47,16 @@ public class LogisticsController {
         return new ApiResponse.ApiResponseBuilder()
                 .code(200)
                 .data(list)
+                .message("successful").build();
+    }
+
+
+    @RequestMapping("/addOrder")
+    public ApiResponse addOrder(@RequestBody OrderProcessReq req) throws SessionExpireException {
+        logger.info("add dada Order ,{}", req);
+        logisticsService.addOrder(req);
+        return new ApiResponse.ApiResponseBuilder()
+                .code(200)
                 .message("successful").build();
     }
 }

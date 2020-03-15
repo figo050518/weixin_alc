@@ -2,8 +2,10 @@ package com.fcgo.weixin.controller.seller;
 
 import com.fcgo.weixin.model.ApiResponse;
 import com.fcgo.weixin.model.PageResponseBO;
+import com.fcgo.weixin.model.backend.bo.BrandAddressBo;
 import com.fcgo.weixin.model.backend.bo.BrandBo;
 import com.fcgo.weixin.model.backend.req.BrandListReq;
+import com.fcgo.weixin.service.BrandAddressService;
 import com.fcgo.weixin.service.BrandService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,6 +26,9 @@ public class BrandController {
     @Autowired
     private BrandService brandService;
 
+    @Autowired
+    private BrandAddressService brandAddressService;
+
     @RequestMapping(value = "/getAll", method = RequestMethod.GET)
     public ApiResponse getAll(){
         List<BrandBo> brandBos = brandService.getAll();
@@ -33,7 +38,7 @@ public class BrandController {
 
     @RequestMapping("/getList")
     public ApiResponse getList(@RequestBody BrandListReq req){
-        logger.info("/brand/getList req {}", req);
+        logger.info("brand.getList req {}", req);
         PageResponseBO<BrandBo> pageResponseBO = brandService.getList(req);
         return new ApiResponse.ApiResponseBuilder().code(200).message("successful")
                 .data(pageResponseBO).build();
@@ -49,9 +54,25 @@ public class BrandController {
 
     @RequestMapping("/update")
     public ApiResponse update(@RequestBody BrandBo req){
-        logger.info("/brand/update req {}", req);
+        logger.info("brand.update req {}", req);
         int rows = brandService.update(req);
         return new ApiResponse.ApiResponseBuilder().code(200).message("add brand successful")
+                .build();
+    }
+
+    @RequestMapping("/addAddress")
+    public ApiResponse addAddress(@RequestBody BrandAddressBo req){
+        logger.info("brand.addAddress req {}", req);
+        brandAddressService.add(req);
+        return new ApiResponse.ApiResponseBuilder().code(200).message("add brand address successful")
+                .build();
+    }
+
+    @RequestMapping("/updateAddress")
+    public ApiResponse updateAddress(@RequestBody BrandAddressBo req){
+        logger.info("brand.updateAddress req {}", req);
+        brandAddressService.update(req);
+        return new ApiResponse.ApiResponseBuilder().code(200).message("update brand address successful")
                 .build();
     }
 }
