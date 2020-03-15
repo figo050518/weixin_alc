@@ -2,9 +2,12 @@ package com.fcgo.weixin.dada.client;
 
 import com.fcgo.weixin.dada.config.AppConfig;
 import com.fcgo.weixin.dada.config.AppConstant;
-import com.fcgo.weixin.dada.service.BaseService;
+import com.fcgo.weixin.dada.service.BaseServiceContext;
+import com.fcgo.weixin.dada.utils.EncryptUtil;
 import com.fcgo.weixin.dada.utils.HttpClientUtil;
 import com.fcgo.weixin.dada.utils.JSONUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.*;
 
@@ -14,12 +17,12 @@ import java.util.*;
  * @author: wan
  */
 public class DadaRequestClient {
-
-    private BaseService apiService;
+    private Logger logger = LoggerFactory.getLogger(getClass());
+    private BaseServiceContext apiService;
 
     private AppConfig appConfig;
 
-    public DadaRequestClient(BaseService baseService, AppConfig appConfig) {
+    public DadaRequestClient(BaseServiceContext baseService, AppConfig appConfig) {
         this.apiService = baseService;
         this.appConfig = appConfig;
     }
@@ -30,8 +33,10 @@ public class DadaRequestClient {
 
         try {
             String resp = HttpClientUtil.postRequest(requestUrl, requestParams);
+            logger.info("call dada api,app config {},apiService {} resp {}", appConfig, apiService, resp);
             return JSONUtil.fromJson(resp, DadaApiResponse.class);
         }catch (Exception e){
+            logger.warn("call dada api fail,app config {},apiService {}", appConfig, apiService);
             return DadaApiResponse.except();
         }
     }
@@ -61,34 +66,9 @@ public class DadaRequestClient {
 
         //MD5签名并校验
         String toSign = this.appConfig.getAppSecret() + signStr.toString() + this.appConfig.getAppSecret();
-        String sign = encrypt(toSign);
+        String sign = EncryptUtil.encrypt(toSign);
         return sign.toUpperCase();
     }
 
-    private String encrypt(String inbuf) {
-        String s = null;
-        char[] hexDigits = { // 用来将字节转换成 16 进制表示的字符
-                '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
-        try {
-            java.security.MessageDigest md = java.security.MessageDigest.getInstance("MD5");
-            md.update(inbuf.getBytes("UTF-8"));
-            byte tmp[] = md.digest(); // MD5 的计算结果是一个 128 位的长整数，
-            // 用字节表示就是 16 个字节
-            char str[] = new char[16 * 2]; // 每个字节用 16 进制表示的话，使用两个字符，
-            // 所以表示成 16 进制需要 32 个字符
-            int k = 0; // 表示转换结果中对应的字符位置
-            for (int i = 0; i < 16; i++) { // 从第一个字节开始，对 MD5 的每一个字节
-                // 转换成 16 进制字符的转换
-                byte byte0 = tmp[i]; // 取第 i 个字节
-                str[k++] = hexDigits[byte0 >>> 4 & 0xf]; // 取字节中高 4 位的数字转换,
-                // >>> 为逻辑右移，将符号位一起右移
-                str[k++] = hexDigits[byte0 & 0xf]; // 取字节中低 4 位的数字转换
-            }
-            s = new String(str); // 换后的结果转换为字符串
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return s;
-    }
 }

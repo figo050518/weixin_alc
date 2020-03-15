@@ -17,7 +17,6 @@
 		<module>weixin-common</module>
 		<module>weixin-persist</module>
 		<module>weixin-web-common</module>
-		<module>weixin-frontend</module>
 		<module>alc-backend</module>
         <module>model</module>
 		<module>http-client</module>
@@ -299,7 +298,11 @@
 				<version>4.12</version>
 				<scope>test</scope>
 			</dependency>
-
+			<dependency>
+				<groupId>com.fcgo.weixin</groupId>
+				<artifactId>dada-open-api</artifactId>
+				<version>${project.version}</version>
+			</dependency>
 
 		</dependencies>
 	</dependencyManagement>

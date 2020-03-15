@@ -1,11 +1,16 @@
 package com.fcgo.weixin.dada.client;
 
+import lombok.Data;
+
+import java.util.Objects;
+
 /**
  * DATE: 18/9/3
  *
  * @author: wan
  */
-public class DadaApiResponse {
+@Data
+public class DadaApiResponse<T> {
 
     private static final int STATUS_CODE = -2;
 
@@ -17,7 +22,7 @@ public class DadaApiResponse {
 
     private String msg;
 
-    private Object result;
+    private T result;
 
     public static DadaApiResponse except() {
         DadaApiResponse apiResponse = new DadaApiResponse();
@@ -26,35 +31,10 @@ public class DadaApiResponse {
         return apiResponse;
     }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public int getCode() {
-        return code;
-    }
-
-    public void setCode(int code) {
-        this.code = code;
-    }
-
-    public String getMsg() {
-        return msg;
-    }
-
-    public void setMsg(String msg) {
-        this.msg = msg;
-    }
-
-    public Object getResult() {
-        return result;
-    }
-
-    public void setResult(Object result) {
-        this.result = result;
+    public boolean isOk(){
+        String formatStatus;
+        return Objects.nonNull(status)
+                && (formatStatus=status.trim()).length() > 0
+                && "success".equals(formatStatus);
     }
 }

@@ -1,16 +1,16 @@
 package com.fcgo.weixin.dada.service.merchant;
 
 import com.fcgo.weixin.dada.config.UrlConstant;
-import com.fcgo.weixin.dada.service.BaseService;
+import com.fcgo.weixin.dada.service.BaseServiceContext;
 
 /**
  * DATE: 18/9/4
  *
  * @author: wan
  */
-public class ShopAddService extends BaseService {
+public class ShopAddContext extends BaseServiceContext {
 
-    public ShopAddService(String params){
+    public ShopAddContext(String params){
         super(UrlConstant.SHOP_ADD_URL, params);
     }
 }

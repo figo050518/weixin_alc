@@ -7,9 +7,9 @@ import com.fcgo.weixin.dada.config.UrlConstant;
  *
  * @author: wan
  */
-public class CityCodeService extends BaseService {
+public class CityCodeContext extends BaseServiceContext {
 
-    public CityCodeService(String params){
+    public CityCodeContext(String params){
         super(UrlConstant.CITY_CODE_URL, params);
     }
 }

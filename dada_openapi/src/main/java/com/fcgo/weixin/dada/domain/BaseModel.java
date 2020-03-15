@@ -1,14 +1,15 @@
 package com.fcgo.weixin.dada.domain;
 
 import com.fcgo.weixin.dada.utils.JSONUtil;
+import lombok.Data;
 
 /**
- * DATE: 18/9/3
  *
- * @author: wan
+ * @version 1.0
+ * @author: chenchao
+ * @date 2020.03.14
  */
 public class BaseModel {
-
     public String toJson() {
         return JSONUtil.toJson(this);
     }

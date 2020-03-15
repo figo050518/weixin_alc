@@ -3,9 +3,9 @@ import com.fcgo.weixin.dada.client.DadaRequestClient;
 import com.fcgo.weixin.dada.config.AppConfig;
 import com.fcgo.weixin.dada.domain.merchant.ShopAddModel;
 import com.fcgo.weixin.dada.domain.order.OrderAddModel;
-import com.fcgo.weixin.dada.service.CityCodeService;
-import com.fcgo.weixin.dada.service.merchant.ShopAddService;
-import com.fcgo.weixin.dada.service.order.OrderAddService;
+import com.fcgo.weixin.dada.service.CityCodeContext;
+import com.fcgo.weixin.dada.service.merchant.ShopAddContext;
+import com.fcgo.weixin.dada.service.order.OrderAddContext;
 import com.fcgo.weixin.dada.utils.JSONUtil;
 
 import java.math.BigDecimal;
@@ -17,7 +17,7 @@ import java.util.List;
  *
  * @author: wan
  */
-public class example {
+public class TestExample {
 
     private static DadaApiResponse addOrder() {
         // 1.初始化配置(isOnline表示是否测试环境)
@@ -40,7 +40,7 @@ public class example {
         orderAddModel.setCallback("http://xxxxxxxxxxxxxxxxxxxxxxxx");
 
         // 3.初始化service
-        OrderAddService orderService = new OrderAddService(orderAddModel.toJson());
+        OrderAddContext orderService = new OrderAddContext(orderAddModel.toJson());
 
         // 4.初始化客户端
         DadaRequestClient dadaClient = new DadaRequestClient(orderService, appConfig);
@@ -71,7 +71,7 @@ public class example {
         // 3.初始化service (门店新增比较特殊,是一个批量新增接口)
         List<ShopAddModel> shopAddList = new ArrayList<ShopAddModel>();
         shopAddList.add(shopAddModel);
-        ShopAddService shopAddService = new ShopAddService(JSONUtil.toJson(shopAddList));
+        ShopAddContext shopAddService = new ShopAddContext(JSONUtil.toJson(shopAddList));
 
 
         // 4.初始化客户端
@@ -85,7 +85,7 @@ public class example {
         AppConfig appConfig = new AppConfig(false);
 
         // 2.初始化service
-        CityCodeService cityCodeService = new CityCodeService("");
+        CityCodeContext cityCodeService = new CityCodeContext("");
 
         // 3.初始化客户端
         DadaRequestClient dadaClient = new DadaRequestClient(cityCodeService, appConfig);

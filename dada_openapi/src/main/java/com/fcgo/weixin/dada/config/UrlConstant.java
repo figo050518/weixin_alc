@@ -14,4 +14,6 @@ public interface UrlConstant {
      String MERCHANT_ADD_URL = "/merchantApi/merchant/add";
 
      String CITY_CODE_URL = "/api/cityCode/list";
+
+     String QUERY_DELIVER_FEE = "/api/order/queryDeliverFee";
 }

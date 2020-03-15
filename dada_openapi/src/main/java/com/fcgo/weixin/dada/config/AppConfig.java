@@ -1,11 +1,18 @@
 package com.fcgo.weixin.dada.config;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 /**
  *
  * DATE: 18/9/3
  *
  * @author: wan
  */
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class AppConfig {
 
     private String appKey;
@@ -23,19 +30,4 @@ public class AppConfig {
         this.sourceId = isOnline ? AppConstant.SOURCE_ID : AppConstant.QA_SOURCE_ID;
     }
 
-    public String getAppKey() {
-        return appKey;
-    }
-
-    public String getAppSecret() {
-        return appSecret;
-    }
-
-    public String getHost() {
-        return host;
-    }
-
-    public String getSourceId() {
-        return sourceId;
-    }
 }

@@ -5,7 +5,8 @@ package com.fcgo.weixin.dada.service;
  *
  * @author: wan
  */
-public class BaseService {
+public class BaseServiceContext {
+
 
     // 请求uri
     private String url;
@@ -13,7 +14,7 @@ public class BaseService {
     // 业务参数
     private String params;
 
-    public BaseService(String url, String params){
+    public BaseServiceContext(String url, String params){
         this.url = url;
         this.params = params;
     }
@@ -33,4 +34,9 @@ public class BaseService {
     public void setParams(String params) {
         this.params = params;
     }
+
+
+
+
+
 }

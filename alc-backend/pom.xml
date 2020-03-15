@@ -133,6 +133,11 @@
 		</dependency>
 
 		<dependency>
+			<groupId>com.fcgo.weixin</groupId>
+			<artifactId>dada-open-api</artifactId>
+		</dependency>
+
+		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
 			<scope>provided</scope>
