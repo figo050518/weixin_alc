@@ -24,10 +24,12 @@ public class DadaApiResponse<T> {
 
     private T result;
 
-    public static DadaApiResponse except() {
-        DadaApiResponse apiResponse = new DadaApiResponse();
-        apiResponse.setCode(STATUS_CODE);
-        apiResponse.setMsg(STATUS_MSG);
+    public static DadaServiceException isNullException(){
+        return new DadaServiceException(500, "达达服务数据异常");
+    }
+
+    public DadaServiceException except() {
+        DadaServiceException apiResponse = new DadaServiceException(this.code,this.msg);
         return apiResponse;
     }
 

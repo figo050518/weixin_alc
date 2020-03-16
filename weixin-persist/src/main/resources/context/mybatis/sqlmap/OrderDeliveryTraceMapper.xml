@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fcgo.weixin.persist.dao.OrderDeliveryTraceMapper">
+  <resultMap id="BaseResultMap" type="com.fcgo.weixin.persist.model.OrderDeliveryTrace">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="order_code" jdbcType="VARCHAR" property="orderCode" />
+    <result column="delivery_num" jdbcType="VARCHAR" property="deliveryNum" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="cancel_reason" jdbcType="VARCHAR" property="cancelReason" />
+    <result column="cancel_from" jdbcType="INTEGER" property="cancelFrom" />
+    <result column="create_time" jdbcType="INTEGER" property="createTime" />
+    <result column="dada_update_time" jdbcType="INTEGER" property="dadaUpdateTime" />
+    <result column="dm_id" jdbcType="INTEGER" property="dmId" />
+    <result column="dm_name" jdbcType="VARCHAR" property="dmName" />
+    <result column="dm_mobile" jdbcType="VARCHAR" property="dmMobile" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, order_code, delivery_num, status, cancel_reason, cancel_from, create_time, dada_update_time, 
+    dm_id, dm_name, dm_mobile
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from order_delivery_trace
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.fcgo.weixin.persist.model.OrderDeliveryTrace" useGeneratedKeys="true">
+    insert into order_delivery_trace (order_code, delivery_num, status, 
+      cancel_reason, cancel_from, create_time, 
+      dada_update_time, dm_id, dm_name, 
+      dm_mobile)
+    values (#{orderCode,jdbcType=VARCHAR}, #{deliveryNum,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
+      #{cancelReason,jdbcType=VARCHAR}, #{cancelFrom,jdbcType=INTEGER}, #{createTime,jdbcType=INTEGER}, 
+      #{dadaUpdateTime,jdbcType=INTEGER}, #{dmId,jdbcType=INTEGER}, #{dmName,jdbcType=VARCHAR}, 
+      #{dmMobile,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.fcgo.weixin.persist.model.OrderDeliveryTrace" useGeneratedKeys="true">
+    insert into order_delivery_trace
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="orderCode != null">
+        order_code,
+      </if>
+      <if test="deliveryNum != null">
+        delivery_num,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="cancelReason != null">
+        cancel_reason,
+      </if>
+      <if test="cancelFrom != null">
+        cancel_from,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="dadaUpdateTime != null">
+        dada_update_time,
+      </if>
+      <if test="dmId != null">
+        dm_id,
+      </if>
+      <if test="dmName != null">
+        dm_name,
+      </if>
+      <if test="dmMobile != null">
+        dm_mobile,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="orderCode != null">
+        #{orderCode,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryNum != null">
+        #{deliveryNum,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="cancelReason != null">
+        #{cancelReason,jdbcType=VARCHAR},
+      </if>
+      <if test="cancelFrom != null">
+        #{cancelFrom,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=INTEGER},
+      </if>
+      <if test="dadaUpdateTime != null">
+        #{dadaUpdateTime,jdbcType=INTEGER},
+      </if>
+      <if test="dmId != null">
+        #{dmId,jdbcType=INTEGER},
+      </if>
+      <if test="dmName != null">
+        #{dmName,jdbcType=VARCHAR},
+      </if>
+      <if test="dmMobile != null">
+        #{dmMobile,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fcgo.weixin.persist.model.OrderDeliveryTrace">
+    update order_delivery_trace
+    <set>
+      <if test="orderCode != null">
+        order_code = #{orderCode,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryNum != null">
+        delivery_num = #{deliveryNum,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="cancelReason != null">
+        cancel_reason = #{cancelReason,jdbcType=VARCHAR},
+      </if>
+      <if test="cancelFrom != null">
+        cancel_from = #{cancelFrom,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=INTEGER},
+      </if>
+      <if test="dadaUpdateTime != null">
+        dada_update_time = #{dadaUpdateTime,jdbcType=INTEGER},
+      </if>
+      <if test="dmId != null">
+        dm_id = #{dmId,jdbcType=INTEGER},
+      </if>
+      <if test="dmName != null">
+        dm_name = #{dmName,jdbcType=VARCHAR},
+      </if>
+      <if test="dmMobile != null">
+        dm_mobile = #{dmMobile,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fcgo.weixin.persist.model.OrderDeliveryTrace">
+    update order_delivery_trace
+    set order_code = #{orderCode,jdbcType=VARCHAR},
+      delivery_num = #{deliveryNum,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      cancel_reason = #{cancelReason,jdbcType=VARCHAR},
+      cancel_from = #{cancelFrom,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=INTEGER},
+      dada_update_time = #{dadaUpdateTime,jdbcType=INTEGER},
+      dm_id = #{dmId,jdbcType=INTEGER},
+      dm_name = #{dmName,jdbcType=VARCHAR},
+      dm_mobile = #{dmMobile,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

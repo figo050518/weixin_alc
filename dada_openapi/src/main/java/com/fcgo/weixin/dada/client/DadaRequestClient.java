@@ -30,15 +30,27 @@ public class DadaRequestClient {
     public DadaApiResponse callRpc() {
         String requestUrl = this.appConfig.getHost().concat(this.apiService.getUrl());
         String requestParams = this.getRequestParams();
-
+        DadaApiResponse response = null;
         try {
             logger.info("ready 2 call dada api,app config {},apiService {}", appConfig, apiService);
             String resp = HttpClientUtil.postRequest(requestUrl, requestParams);
             logger.info("finish call dada api,app config {},apiService {} resp {}", appConfig, apiService, resp);
-            return JSONUtil.fromJson(resp, DadaApiResponse.class);
+            response = JSONUtil.fromJson(resp, DadaApiResponse.class);
         }catch (Exception e){
             logger.warn("call dada api fail,app config {},apiService {}", appConfig, apiService,e);
-            throw e;
+            throw new DadaServiceException(500, "请求达达服务超时");
+        }finally {
+            if (Objects.isNull(response)){
+                logger.warn("finish call dada api,but resp is null, app config {},apiService {} ", appConfig, apiService);
+                throw DadaApiResponse.isNullException();
+            }
+
+            if (response.isOk()){
+                return response;
+            }else {
+                logger.warn("finish call dada api,but not ok status, app config {},apiService {} ", appConfig, apiService);
+                throw response.except();
+            }
         }
     }
 
