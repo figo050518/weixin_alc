@@ -130,4 +130,10 @@ public class LogisticsService {
     public String buildOrderCallBackUrl(){
         return ORDER_CALLBACK_URL + "/" + OrderConstant.CALL_BACK_API;
     }
+
+
+
+    public void processCallBack(){
+
+    }
 }

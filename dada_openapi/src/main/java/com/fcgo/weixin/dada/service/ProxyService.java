@@ -12,14 +12,20 @@ import com.fcgo.weixin.dada.domain.req.DeliverFeeReq;
 import com.fcgo.weixin.dada.domain.req.OrderDetailReq;
 import com.fcgo.weixin.dada.domain.req.RechargeUrlReq;
 import com.fcgo.weixin.dada.domain.resp.BalanceResp;
+import com.fcgo.weixin.dada.domain.req.OrderCancelReq;
 import com.fcgo.weixin.dada.domain.resp.CityCodeBo;
 import com.fcgo.weixin.dada.domain.resp.DeliverFeeResp;
 import com.fcgo.weixin.dada.domain.resp.OrderCancelReason;
+import com.fcgo.weixin.dada.domain.resp.OrderCancelResp;
 import com.fcgo.weixin.dada.service.merchant.ShopAddContext;
 import com.fcgo.weixin.dada.service.merchant.ShopUpdateContext;
 import com.fcgo.weixin.dada.service.order.*;
 import com.fcgo.weixin.dada.service.recharge.BalanceQueryContext;
 import com.fcgo.weixin.dada.service.recharge.RechargeQueryUrlContext;
+import com.fcgo.weixin.dada.service.order.OrderAddAfterQueryContext;
+import com.fcgo.weixin.dada.service.order.OrderAddContext;
+import com.fcgo.weixin.dada.service.order.OrderCancelContext;
+import com.fcgo.weixin.dada.service.order.PreQueryDeliverFeeContext;
 import com.fcgo.weixin.dada.utils.JSONUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -74,6 +80,12 @@ public class ProxyService {
         OrderDetailContext context = new OrderDetailContext(req);
         return (OrderDetail)call(context);
     }
+
+    public DadaApiResponse cancelOrder(OrderCancelReq req){
+        OrderCancelContext context = new OrderCancelContext(req);
+        return callAndGetFullResp(context);
+    }
+
 
     public void addShop(ShopModel shopAddModel){
         ShopAddContext context = new ShopAddContext(JSONUtil.toJson(shopAddModel));

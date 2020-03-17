@@ -7,7 +7,8 @@ package com.fcgo.weixin.dada.config;
  */
 public interface UrlConstant {
 
-     String ORDER_ADD_URL = "/api/order/addOrder";
+     String ORDER_ADD_URL = "/api/order/addOrder",
+     ORDER_CANCEL = "/api/order/formalCancel";
 
      String ORDER_DETAIL = "/api/order/status/query";
 

@@ -24,6 +24,8 @@ public class DadaApiResponse<T> {
 
     private T result;
 
+    private Integer errorCode;
+
     public static DadaServiceException isNullException(){
         return new DadaServiceException(500, "达达服务数据异常");
     }
