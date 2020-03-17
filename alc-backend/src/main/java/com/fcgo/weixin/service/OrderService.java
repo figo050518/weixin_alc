@@ -18,6 +18,8 @@ import com.fcgo.weixin.model.backend.req.OrderDetailReq;
 import com.fcgo.weixin.model.backend.req.OrderListReq;
 import com.fcgo.weixin.model.backend.req.OrderProcessReq;
 import com.fcgo.weixin.model.backend.resp.LoginUserResp;
+import com.fcgo.weixin.model.constant.OrderDeliverType;
+import com.fcgo.weixin.model.constant.ShopDeliverType;
 import com.fcgo.weixin.model.constant.OrderPayStatus;
 import com.fcgo.weixin.model.constant.OrderStatus;
 import com.fcgo.weixin.persist.dao.*;
@@ -68,6 +70,9 @@ public class OrderService {
 
     @Autowired
     private OrderAddressMapper orderAddressMapper;
+
+    @Autowired
+    private LogisticsService logisticsService;
 
     private static final String API_CANCLE_ORDER_BY_SELLER = "/order/api/refundFromBackend";
 
@@ -262,9 +267,13 @@ public class OrderService {
             logger.warn("process order fail order pay status illegal,pay status {} req {} user {}", payStatus, req, loginUserResp);
             throw new ServiceException(401, "订单支付状态异常");
         }
+
+
         OrderStatus exceptStatus = null;
         switch (targetOrderStatus){
             case RECEIVED:
+                //TODO 是否自提
+
                 exceptStatus = OrderStatus.WAITING_CONFIRM;
                 break;
             case MAKE_SUCCESS:
@@ -293,8 +302,56 @@ public class OrderService {
                 .build();
         int result = orderMapper.updateOrderStatusByOrderCode(updateCondition);
         logger.info("process order result {} req {} login user {}", result, req, loginUserResp);
-        return result>0;
+        boolean isUpdateSucess;
+        if ((isUpdateSucess = result>0)){
+            processOrderDeliver(order, targetOrderStatus, req);
+        }
+
+        return isUpdateSucess;
     }
+
+    private void processOrderDeliver(Order order,OrderStatus targetOrderStatus, OrderProcessReq req){
+        OrderDeliverType orderDeliverType = OrderDeliverType.getDeliverType(order.getOrderType());
+
+        if (Objects.nonNull(orderDeliverType) && OrderStatus.RECEIVED.equals(targetOrderStatus)){
+
+            switch (orderDeliverType){
+                case USER_FETCH:{
+                    //do nothing
+                    break;
+                }
+                case SHOP_DELIVER:{
+                    processShopDeliver(req,order);
+                }
+            }
+        }
+    }
+
+    private void processShopDeliver(OrderProcessReq req,Order order){
+        ShopDeliverType deliverType = null;
+        Integer deliverTypeCode = req.getDeliverType();
+        deliverType = Objects.nonNull(deliverTypeCode) ? ShopDeliverType.getDeliverType(deliverTypeCode) : ShopDeliverType.SELF;
+        switch (deliverType){
+            case DADA:{
+                logisticsService.addOrderAfterCheck(order, deliverType);
+                break;
+            }
+            case SELF:{
+                updateDeliverType(order.getCode(), deliverType);
+                break;
+            }
+        }
+    }
+
+    private int updateDeliverType(String orderCode, ShopDeliverType shopDeliverType){
+        Order uoc = new Order();
+        uoc.setCode(orderCode);
+        uoc.setDeliverType(shopDeliverType.getCode());
+        int updateDeliverType = orderMapper.updateByOrderCode(uoc);
+        logger.info("processShopDeliver updateDeliverType [{},{}]", uoc, updateDeliverType);
+        return updateDeliverType;
+    }
+
 
 
     public int cancelBySeller(Order order,LoginUserResp loginUserResp){

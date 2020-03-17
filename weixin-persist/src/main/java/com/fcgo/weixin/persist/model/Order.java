@@ -40,5 +40,8 @@ public class Order {
 
     private Integer updateTime;
 
+    private Integer orderType;
+
+    private Integer deliverType;
 
 }

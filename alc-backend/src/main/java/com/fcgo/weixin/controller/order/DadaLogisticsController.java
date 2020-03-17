@@ -26,6 +26,7 @@ public class DadaLogisticsController {
     @RequestMapping("/" + OrderConstant.CALL_BACK_API)
     public ApiResponse dadaCallBack(@RequestBody OrderCallBackReq req){
         logger.info("in dadaCallBack, {}", req);
+        logisticsService.processCallBack(req);
         return new ApiResponse.ApiResponseBuilder()
                 .code(200)
                 .message("successful").build();
@@ -59,4 +60,7 @@ public class DadaLogisticsController {
                 .code(200)
                 .message("successful").build();
     }
+
+
+
 }

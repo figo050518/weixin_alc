@@ -14,9 +14,7 @@ public interface OrderMapper {
 
     Order selectByPrimaryKey(Integer id);
 
-    int updateByPrimaryKeySelective(Order record);
-
-    int updateByPrimaryKey(Order record);
+    int updateByOrderCode(Order record);
 
     int selectCnt(@Param("dto")OrderListQueryDto dto);
 

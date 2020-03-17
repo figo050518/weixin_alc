@@ -9,4 +9,8 @@ public class OrderProcessReq {
      *
      */
     private Integer status;
+    /**
+     * 1:自己配送 2:达达配送
+     */
+    private Integer deliverType;
 }
