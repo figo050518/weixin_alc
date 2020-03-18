@@ -1,5 +1,8 @@
 package com.fcgo.weixin.controller.seller;
 
+import com.alibaba.fastjson.JSONObject;
+import com.fcgo.weixin.common.exception.SessionExpireException;
+import com.fcgo.weixin.dada.domain.req.RechargeUrlReq;
 import com.fcgo.weixin.model.ApiResponse;
 import com.fcgo.weixin.model.PageResponseBO;
 import com.fcgo.weixin.model.backend.bo.BrandAddressBo;
@@ -7,6 +10,7 @@ import com.fcgo.weixin.model.backend.bo.BrandBo;
 import com.fcgo.weixin.model.backend.req.BrandListReq;
 import com.fcgo.weixin.service.BrandAddressService;
 import com.fcgo.weixin.service.BrandService;
+import com.fcgo.weixin.service.ShopRechargeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +32,9 @@ public class BrandController {
 
     @Autowired
     private BrandAddressService brandAddressService;
+
+    @Autowired
+    private ShopRechargeService shopRechargeService;
 
     @RequestMapping(value = "/getAll", method = RequestMethod.GET)
     public ApiResponse getAll(){
@@ -72,7 +79,36 @@ public class BrandController {
     public ApiResponse updateAddress(@RequestBody BrandAddressBo req){
         logger.info("brand.updateAddress req {}", req);
         brandAddressService.update(req);
-        return new ApiResponse.ApiResponseBuilder().code(200).message("update brand address successful")
+        return new ApiResponse.ApiResponseBuilder().code(200).message("add brand address successful")
                 .build();
     }
+
+    @RequestMapping("/getRechargeUrl")
+    public ApiResponse getRechargeUrl(@RequestBody RechargeUrlReq req) throws SessionExpireException {
+        logger.info("brand.getRechargeUrl req {}", req);
+        JSONObject result = shopRechargeService.getRechargeUrl(req);
+        Integer code = 200;
+        String msg = "getRechargeUrl successful";
+        if (result==null){
+            code = 400;
+        }else {
+            code = result.getInteger("status");
+            if (code==null){
+                code = 500;
+                msg = "getRechargeUrl fail";
+            }else {
+                if (code != 200){
+                    msg = result.getString("msg");
+                }
+            }
+        }
+        return new ApiResponse.ApiResponseBuilder()
+                .code(code)
+                .data(result)
+                .message(msg)
+                .build();
+    }
+
+
+
 }
