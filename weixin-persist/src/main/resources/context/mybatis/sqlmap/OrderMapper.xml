@@ -12,7 +12,6 @@
     <result column="pay_status" jdbcType="CHAR" property="payStatus" />
     <result column="amount" jdbcType="DOUBLE" property="amount" />
     <result column="pay_type" jdbcType="SMALLINT" property="payType" />
-    <result column="order_type" jdbcType="SMALLINT" property="orderType"/>
     <result column="deliver_type" jdbcType="INTEGER" property="deliverType"/>
     <result column="pay_time" jdbcType="INTEGER" property="payTime" />
     <result column="create_time" jdbcType="INTEGER" property="createTime" />
@@ -20,7 +19,7 @@
   </resultMap>
   <sql id="Base_Column_List">
     id, `code`, brand_id, brand_phone, buyer_id, buyer_phone, status, pay_status, amount,
-    pay_type,order_type, deliver_type, pay_time, create_time, update_time
+    pay_type, deliver_type, pay_time, create_time, update_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 

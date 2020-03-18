@@ -19,7 +19,6 @@ import com.fcgo.weixin.model.backend.req.OrderListReq;
 import com.fcgo.weixin.model.backend.req.OrderProcessReq;
 import com.fcgo.weixin.model.backend.resp.LoginUserResp;
 import com.fcgo.weixin.model.constant.OrderDeliverType;
-import com.fcgo.weixin.model.constant.ShopDeliverType;
 import com.fcgo.weixin.model.constant.OrderPayStatus;
 import com.fcgo.weixin.model.constant.OrderStatus;
 import com.fcgo.weixin.persist.dao.*;
@@ -311,39 +310,44 @@ public class OrderService {
     }
 
     private void processOrderDeliver(Order order,OrderStatus targetOrderStatus, OrderProcessReq req){
-        OrderDeliverType orderDeliverType = OrderDeliverType.getDeliverType(order.getOrderType());
+        OrderDeliverType orderDeliverType = OrderDeliverType.getDeliverType(order.getDeliverType());
 
         if (Objects.nonNull(orderDeliverType) && OrderStatus.RECEIVED.equals(targetOrderStatus)){
 
             switch (orderDeliverType){
                 case USER_FETCH:{
                     //do nothing
+                    logger.warn("processOrderDeliver orderDeliverType is user fetch, req {} orderDeliverType {}",req, orderDeliverType);
                     break;
                 }
-                case SHOP_DELIVER:{
-                    processShopDeliver(req,order);
+                case DELIVER:{
+                    processShopDeliver(req, order, orderDeliverType);
                 }
+                default:{
+                    logger.warn("processOrderDeliver orderDeliverType illegal, req {} orderDeliverType {}",req, orderDeliverType);
+                    throw new ServiceException(501, "订单已在配送中");
+                }
+
+
             }
         }
     }
 
-    private void processShopDeliver(OrderProcessReq req,Order order){
-        ShopDeliverType deliverType = null;
+    private void processShopDeliver(OrderProcessReq req,Order order,OrderDeliverType orderDeliverType){
         Integer deliverTypeCode = req.getDeliverType();
-        deliverType = Objects.nonNull(deliverTypeCode) ? ShopDeliverType.getDeliverType(deliverTypeCode) : ShopDeliverType.SELF;
-        switch (deliverType){
-            case DADA:{
-                logisticsService.addOrderAfterCheck(order, deliverType);
+        switch (orderDeliverType){
+            case DADA_DELIVER:{
+                logisticsService.addOrderAfterCheck(order, orderDeliverType);
                 break;
             }
-            case SELF:{
-                updateDeliverType(order.getCode(), deliverType);
+            case SHOP_DELIVER:{
+                updateDeliverType(order.getCode(), orderDeliverType);
                 break;
             }
         }
     }
 
-    private int updateDeliverType(String orderCode, ShopDeliverType shopDeliverType){
+    public int updateDeliverType(String orderCode, OrderDeliverType shopDeliverType){
         Order uoc = new Order();
         uoc.setCode(orderCode);
         uoc.setDeliverType(shopDeliverType.getCode());

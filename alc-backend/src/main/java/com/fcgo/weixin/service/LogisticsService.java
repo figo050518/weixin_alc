@@ -13,8 +13,8 @@ import com.fcgo.weixin.dada.service.ProxyService;
 import com.fcgo.weixin.model.backend.constant.OrderConstant;
 import com.fcgo.weixin.model.backend.req.OrderProcessReq;
 import com.fcgo.weixin.model.backend.resp.LoginUserResp;
+import com.fcgo.weixin.model.constant.OrderDeliverType;
 import com.fcgo.weixin.model.constant.OrderPayStatus;
-import com.fcgo.weixin.model.constant.ShopDeliverType;
 import com.fcgo.weixin.persist.dao.BrandWalletMapper;
 import com.fcgo.weixin.persist.dao.OrderAddressMapper;
 import com.fcgo.weixin.persist.dao.OrderDeliveryMapper;
@@ -60,6 +60,9 @@ public class LogisticsService {
     @Value("${dada.order.callback.url}")
     private String ORDER_CALLBACK_URL;
 
+    @Autowired
+    private OrderService orderService;
+
     public DeliverFeeResp queryDeliverFee(Order order){
         String orderCode = order.getCode();
         OrderAddress orderAddress = orderAddressMapper.selectByOrderCode(orderCode);
@@ -97,10 +100,10 @@ public class LogisticsService {
             logger.warn("add order deliver fail order pay status illegal,pay status {} req {} user {}", payStatus, req, loginUserResp);
             throw new ServiceException(401, "订单支付状态异常");
         }
-        addOrderAfterCheck(order, ShopDeliverType.DADA);
+        addOrderAfterCheck(order, OrderDeliverType.DADA_DELIVER);
     }
 
-    public void addOrderAfterCheck(Order order, ShopDeliverType shopDeliverType){
+    public void addOrderAfterCheck(Order order, OrderDeliverType shopDeliverType){
 
         String orderCode = order.getCode();
         Integer brandId = order.getBrandId();
@@ -134,11 +137,8 @@ public class LogisticsService {
         OrderDelivery odCreateCondition = OrderDeliveryConvert.buildDOOfInsert(orderCode,deliveryNo, deliverFeeResp);
         orderDeliveryMapper.insertSelective(odCreateCondition);
         //update order shop deliver type
-        Order uoc = new Order();
-        uoc.setCode(orderCode);
-        uoc.setDeliverType(shopDeliverType.getCode());
-        int updateDeliverType = orderMapper.updateByOrderCode(uoc);
-        logger.info("add dada order updateDeliverType [{},{}]", uoc, updateDeliverType);
+        int updateDeliverType = orderService.updateDeliverType(orderCode, shopDeliverType);
+        logger.info("add dada order updateDeliverType [{},{},{}]", orderCode, shopDeliverType, updateDeliverType);
     }
 
 
@@ -155,5 +155,14 @@ public class LogisticsService {
 
     public void processCallBack(OrderCallBackReq req){
 
+    }
+
+
+
+    public void cancelDeliver(String orderCode){
+
+        //reset deliver type of order
+        OrderDeliverType shopDeliverType = OrderDeliverType.DELIVER;
+        int updateDeliverType = orderService.updateDeliverType(orderCode, shopDeliverType);
     }
 }

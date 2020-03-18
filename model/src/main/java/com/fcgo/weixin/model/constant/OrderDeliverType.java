@@ -9,14 +9,21 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * 订单类型 0 外送（方式未定）1 到店取餐 2 商家配送 3 达达配送
+ */
 @AllArgsConstructor
 public enum OrderDeliverType {
     /**
      * 到店自取
      */
     USER_FETCH(1),
-
-    SHOP_DELIVER(2);
+    /**
+     * 0 外送（方式未定）
+     */
+    DELIVER(0),
+    SHOP_DELIVER(2),
+    DADA_DELIVER(3);
     @Getter
     private int code;
     private static final Map<Integer, OrderDeliverType> cache;
