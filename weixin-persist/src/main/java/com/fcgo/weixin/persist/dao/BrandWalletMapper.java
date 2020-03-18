@@ -14,4 +14,18 @@ public interface BrandWalletMapper {
     int updateByPrimaryKeySelective(BrandWallet record);
 
     int updateByPrimaryKey(BrandWallet record);
+
+    /**
+     * 加钱
+     * @param record
+     * @return
+     */
+    int updatePositive(BrandWallet record);
+
+    /**
+     * 扣钱
+     * @param record
+     * @return
+     */
+    int updateNegative(BrandWallet record);
 }

@@ -112,4 +112,22 @@
       update_time = #{updateTime,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <update id="updatePositive" parameterType="com.fcgo.weixin.persist.model.BrandWallet">
+    update brand_wallet
+    set  amount = amount + #{amount,jdbcType=DECIMAL},
+      update_time = #{updateTime,jdbcType=INTEGER}
+    where brand_id = #{brandId,jdbcType=INTEGER}
+    and biz_type = #{bizType,jdbcType=INTEGER}
+    and status = 1
+  </update>
+
+  <update id="updateNegative" parameterType="com.fcgo.weixin.persist.model.BrandWallet">
+    update brand_wallet
+    set  amount = amount - #{amount,jdbcType=DECIMAL},
+      update_time = #{updateTime,jdbcType=INTEGER}
+    where brand_id = #{brandId,jdbcType=INTEGER}
+    and biz_type = #{bizType,jdbcType=INTEGER}
+    and status = 1
+  </update>
 </mapper>

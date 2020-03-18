@@ -10,6 +10,8 @@ public interface OrderDeliveryMapper {
 
     OrderDelivery selectByPrimaryKey(Integer id);
 
+    OrderDelivery selectByOrderCodeDeliverNum(OrderDelivery record);
+
     int updateByPrimaryKeySelective(OrderDelivery record);
 
     int updateByPrimaryKey(OrderDelivery record);

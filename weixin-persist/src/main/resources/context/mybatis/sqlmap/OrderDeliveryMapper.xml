@@ -24,6 +24,14 @@
     from order_delivery
     where id = #{id,jdbcType=INTEGER}
   </select>
+
+
+  <select id="selectByOrderCodeDeliverNum" parameterType="com.fcgo.weixin.persist.model.OrderDelivery" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" /> from order_delivery
+    where order_code = #{orderCode,jdbcType=VARCHAR}
+    and delivery_num = #{deliveryNum,jdbcType=VARCHAR}
+  </select>
+
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.fcgo.weixin.persist.model.OrderDelivery" useGeneratedKeys="true">
     insert into order_delivery (order_code, delivery_num, fee, 
       deliver_fee, coupon_fee, tips, 
