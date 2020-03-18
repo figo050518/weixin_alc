@@ -8,6 +8,7 @@ import com.fcgo.weixin.model.PageResponseBO;
 import com.fcgo.weixin.model.backend.bo.BrandAddressBo;
 import com.fcgo.weixin.model.backend.bo.BrandBo;
 import com.fcgo.weixin.model.backend.req.BrandListReq;
+import com.fcgo.weixin.persist.dao.BrandAddressMapper;
 import com.fcgo.weixin.persist.dao.BrandMapper;
 import com.fcgo.weixin.persist.model.Brand;
 import com.fcgo.weixin.persist.model.BrandAddress;
@@ -27,6 +28,9 @@ public class BrandService {
 
     @Autowired
     private BrandMapper brandMapper;
+
+    @Autowired
+    private BrandAddressMapper brandAddressMapper;
 
     @Autowired
     private BrandAddressService brandAddressService;
@@ -85,6 +89,11 @@ public class BrandService {
         Brand brand = BrandConvert.bo2Do4Insert(bo);
         rows = brandMapper.insertSelective(brand);
         logger.info("add brand,req {} id {}", bo, brand.getId());
+        if (rows>0){
+            BrandAddressBo brandAddressBo = bo.getBrandAddress();
+            brandAddressBo.setBrandId(brand.getId());
+            brandAddressService.add(brandAddressBo);
+        }
         return rows;
     }
 
@@ -95,6 +104,19 @@ public class BrandService {
         }
         Brand condition = BrandConvert.bo2Do4Update(bo);
         int rows = brandMapper.updateByPrimaryKeySelective(condition);
+        logger.info("update brand, req {} rows {}",bo, rows);
+        //add or update address
+        BrandAddress brandAddress = brandAddressMapper.selectByBrandId(id);
+        BrandAddressBo brandAddressBo = bo.getBrandAddress();
+        brandAddressBo.setBrandId(id);
+        if (Objects.isNull(brandAddress)){
+            int aac = brandAddressService.add(brandAddressBo);
+            logger.info("update brand, add address {} rows {}",bo, aac);
+        }else{
+            brandAddressBo.setId(brandAddress.getId());
+            int upac = brandAddressService.update(brandAddressBo);
+            logger.info("update brand, update address {} rows {}",bo, upac);
+        }
         return rows;
     }
 

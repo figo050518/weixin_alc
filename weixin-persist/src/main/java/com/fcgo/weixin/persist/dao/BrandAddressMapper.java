@@ -17,6 +17,8 @@ public interface BrandAddressMapper {
 
     BrandAddress selectByPrimaryKey(Integer id);
 
+    BrandAddress selectByBrandId(Integer brandId);
+
     int updateByPrimaryKeySelective(BrandAddress record);
 
     int updateByPrimaryKey(BrandAddress record);
