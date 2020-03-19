@@ -22,5 +22,16 @@
             <scope>provided</scope>
         </dependency>
     </dependencies>
-
+    <distributionManagement>
+        <repository>
+            <!-- 库的id -->
+            <id>rdc-snapshots</id>
+            <!-- 库的url -->
+            <url>https://repo.rdc.aliyun.com/repository/123120-snapshot-OViAA1/</url>
+        </repository>
+        <snapshotRepository>
+            <id>rdc-releases</id>
+            <url>https://repo.rdc.aliyun.com/repository/123120-release-R7zGfV/</url>
+        </snapshotRepository>
+    </distributionManagement>
 </project>

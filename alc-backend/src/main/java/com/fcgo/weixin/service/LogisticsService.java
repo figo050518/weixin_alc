@@ -2,6 +2,7 @@ package com.fcgo.weixin.service;
 
 import com.fcgo.weixin.common.exception.ServiceException;
 import com.fcgo.weixin.common.exception.SessionExpireException;
+import com.fcgo.weixin.common.util.BigDecimalHelper;
 import com.fcgo.weixin.common.util.DateUtil;
 import com.fcgo.weixin.convert.LogisticsOrderConvert;
 import com.fcgo.weixin.convert.OrderDeliveryConvert;
@@ -9,13 +10,17 @@ import com.fcgo.weixin.dada.client.DadaApiResponse;
 import com.fcgo.weixin.dada.domain.order.OrderAddAfterQueryReq;
 import com.fcgo.weixin.dada.domain.order.OrderCallBackReq;
 import com.fcgo.weixin.dada.domain.req.DeliverFeeReq;
+import com.fcgo.weixin.dada.domain.req.OrderCancelReq;
 import com.fcgo.weixin.dada.domain.resp.DeliverFeeResp;
+import com.fcgo.weixin.dada.domain.resp.OrderCancelResp;
 import com.fcgo.weixin.dada.service.ProxyService;
 import com.fcgo.weixin.model.backend.constant.OrderConstant;
 import com.fcgo.weixin.model.backend.req.OrderProcessReq;
 import com.fcgo.weixin.model.backend.resp.LoginUserResp;
+import com.fcgo.weixin.model.constant.BillsInOutType;
 import com.fcgo.weixin.model.constant.OrderDeliverType;
 import com.fcgo.weixin.model.constant.OrderPayStatus;
+import com.fcgo.weixin.model.third.dada.DadaOrderStatus;
 import com.fcgo.weixin.persist.dao.*;
 import com.fcgo.weixin.persist.model.*;
 import org.apache.commons.lang3.StringUtils;
@@ -60,6 +65,9 @@ public class LogisticsService {
 
     @Autowired
     private OrderService orderService;
+
+    @Autowired
+    private WalletService walletService;
 
     public DeliverFeeResp queryDeliverFee(Order order){
         String orderCode = order.getCode();
@@ -164,6 +172,22 @@ public class LogisticsService {
             logger.warn("create dada order fail, now create one {}",req);
             //todo add
         }
+        DadaOrderStatus orderStatus = DadaOrderStatus.getDadaOrderStatus(req.getOrderStatus());
+        if (Objects.isNull(orderStatus)){
+            logger.warn("process dada order CallBack fail,{}",req);
+            return;
+        }
+        boolean delivryFail = false;
+        switch (orderStatus){
+            case CACELED:
+            case EXPIRED:
+            case CREATE_FAIL:
+            case RECALL_GOODS_DELIVERED_FAIL:
+            case RECALL_FINISH_DELIVERED_FAIL:
+                delivryFail = true;
+                break;
+
+        }
         OrderDeliveryTrace odtc = OrderDeliveryTrace.builder()
                 .orderCode(orderCode).deliveryNum(dadaOrderCode)
                 .status(req.getOrderStatus())
@@ -178,13 +202,67 @@ public class LogisticsService {
 
         int rows = orderDeliveryTraceMapper.insertSelective(odtc);
         logger.info("processCallBack finish, req {} rows {}", req, rows);
+        if (delivryFail){
+            cancelInnorOrder(orderCode);
+        }
     }
 
 
 
-    public void cancelDeliver(String orderCode){
+    public void cancelDeliverByBrand(OrderCancelReq cancelReq) throws SessionExpireException {
+        String orderCode = cancelReq.getOrder_id();
+        if (StringUtils.isBlank(orderCode)){
+            throw new ServiceException(401, "没有订单号");
+        }
+        LoginUserResp loginUserResp = loginService.getLoginUser();
+        if (Objects.isNull(loginUserResp)){
+            throw new SessionExpireException();
+        }
+        Integer brandId;
+        Order orderCondition = Order.builder().code(orderCode).brandId(brandId=loginUserResp.getBrandId()).build();
+        Order order = orderMapper.selectByOrderCode(orderCondition);
+        if (Objects.isNull(order)){
+            logger.warn("cancelDeliverByBrand fail not find order, req {} user {}", cancelReq, loginUserResp);
+            throw new ServiceException(401, "订单非你所属");
+        }
+        OrderCancelResp cancelRsp = proxyService.cancelOrder(cancelReq);
+        Double deductFee;
+        if (Objects.nonNull(deductFee=cancelRsp.getDeduct_fee()) && deductFee>0){
 
+            OrderDelivery odc = OrderDelivery.builder()
+                    .orderCode(orderCode)
+                    .build();
+            OrderDelivery orderDelivery = orderDeliveryMapper.selectByOrderCode(odc);
+            //update status
+            DadaOrderStatus orderStatus = DadaOrderStatus.CACELED;
+            int cdt = DateUtil.getCurrentTimeSeconds();
+            OrderDelivery oduc = OrderDelivery.builder().id(orderDelivery.getId())
+                    .status(orderStatus.getCode()).updateTime(cdt).build();
+            int oducRows = orderDeliveryMapper.updateByPrimaryKeySelective(oduc);
+            logger.info("cancelDeliverByBrand req {} ,orderDelivery update {}",
+                    cancelReq, oducRows);
+
+            BigDecimal deliveryFee = orderDelivery.getCouponFee();
+            BigDecimal deductFeeBD ;
+            BigDecimal left = BigDecimalHelper.sub(deliveryFee, deductFeeBD=new BigDecimal(deductFee));
+            logger.info("cancelDeliverByBrand req {} ,deductFee {} deliveryFee {} left {}",
+                    cancelReq, deductFee, deliveryFee, left);
+            walletService.plus(orderCode, brandId, left, BillsInOutType.REFUND_OUT);
+            //record deductFee
+            BrandWalletBills bwbc = BrandWalletBills.builder()
+                    .orderCode(orderCode)
+                    .amount(deductFeeBD)
+                    .inOut(BillsInOutType.PENALTY.getCode())
+                    .bizType(1)
+                    .createTime(cdt)
+                    .brandId(brandId)
+                    .build();
+        }
         //reset deliver type of order
+        cancelInnorOrder(orderCode);
+    }
+
+    private void cancelInnorOrder(String orderCode){
         OrderDeliverType shopDeliverType = OrderDeliverType.DELIVER;
         int updateDeliverType = orderService.updateDeliverType(orderCode, shopDeliverType);
     }

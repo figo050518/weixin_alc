@@ -45,5 +45,4 @@ public enum BillsInOutType {
         }
         return cache.get(code);
     }
-
 }

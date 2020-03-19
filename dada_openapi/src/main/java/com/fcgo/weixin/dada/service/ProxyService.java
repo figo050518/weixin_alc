@@ -81,9 +81,9 @@ public class ProxyService {
         return (OrderDetail)call(context);
     }
 
-    public DadaApiResponse cancelOrder(OrderCancelReq req){
+    public OrderCancelResp cancelOrder(OrderCancelReq req){
         OrderCancelContext context = new OrderCancelContext(req);
-        return callAndGetFullResp(context);
+        return (OrderCancelResp)call(context);
     }
 
 
