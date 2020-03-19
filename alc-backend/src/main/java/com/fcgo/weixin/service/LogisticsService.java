@@ -2,6 +2,7 @@ package com.fcgo.weixin.service;
 
 import com.fcgo.weixin.common.exception.ServiceException;
 import com.fcgo.weixin.common.exception.SessionExpireException;
+import com.fcgo.weixin.common.util.DateUtil;
 import com.fcgo.weixin.convert.LogisticsOrderConvert;
 import com.fcgo.weixin.convert.OrderDeliveryConvert;
 import com.fcgo.weixin.dada.client.DadaApiResponse;
@@ -15,14 +16,8 @@ import com.fcgo.weixin.model.backend.req.OrderProcessReq;
 import com.fcgo.weixin.model.backend.resp.LoginUserResp;
 import com.fcgo.weixin.model.constant.OrderDeliverType;
 import com.fcgo.weixin.model.constant.OrderPayStatus;
-import com.fcgo.weixin.persist.dao.BrandWalletMapper;
-import com.fcgo.weixin.persist.dao.OrderAddressMapper;
-import com.fcgo.weixin.persist.dao.OrderDeliveryMapper;
-import com.fcgo.weixin.persist.dao.OrderMapper;
-import com.fcgo.weixin.persist.model.BrandWallet;
-import com.fcgo.weixin.persist.model.Order;
-import com.fcgo.weixin.persist.model.OrderAddress;
-import com.fcgo.weixin.persist.model.OrderDelivery;
+import com.fcgo.weixin.persist.dao.*;
+import com.fcgo.weixin.persist.model.*;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,6 +39,9 @@ public class LogisticsService {
 
     @Autowired
     private OrderDeliveryMapper orderDeliveryMapper;
+
+    @Autowired
+    private OrderDeliveryTraceMapper orderDeliveryTraceMapper;
 
     @Autowired
     private BrandWalletMapper brandWalletMapper;
@@ -154,7 +152,32 @@ public class LogisticsService {
 
 
     public void processCallBack(OrderCallBackReq req){
+        //TODO check sign
+        String orderCode = req.getOrderId();
+        String dadaOrderCode = req.getClientId();
+        OrderDelivery condition = OrderDelivery.builder()
+                .orderCode(orderCode)
+                .deliveryNum(dadaOrderCode)
+                .build();
+        OrderDelivery orderDelivery = orderDeliveryMapper.selectByOrderCodeDeliverNum(condition);
+        if (Objects.isNull(orderDelivery)){
+            logger.warn("create dada order fail, now create one {}",req);
+            //todo add
+        }
+        OrderDeliveryTrace odtc = OrderDeliveryTrace.builder()
+                .orderCode(orderCode).deliveryNum(dadaOrderCode)
+                .status(req.getOrderStatus())
+                .dadaUpdateTime(req.getUpdateTime())
+                .cancelFrom(req.getCancelFrom())
+                .cancelReason(req.getCancelReason())
+                .dmId(req.getDmId())
+                .dmName(req.getDmName())
+                .dmMobile(req.getDmMobile())
+                .createTime(DateUtil.getCurrentTimeSeconds())
+                .build();
 
+        int rows = orderDeliveryTraceMapper.insertSelective(odtc);
+        logger.info("processCallBack finish, req {} rows {}", req, rows);
     }
 
 
