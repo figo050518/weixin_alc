@@ -1,4 +1,4 @@
-package com.fcgo.weixin.persist.model;
+package com.fcgo.weixin.model.backend.bo;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -6,12 +6,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
-
-
 @Data
 @Builder
-@AllArgsConstructor@NoArgsConstructor
-public class RechargeOrder {
+@NoArgsConstructor@AllArgsConstructor
+public class RechargeOrderBo {
+
+
     private Integer id;
 
     private String orderCode;
@@ -19,18 +19,15 @@ public class RechargeOrder {
     private Integer bizType;
 
     private Integer brandId;
+    private String brandName;
 
     private BigDecimal amount;
 
     private Integer status;
 
-    private Integer platformStatus;
+    private String createTime;
 
-    private Integer createTime;
+    private String updateTime;
 
-    private Integer updateTime;
-
-    private Integer payTime;
-
-
+    private String payTime;
 }

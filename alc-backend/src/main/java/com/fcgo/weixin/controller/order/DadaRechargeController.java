@@ -3,6 +3,9 @@ package com.fcgo.weixin.controller.order;
 import com.fcgo.weixin.dada.domain.req.RechargeUrlReq;
 import com.fcgo.weixin.dada.domain.resp.BalanceResp;
 import com.fcgo.weixin.model.ApiResponse;
+import com.fcgo.weixin.model.PageResponseBO;
+import com.fcgo.weixin.model.backend.bo.RechargeOrderBo;
+import com.fcgo.weixin.model.backend.req.RechargeOrderListReq;
 import com.fcgo.weixin.model.backend.resp.DadaRechargeUrlResp;
 import com.fcgo.weixin.service.DadaRechargeService;
 import org.slf4j.Logger;
@@ -38,4 +41,19 @@ public class DadaRechargeController {
     }
 
 
+    @RequestMapping("/getShopRechargeOrderList")
+    public ApiResponse getList(@RequestBody RechargeOrderListReq req) {
+        logger.info("get shop RechargeOrder List req {}", req);
+        PageResponseBO<RechargeOrderBo> pageResponseBO = dadaRechargeService.getList(req);
+        return new ApiResponse.ApiResponseBuilder().code(200).message("successful")
+                .data(pageResponseBO).build();
+    }
+
+    @RequestMapping("/confirmPaidToDaDa")
+    public ApiResponse confirmPaidToDaDa(@RequestBody RechargeOrderBo req) {
+        logger.info("confirmPaid req {}", req);
+        dadaRechargeService.confirmPaid(req);
+        return new ApiResponse.ApiResponseBuilder().code(200).message("successful")
+                .build();
+    }
 }

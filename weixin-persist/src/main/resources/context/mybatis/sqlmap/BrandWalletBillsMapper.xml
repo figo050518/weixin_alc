@@ -19,10 +19,7 @@
     from brand_wallet_bills
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from brand_wallet_bills
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
+
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.fcgo.weixin.persist.model.BrandWalletBills" useGeneratedKeys="true">
     insert into brand_wallet_bills (brand_id, in_out, order_code, 
       amount, biz_type, create_time
@@ -108,4 +105,27 @@
       create_time = #{createTime,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+
+  <select id="selectCnt" resultType="int">
+    select count(*) from brand_wallet_bills
+    where 1=1 <include refid="where_select_all" />
+  </select>
+
+  <sql id="where_select_all">
+    <if test="condition.brandId != null">
+      and brand_id = #{condition.brandId,jdbcType=INTEGER}
+    </if>
+    <if test="condition.orderCode != null">
+      and order_code = #{condition.orderCode,jdbcType=VARCHAR}
+    </if>
+  </sql>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from brand_wallet_bills
+    where 1=1 <include refid="where_select_all" />
+    order by id desc limit #{offset},#{limit}
+  </select>
 </mapper>

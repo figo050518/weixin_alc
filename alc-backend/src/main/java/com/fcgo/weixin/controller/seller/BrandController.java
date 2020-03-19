@@ -7,9 +7,12 @@ import com.fcgo.weixin.model.ApiResponse;
 import com.fcgo.weixin.model.PageResponseBO;
 import com.fcgo.weixin.model.backend.bo.BrandAddressBo;
 import com.fcgo.weixin.model.backend.bo.BrandBo;
+import com.fcgo.weixin.model.backend.bo.BrandWalletBillsBo;
 import com.fcgo.weixin.model.backend.req.BrandListReq;
+import com.fcgo.weixin.model.backend.req.WalletBillsListReq;
 import com.fcgo.weixin.service.BrandAddressService;
 import com.fcgo.weixin.service.BrandService;
+import com.fcgo.weixin.service.BrandWalletBillsService;
 import com.fcgo.weixin.service.ShopRechargeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,6 +38,9 @@ public class BrandController {
 
     @Autowired
     private ShopRechargeService shopRechargeService;
+
+    @Autowired
+    private BrandWalletBillsService brandWalletBillsService;
 
     @RequestMapping(value = "/getAll", method = RequestMethod.GET)
     public ApiResponse getAll(){
@@ -109,6 +115,17 @@ public class BrandController {
                 .build();
     }
 
+
+    @RequestMapping("/getWalletBillsList")
+    public ApiResponse getWalletBillsList(@RequestBody WalletBillsListReq req) throws SessionExpireException {
+
+        PageResponseBO<BrandWalletBillsBo> pageResponseBO = brandWalletBillsService.getList(req);
+        return new ApiResponse.ApiResponseBuilder()
+                .code(200)
+                .data(pageResponseBO)
+                .message("success")
+                .build();
+    }
 
 
 }

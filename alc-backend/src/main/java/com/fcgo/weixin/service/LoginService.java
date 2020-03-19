@@ -92,8 +92,13 @@ public class LoginService {
             String userInfo = (String)session.getAttribute(AccountConstant.SESSION_USER_INFO_KEY);
             if (StringUtils.isNotBlank(userInfo)){
                 resp = JSONObject.parseObject(userInfo, LoginUserResp.class);
-                logger.info("login hit user in session req {} user {} ",bo, resp);
-                return resp;
+                if (resp.getUserName().equalsIgnoreCase(name)) {
+                    logger.info("login hit user in session req {} user {} ", bo, resp);
+                    return resp;
+                }else {
+                    logger.info("login hit user in session not current name,need quit user in session, req {} user {} ", bo, resp);
+                    session.invalidate();
+                }
             }
         }
         //no session, first login
