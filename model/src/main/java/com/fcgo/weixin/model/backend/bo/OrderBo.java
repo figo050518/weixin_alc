@@ -5,7 +5,6 @@ import lombok.*;
 import java.util.List;
 
 @Data
-@ToString
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -44,4 +43,6 @@ public class OrderBo {
     private OrderAddressBo orderAddress;
 
     private List<OrderGoodsBo> orderGoodsList;
+
+    private OrderDeliveryBo orderDelivery;
 }

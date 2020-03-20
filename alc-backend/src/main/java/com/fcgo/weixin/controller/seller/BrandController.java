@@ -8,6 +8,7 @@ import com.fcgo.weixin.model.PageResponseBO;
 import com.fcgo.weixin.model.backend.bo.BrandAddressBo;
 import com.fcgo.weixin.model.backend.bo.BrandBo;
 import com.fcgo.weixin.model.backend.bo.BrandWalletBillsBo;
+import com.fcgo.weixin.model.backend.bo.BrandWalletBo;
 import com.fcgo.weixin.model.backend.req.BrandListReq;
 import com.fcgo.weixin.model.backend.req.WalletBillsListReq;
 import com.fcgo.weixin.service.BrandAddressService;
@@ -127,5 +128,14 @@ public class BrandController {
                 .build();
     }
 
+    @RequestMapping("/getBrandWallet")
+    public ApiResponse getBrandWallet() throws SessionExpireException {
 
+        BrandWalletBo resp = brandWalletBillsService.getBrandWallet();
+        return new ApiResponse.ApiResponseBuilder()
+                .code(200)
+                .data(resp)
+                .message("success")
+                .build();
+    }
 }

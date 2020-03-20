@@ -3,7 +3,9 @@ package com.fcgo.weixin.dada.service.recharge;
 import com.fcgo.weixin.dada.config.UrlConstant;
 import com.fcgo.weixin.dada.domain.req.RechargeUrlReq;
 import com.fcgo.weixin.dada.service.BaseServiceContext;
+import lombok.ToString;
 
+@ToString(callSuper = true)
 public class RechargeQueryUrlContext extends BaseServiceContext {
 
     public RechargeQueryUrlContext(RechargeUrlReq req) {

@@ -87,8 +87,8 @@ public class ProxyService {
     }
 
 
-    public void addShop(ShopModel shopAddModel){
-        ShopAddContext context = new ShopAddContext(JSONUtil.toJson(shopAddModel));
+    public void addShop(List<ShopModel> shopModelList){
+        ShopAddContext context = new ShopAddContext(JSONUtil.toJson(shopModelList));
         call(context);
     }
 

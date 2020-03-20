@@ -9,6 +9,7 @@ public class DadaServiceException extends RuntimeException {
     private final String errorMessage;
 
     public DadaServiceException(int code, String errorMessage){
+        super(errorMessage);
         this.code = code;
         this.errorMessage = errorMessage;
     }

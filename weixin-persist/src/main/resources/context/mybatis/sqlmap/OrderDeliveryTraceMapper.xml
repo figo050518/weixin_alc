@@ -24,6 +24,14 @@
     from order_delivery_trace
     where id = #{id,jdbcType=INTEGER}
   </select>
+
+
+  <select id="selectAllByOrderCodeDeliveryNum" parameterType="com.fcgo.weixin.persist.model.OrderDeliveryTrace" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" /> from order_delivery_trace
+    where order_code = #{orderCode,jdbcType=VARCHAR}
+    and delivery_num = #{deliveryNum,jdbcType=VARCHAR}
+  </select>
+
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.fcgo.weixin.persist.model.OrderDeliveryTrace" useGeneratedKeys="true">
     insert into order_delivery_trace (order_code, delivery_num, status, 
       cancel_reason, cancel_from, create_time, 

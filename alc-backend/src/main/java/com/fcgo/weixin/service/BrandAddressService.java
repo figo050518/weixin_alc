@@ -9,6 +9,7 @@ import com.fcgo.weixin.persist.dao.BrandAddressMapper;
 import com.fcgo.weixin.persist.dao.BrandMapper;
 import com.fcgo.weixin.persist.model.Brand;
 import com.fcgo.weixin.persist.model.BrandAddress;
+import com.google.common.collect.Lists;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -40,8 +41,8 @@ public class BrandAddressService {
         if (brandAddressId>0){
             Brand brand = brandMapper.selectByPrimaryKey(brandId);
             ShopModel shopAddModel = BrandAddressConvert.convertToShopModel(brandAddress, brand);
-
-            proxyService.addShop(shopAddModel);
+            List<ShopModel> shopModelList = Lists.newArrayList(shopAddModel);
+            proxyService.addShop(shopModelList);
         }
         return brandAddressId;
     }

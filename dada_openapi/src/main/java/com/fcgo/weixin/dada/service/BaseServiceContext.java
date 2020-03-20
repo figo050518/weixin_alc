@@ -1,12 +1,14 @@
 package com.fcgo.weixin.dada.service;
 
 import com.fcgo.weixin.dada.utils.JSONUtil;
+import lombok.ToString;
 
 /**
  * DATE: 18/9/3
  *
  * @author: wan
  */
+@ToString
 public class BaseServiceContext {
 
 

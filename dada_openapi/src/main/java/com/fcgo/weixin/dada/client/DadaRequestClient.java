@@ -32,7 +32,8 @@ public class DadaRequestClient {
         String requestParams = this.getRequestParams();
         DadaApiResponse response = null;
         try {
-            logger.info("ready 2 call dada api,app config {},apiService {}", appConfig, apiService);
+            logger.info("ready 2 call dada api,app config {},apiService {},requestUrl {} requestParams {}",
+                    appConfig, apiService, requestUrl, requestParams);
             String resp = HttpClientUtil.postRequest(requestUrl, requestParams);
             logger.info("finish call dada api,app config {},apiService {} resp {}", appConfig, apiService, resp);
             response = JSONUtil.fromJson(resp, DadaApiResponse.class);

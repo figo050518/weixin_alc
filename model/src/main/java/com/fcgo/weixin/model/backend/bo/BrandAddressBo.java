@@ -24,6 +24,8 @@ public class BrandAddressBo {
 
     private String contactName;
 
+    private String mobile;
+
     private String lng;
 
     private String lat;

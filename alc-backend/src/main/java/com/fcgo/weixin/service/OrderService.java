@@ -13,6 +13,7 @@ import com.fcgo.weixin.httpclient.RestTemplateUtils;
 import com.fcgo.weixin.model.PageResponseBO;
 import com.fcgo.weixin.model.backend.bo.OrderAddressBo;
 import com.fcgo.weixin.model.backend.bo.OrderBo;
+import com.fcgo.weixin.model.backend.bo.OrderDeliveryBo;
 import com.fcgo.weixin.model.backend.bo.OrderGoodsBo;
 import com.fcgo.weixin.model.backend.req.OrderDetailReq;
 import com.fcgo.weixin.model.backend.req.OrderListReq;
@@ -72,6 +73,9 @@ public class OrderService {
 
     @Autowired
     private LogisticsService logisticsService;
+
+    @Autowired
+    private OrderDeliverService orderDeliverService;
 
     private static final String API_CANCLE_ORDER_BY_SELLER = "/order/api/refundFromBackend";
 
@@ -229,6 +233,10 @@ public class OrderService {
         if (Objects.nonNull(orderAddress)){
             OrderAddressBo orderAddressBo = OrderAddressConvert.do2Bo(orderAddress);
             orderBo.setOrderAddress(orderAddressBo);
+        }
+        OrderDeliveryBo orderDeliveryBo;
+        if (Objects.nonNull(orderDeliveryBo=orderDeliverService.getOrderDelivery(orderCode))){
+            orderBo.setOrderDelivery(orderDeliveryBo);
         }
         return orderBo;
     }

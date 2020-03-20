@@ -10,6 +10,8 @@ public class BrandAddress {
 
     private String contactName;
 
+    private String mobile;
+
     private String stationName;
 
     private String cityName;

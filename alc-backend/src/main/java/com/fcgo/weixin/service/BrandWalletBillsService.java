@@ -6,10 +6,13 @@ import com.fcgo.weixin.common.util.PageHelper;
 import com.fcgo.weixin.convert.BrandWalletBillsConvert;
 import com.fcgo.weixin.model.PageResponseBO;
 import com.fcgo.weixin.model.backend.bo.BrandWalletBillsBo;
+import com.fcgo.weixin.model.backend.bo.BrandWalletBo;
 import com.fcgo.weixin.model.backend.req.WalletBillsListReq;
 import com.fcgo.weixin.model.backend.resp.LoginUserResp;
 import com.fcgo.weixin.persist.dao.BrandWalletBillsMapper;
+import com.fcgo.weixin.persist.dao.BrandWalletMapper;
 import com.fcgo.weixin.persist.model.Brand;
+import com.fcgo.weixin.persist.model.BrandWallet;
 import com.fcgo.weixin.persist.model.BrandWalletBills;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -28,6 +31,9 @@ public class BrandWalletBillsService {
 
     @Autowired
     private LoginService loginService;
+
+    @Autowired
+    private BrandWalletMapper brandWalletMapper;
 
     @Autowired
     private BrandWalletBillsMapper brandWalletBillsMapper;
@@ -105,5 +111,18 @@ public class BrandWalletBillsService {
             condition.setOrderCode(orderCode);
         }
         return condition;
+    }
+
+
+    public BrandWalletBo getBrandWallet() throws SessionExpireException {
+        LoginUserResp userResp = loginService.getLoginUser();
+        if (Objects.isNull(userResp)){
+            throw new SessionExpireException();
+        }
+        BrandWallet brandWallet = brandWalletMapper.selectByBrandId(userResp.getBrandId());
+        if (Objects.isNull(brandWallet)){
+            return null;
+        }
+        return BrandWalletBo.builder().amount(brandWallet.getAmount()).build();
     }
 }

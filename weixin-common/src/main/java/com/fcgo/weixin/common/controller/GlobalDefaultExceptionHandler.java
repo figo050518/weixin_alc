@@ -65,7 +65,12 @@ public class GlobalDefaultExceptionHandler {
 
                 log.info("service exception happened at:{}, code:{}, desc:{},  params is: {}",
                         url, code, desc, params,e);
-            } else {
+            } else if(e instanceof RuntimeException){
+                 code = 500;
+                 desc = e.getMessage();
+                 log.info("runtime exception happened at:{}, code:{}, desc:{},  params is: {}",
+                         url, code, desc, params,e);
+             }else{
                 code = 500;
                 desc = "服务暂时异常,请稍等";
                 log.warn("exception happened at:{}, code:{}, desc:{}, uri:{},  params is: {}",

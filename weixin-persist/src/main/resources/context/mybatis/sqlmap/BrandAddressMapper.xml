@@ -5,6 +5,7 @@
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="brand_id" jdbcType="INTEGER" property="brandId" />
     <result column="contact_name" jdbcType="VARCHAR" property="contactName" />
+    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
     <result column="station_name" jdbcType="VARCHAR" property="stationName" />
     <result column="city_name" jdbcType="VARCHAR" property="cityName" />
     <result column="area_name" jdbcType="VARCHAR" property="areaName" />
@@ -15,7 +16,7 @@
     <result column="update_time" jdbcType="INTEGER" property="updateTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, brand_id, contact_name, station_name, city_name, area_name, station_address, lng, lat, create_time,
+    id, brand_id, contact_name, mobile,station_name, city_name, area_name, station_address, lng, lat, create_time,
     update_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -67,6 +68,9 @@
       <if test="contactName != null">
         contact_name,
       </if>
+      <if test="mobile != null">
+        mobile,
+      </if>
       <if test="stationName != null">
         station_name,
       </if>
@@ -98,6 +102,9 @@
       </if>
       <if test="contactName != null">
         #{contactName,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        #{mobile},
       </if>
       <if test="stationName != null">
         #{stationName,jdbcType=VARCHAR},
@@ -133,6 +140,9 @@
       </if>
       <if test="stationName != null">
         station_name = #{stationName,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        mobile = #{mobile},
       </if>
       <if test="cityName != null">
         city_name = #{cityName,jdbcType=VARCHAR},

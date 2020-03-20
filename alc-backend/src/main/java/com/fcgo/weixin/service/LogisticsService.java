@@ -12,6 +12,7 @@ import com.fcgo.weixin.dada.domain.order.OrderCallBackReq;
 import com.fcgo.weixin.dada.domain.req.DeliverFeeReq;
 import com.fcgo.weixin.dada.domain.req.OrderCancelReq;
 import com.fcgo.weixin.dada.domain.resp.DeliverFeeResp;
+import com.fcgo.weixin.dada.domain.resp.OrderCancelReason;
 import com.fcgo.weixin.dada.domain.resp.OrderCancelResp;
 import com.fcgo.weixin.dada.service.ProxyService;
 import com.fcgo.weixin.model.backend.constant.OrderConstant;
@@ -23,6 +24,7 @@ import com.fcgo.weixin.model.constant.OrderPayStatus;
 import com.fcgo.weixin.model.third.dada.DadaOrderStatus;
 import com.fcgo.weixin.persist.dao.*;
 import com.fcgo.weixin.persist.model.*;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,6 +33,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -39,6 +42,9 @@ import java.util.Objects;
 @Service
 public class LogisticsService {
     private final Logger logger = LoggerFactory.getLogger(getClass());
+
+    private List<OrderCancelReason> orderCancelReasons;
+
     @Autowired
     private ProxyService proxyService;
 
@@ -207,7 +213,12 @@ public class LogisticsService {
         }
     }
 
-
+    public List<OrderCancelReason> getAllOrderCancelReason(){
+        if (CollectionUtils.isEmpty(this.orderCancelReasons)) {
+            orderCancelReasons = proxyService.getOrderCancelReasonList();
+        }
+        return orderCancelReasons;
+    }
 
     public void cancelDeliverByBrand(OrderCancelReq cancelReq) throws SessionExpireException {
         String orderCode = cancelReq.getOrder_id();
@@ -225,6 +236,12 @@ public class LogisticsService {
             logger.warn("cancelDeliverByBrand fail not find order, req {} user {}", cancelReq, loginUserResp);
             throw new ServiceException(401, "订单非你所属");
         }
+        Integer cancel_reason_id;
+        if (Objects.isNull(cancel_reason_id=cancelReq.getCancel_reason_id())){
+            logger.warn("cancelDeliverByBrand fail at no cancel_reason_id, req {} user {}", cancelReq, loginUserResp);
+            throw new ServiceException(401, "需要选择取消原因");
+        }
+
         OrderCancelResp cancelRsp = proxyService.cancelOrder(cancelReq);
         Double deductFee;
         if (Objects.nonNull(deductFee=cancelRsp.getDeduct_fee()) && deductFee>0){

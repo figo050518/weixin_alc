@@ -49,7 +49,7 @@ public class BrandAddressConvert {
                 .stationName(StringUtils.isBlank(brandAddress.getStationName()) ? brand.getName() : brand.getName())
                 .business(2)
                 .contactName(brandAddress.getContactName())
-                .phone(brand.getPhone())
+                .phone(brandAddress.getMobile())
                 .build();
         return shopAddModel;
     }
