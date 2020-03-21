@@ -116,9 +116,9 @@ public class LogisticsService {
     }
 
     public void addOrderAfterCheck(Order order, OrderDeliverType shopDeliverType){
-
         String orderCode = order.getCode();
         Integer brandId = order.getBrandId();
+        logger.info("addOrderAfterCheck orderCode {} shopDeliverType {}", orderCode, shopDeliverType);
         //pre-fetch deliver fee
         DeliverFeeResp deliverFeeResp = queryDeliverFee(order);
         if (Objects.isNull(deliverFeeResp)){
@@ -220,6 +220,13 @@ public class LogisticsService {
         return orderCancelReasons;
     }
 
+    /**
+     * 在订单待接单或待取货情况下，调用此接口可取消订单。
+     * 注意：接单后1－15分钟内取消订单，运费退回。
+     * 同时扣除2元作为给配送员的违约金
+     * @param cancelReq
+     * @throws SessionExpireException
+     */
     public void cancelDeliverByBrand(OrderCancelReq cancelReq) throws SessionExpireException {
         String orderCode = cancelReq.getOrder_id();
         if (StringUtils.isBlank(orderCode)){

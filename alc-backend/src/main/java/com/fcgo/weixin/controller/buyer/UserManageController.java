@@ -2,7 +2,6 @@ package com.fcgo.weixin.controller.buyer;
 
 import com.fcgo.weixin.model.ApiResponse;
 import com.fcgo.weixin.model.PageResponseBO;
-import com.fcgo.weixin.model.backend.req.AccountListReq;
 import com.fcgo.weixin.model.backend.req.UserListReq;
 import com.fcgo.weixin.service.UserManageService;
 import org.slf4j.Logger;

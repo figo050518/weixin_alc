@@ -77,6 +77,8 @@ public class OrderService {
     @Autowired
     private OrderDeliverService orderDeliverService;
 
+
+
     private static final String API_CANCLE_ORDER_BY_SELLER = "/order/api/refundFromBackend";
 
     public String getCancleOrderUrl(){
@@ -343,6 +345,7 @@ public class OrderService {
 
     private void processShopDeliver(OrderProcessReq req,Order order,OrderDeliverType orderDeliverType){
         Integer deliverTypeCode = req.getDeliverType();
+        logger.info("processShopDeliver orderDeliverType {} order code {}", orderDeliverType, order.getCode());
         switch (orderDeliverType){
             case DADA_DELIVER:{
                 logisticsService.addOrderAfterCheck(order, orderDeliverType);
@@ -364,10 +367,21 @@ public class OrderService {
         return updateDeliverType;
     }
 
+    @Autowired
+    private OrderDeliveryMapper orderDeliveryMapper;
 
-
+    /**
+     *
+     * @param order
+     * @param loginUserResp
+     * @return
+     */
     public int cancelBySeller(Order order,LoginUserResp loginUserResp){
-        logger.info("cacelBySeller {} ,order {}", loginUserResp, order);
+        logger.info("cancelBySeller {} ,order {}", loginUserResp, order);
+        OrderDeliverType orderDeliverType = OrderDeliverType.getDeliverType(order.getDeliverType());
+        if (Objects.nonNull(orderDeliverType) && OrderDeliverType.DADA_DELIVER.equals(orderDeliverType)) {
+            orderDeliverService.checkWhenCancel(order);
+        }
         String url = getCancleOrderUrl();
         Map<String,Object> params = new HashMap<>(2);
         params.put("orderId", order.getId());
@@ -381,9 +395,7 @@ public class OrderService {
             if (Objects.nonNull(businessCode)&& businessCode.equals(100)){
                 result = 1;
             }
-
         } catch (Exception e) {
-
             logger.warn("call order cancel fail, url {} params {}", url, params, e);
         }finally {
             return result;
