@@ -6,7 +6,10 @@ import com.fcgo.weixin.common.util.BigDecimalHelper;
 import com.fcgo.weixin.common.util.SHA256;
 import com.fcgo.weixin.dada.domain.req.RechargeUrlReq;
 import com.fcgo.weixin.httpclient.RestTemplateUtils;
+import com.fcgo.weixin.model.backend.bo.RechargeOrderBo;
 import com.fcgo.weixin.model.backend.resp.LoginUserResp;
+import com.fcgo.weixin.persist.dao.RechargeOrderMapper;
+import com.fcgo.weixin.persist.model.RechargeOrder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +37,9 @@ public class ShopRechargeService {
 
     @Value("${alc.service.order.url}")
     private String orderServiceUrl;
+
+    @Autowired
+    private RechargeOrderMapper rechargeOrderMapper;
 
 
     public JSONObject getRechargeUrl(RechargeUrlReq req) throws SessionExpireException {
@@ -75,5 +81,23 @@ public class ShopRechargeService {
         return new StringBuilder(orderServiceUrl).append(RECHARGE_API).toString();
     }
 
+
+    public RechargeOrderBo queryRechargeOrder(RechargeOrderBo req) throws SessionExpireException {
+        LoginUserResp loginUserResp = loginService.getLoginUser();
+        if (Objects.isNull(loginUserResp)){
+            throw new SessionExpireException();
+        }
+
+        RechargeOrder condition = RechargeOrder.builder()
+                .brandId(loginUserResp.getBrandId())
+                .orderCode(req.getOrderCode()).build();
+
+        RechargeOrder pro = rechargeOrderMapper.selectByOrderCode(condition);
+        if (Objects.isNull(pro)){
+            logger.warn("queryRechargeOrder not find RechargeOrder , req {}", req);
+            return req;
+        }
+        return RechargeOrderBo.builder().status(pro.getStatus()).build();
+    }
 
 }

@@ -23,7 +23,13 @@
     where id = #{id,jdbcType=INTEGER}
   </select>
 
-
+  <select id="selectByOrderCode" parameterType="com.fcgo.weixin.persist.model.RechargeOrder" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from recharge_order
+    where brand_id = #{brandId,jdbcType=INTEGER}
+      and order_code = #{orderCode}
+  </select>
 
   <select id="selectCnt" resultType="int">
     select count(*) from recharge_order
@@ -39,7 +45,7 @@
 
   <sql id="where_select_all">
     <if test="condition.brandId != null">
-      and brand_id = #{condition.brandId,jdbcType=INTEGER},
+      and brand_id = #{condition.brandId,jdbcType=INTEGER}
     </if>
     <if test="condition.orderCode != null">
       and order_code = #{condition.orderCode}

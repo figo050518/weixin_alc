@@ -5,10 +5,7 @@ import com.fcgo.weixin.common.exception.SessionExpireException;
 import com.fcgo.weixin.dada.domain.req.RechargeUrlReq;
 import com.fcgo.weixin.model.ApiResponse;
 import com.fcgo.weixin.model.PageResponseBO;
-import com.fcgo.weixin.model.backend.bo.BrandAddressBo;
-import com.fcgo.weixin.model.backend.bo.BrandBo;
-import com.fcgo.weixin.model.backend.bo.BrandWalletBillsBo;
-import com.fcgo.weixin.model.backend.bo.BrandWalletBo;
+import com.fcgo.weixin.model.backend.bo.*;
 import com.fcgo.weixin.model.backend.req.BrandListReq;
 import com.fcgo.weixin.model.backend.req.WalletBillsListReq;
 import com.fcgo.weixin.service.BrandAddressService;
@@ -113,6 +110,17 @@ public class BrandController {
                 .code(code)
                 .data(result)
                 .message(msg)
+                .build();
+    }
+
+    @RequestMapping("/queryRechargeResult")
+    public ApiResponse queryRechargeResult(RechargeOrderBo req) throws SessionExpireException {
+        logger.info("queryRechargeResult in, req {}", req);
+        RechargeOrderBo resp = shopRechargeService.queryRechargeOrder(req);
+        return new ApiResponse.ApiResponseBuilder()
+                .code(200)
+                .data(resp)
+                .message("success")
                 .build();
     }
 

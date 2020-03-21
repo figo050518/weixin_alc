@@ -18,6 +18,8 @@ public interface RechargeOrderMapper {
 
     RechargeOrder selectByPrimaryKey(Integer id);
 
+    RechargeOrder selectByOrderCode(RechargeOrder record);
+
     int updateByPrimaryKeySelective(RechargeOrder record);
 
     int updateByPrimaryKey(RechargeOrder record);

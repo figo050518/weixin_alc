@@ -11,7 +11,6 @@ import java.math.BigDecimal;
 @NoArgsConstructor@AllArgsConstructor
 public class RechargeOrderBo {
 
-
     private Integer id;
 
     private String orderCode;
@@ -24,6 +23,8 @@ public class RechargeOrderBo {
     private BigDecimal amount;
 
     private Integer status;
+
+    private Integer platformStatus;
 
     private String createTime;
 
