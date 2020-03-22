@@ -18,6 +18,7 @@
 		<module>weixin-persist</module>
 		<module>weixin-web-common</module>
 		<module>alc-backend</module>
+		<module>alc-backend-service</module>
         <module>model</module>
 		<module>http-client</module>
 	</modules>
@@ -209,6 +210,12 @@
 			<dependency>
 				<groupId>${project.groupId}</groupId>
 				<artifactId>weixin-web-common</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.fcgo.weixin</groupId>
+				<artifactId>alc-backend-service</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 

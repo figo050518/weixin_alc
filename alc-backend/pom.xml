@@ -12,6 +12,10 @@
 	<name>后台系统</name>
 	<packaging>war</packaging>
 	<dependencies>
+		<dependency>
+			<groupId>com.fcgo.weixin</groupId>
+			<artifactId>alc-backend-service</artifactId>
+		</dependency>
 
 		<dependency>
 			<groupId>${project.groupId}</groupId>
@@ -33,15 +37,7 @@
 			<artifactId>weixin-common</artifactId>
 		</dependency>
 
-		<dependency>
-			<groupId>commons-codec</groupId>
-			<artifactId>commons-codec</artifactId>
-		</dependency>
 
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-io</artifactId>
-		</dependency>
 		
 		<dependency>
 			<groupId>${project.groupId}</groupId>
@@ -51,6 +47,18 @@
 		<dependency>
 			<groupId>${project.groupId}</groupId>
 			<artifactId>weixin-persist</artifactId>
+		</dependency>
+
+
+
+		<dependency>
+			<groupId>com.fcgo.weixin</groupId>
+			<artifactId>dada-open-api</artifactId>
+		</dependency>
+		<!--
+		<dependency>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
 		</dependency>
 
 		<dependency>
@@ -133,8 +141,8 @@
 		</dependency>
 
 		<dependency>
-			<groupId>com.fcgo.weixin</groupId>
-			<artifactId>dada-open-api</artifactId>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-io</artifactId>
 		</dependency>
 
 		<dependency>
@@ -142,6 +150,7 @@
 			<artifactId>servlet-api</artifactId>
 			<scope>provided</scope>
 		</dependency>
+		-->
 	</dependencies>
 	<profiles>
 		<profile>
