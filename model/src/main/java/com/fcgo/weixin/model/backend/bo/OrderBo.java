@@ -36,6 +36,8 @@ public class OrderBo {
 
     private String payTime;
 
+    private Integer deliverType;
+
     private String createTime;
 
     private String updateTime;
