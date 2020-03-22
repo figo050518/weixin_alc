@@ -1,5 +1,7 @@
 package com.fcgo.weixin.dada.service;
 
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.TypeReference;
 import com.fcgo.weixin.dada.client.DadaApiResponse;
 import com.fcgo.weixin.dada.client.DadaRequestClient;
 import com.fcgo.weixin.dada.config.AppConfig;
@@ -32,7 +34,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 @Service
 public class ProxyService {
@@ -48,13 +53,22 @@ public class ProxyService {
         return resp;
     }
 
-    public Object call(BaseServiceContext service){
+    public Object call(BaseServiceContext service, Class clazz){
         logger.info("ProxyService.call, api service {},appConfig {}", service, appConfig);
         DadaRequestClient dadaClient = new DadaRequestClient(service, appConfig);
         DadaApiResponse resp = dadaClient.callRpc();
         Object obj = null;
         if (resp.isOk()){
             obj = resp.getResult();
+
+            if (obj instanceof Collection){
+                //JSONObject.parseObject(JSONObject.toJSONString(obj), new TypeReference<Collection>(){});
+                return obj;
+            }
+
+            if (obj instanceof JSONObject && Objects.nonNull(clazz)){
+                return JSONObject.parseObject(((JSONObject) obj).toJSONString(),clazz);
+            }
         }
         return obj;
     }
@@ -62,12 +76,12 @@ public class ProxyService {
     public DeliverFeeResp queryDeliverFee(DeliverFeeReq dfr){
         String paramsStr = JSONUtil.toJson(dfr);
         PreQueryDeliverFeeContext service = new PreQueryDeliverFeeContext(paramsStr);
-        return (DeliverFeeResp)call(service);
+        return (DeliverFeeResp)call(service, DeliverFeeResp.class);
     }
 
     public List<CityCodeBo> getCityCodeList(){
         CityCodeContext ccc = new CityCodeContext("");
-        List<CityCodeBo> resp = (List<CityCodeBo>)call(ccc);
+        List<CityCodeBo> resp = (List<CityCodeBo>)call(ccc, List.class);
         return resp;
     }
 
@@ -78,28 +92,28 @@ public class ProxyService {
 
     public OrderDetail getOrderDetail(OrderDetailReq req){
         OrderDetailContext context = new OrderDetailContext(req);
-        return (OrderDetail)call(context);
+        return (OrderDetail)call(context, OrderDetail.class);
     }
 
     public OrderCancelResp cancelOrder(OrderCancelReq req){
         OrderCancelContext context = new OrderCancelContext(req);
-        return (OrderCancelResp)call(context);
+        return (OrderCancelResp)call(context, OrderCancelResp.class);
     }
 
 
     public void addShop(List<ShopModel> shopModelList){
         ShopAddContext context = new ShopAddContext(JSONUtil.toJson(shopModelList));
-        call(context);
+        call(context, null);
     }
 
     public void updateShop(ShopModel shopAddModel){
         ShopUpdateContext context = new ShopUpdateContext(JSONUtil.toJson(shopAddModel));
-        call(context);
+        call(context, null);
     }
 
     public void addOrder(OrderAddModel orderAddModel){
         OrderAddContext context = new OrderAddContext(JSONUtil.toJson(orderAddModel));
-        call(context);
+        call(context, null);
     }
 
     /**
@@ -109,7 +123,7 @@ public class ProxyService {
      */
     public List<OrderCancelReason> getOrderCancelReasonList(){
         OrderCancelReasonContext context = new OrderCancelReasonContext();
-        return (List<OrderCancelReason>)call(context);
+        return (List<OrderCancelReason>)call(context, null);
     }
 
     /**
@@ -119,7 +133,7 @@ public class ProxyService {
      */
     public String queryRechargeUrl(RechargeUrlReq req){
         RechargeQueryUrlContext context = new RechargeQueryUrlContext(req);
-        return (String)call(context);
+        return (String)call(context, String.class);
     }
 
     /**
@@ -129,6 +143,6 @@ public class ProxyService {
      */
     public BalanceResp queryBalance(BalanceQueryReq req){
         BalanceQueryContext context = new BalanceQueryContext(req);
-        return (BalanceResp)call(context);
+        return (BalanceResp)call(context, BalanceResp.class);
     }
 }

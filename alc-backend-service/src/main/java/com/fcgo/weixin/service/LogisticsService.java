@@ -133,7 +133,7 @@ public class LogisticsService {
             throw new ServiceException(500, "初次使用,请先完成运费充值");
         }
         BigDecimal dadaDeliverFee = new BigDecimal(deliverFeeResp.getFee());
-        if (dadaDeliverFee.compareTo(amountInWallet)<0){
+        if (dadaDeliverFee.compareTo(amountInWallet)>0){
             logger.warn("add dada order brandWallet not enough pay dadaDeliverFee, orderCode {},dadaDeliverFee{} amountInWallet {}",
                     orderCode,dadaDeliverFee,amountInWallet);
             throw new ServiceException(500, "运费余额不足，请充值");

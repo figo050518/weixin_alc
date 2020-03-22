@@ -331,7 +331,9 @@ public class OrderService {
                     break;
                 }
                 case DELIVER:{
-                    processShopDeliver(req, order, orderDeliverType);
+                    logger.info("processOrderDeliver req {} orderDeliverType {}", req, orderDeliverType);
+                    processShopDeliver(req, order);
+                    break;
                 }
                 default:{
                     logger.warn("processOrderDeliver orderDeliverType illegal, req {} orderDeliverType {}",req, orderDeliverType);
@@ -343,8 +345,9 @@ public class OrderService {
         }
     }
 
-    private void processShopDeliver(OrderProcessReq req,Order order,OrderDeliverType orderDeliverType){
+    private void processShopDeliver(OrderProcessReq req,Order order){
         Integer deliverTypeCode = req.getDeliverType();
+        OrderDeliverType orderDeliverType = OrderDeliverType.getDeliverType(deliverTypeCode);
         logger.info("processShopDeliver orderDeliverType {} order code {}", orderDeliverType, order.getCode());
         switch (orderDeliverType){
             case DADA_DELIVER:{
@@ -367,8 +370,6 @@ public class OrderService {
         return updateDeliverType;
     }
 
-    @Autowired
-    private OrderDeliveryMapper orderDeliveryMapper;
 
     /**
      *

@@ -48,12 +48,13 @@ public class DadaRechargeController {
         return new ApiResponse.ApiResponseBuilder().code(200).message("successful")
                 .data(pageResponseBO).build();
     }
-
-    @RequestMapping("/confirmPaidToDaDa")
-    public ApiResponse confirmPaidToDaDa(@RequestBody RechargeOrderBo req) {
-        logger.info("confirmPaid req {}", req);
-        dadaRechargeService.confirmPaid(req);
+    @RequestMapping("/processDadaOrderOfBrand")
+    public ApiResponse processDadaOrderOfBrand(@RequestBody RechargeOrderBo req) {
+        logger.info("processDadaOrderOfBrand req {}", req);
+        dadaRechargeService.processDadaOrderOfBrand(req);
         return new ApiResponse.ApiResponseBuilder().code(200).message("successful")
                 .build();
     }
+
+
 }

@@ -11,6 +11,7 @@ import com.fcgo.weixin.model.PageResponseBO;
 import com.fcgo.weixin.model.backend.bo.RechargeOrderBo;
 import com.fcgo.weixin.model.backend.req.RechargeOrderListReq;
 import com.fcgo.weixin.model.backend.resp.DadaRechargeUrlResp;
+import com.fcgo.weixin.model.constant.PlatformRechargeStatus;
 import com.fcgo.weixin.model.constant.RechargeOrderStatus;
 import com.fcgo.weixin.persist.dao.RechargeOrderMapper;
 import com.fcgo.weixin.persist.model.Brand;
@@ -83,27 +84,64 @@ public class DadaRechargeService {
         return condition;
     }
 
+    public void processDadaOrderOfBrand(RechargeOrderBo rechargeOrderBo){
+        Integer platformStatusCode;
+        if (Objects.isNull(platformStatusCode = rechargeOrderBo.getPlatformStatus())){
+            logger.warn("process Dada Order Of Brand, req {}", rechargeOrderBo);
+            return;
+        }
+        PlatformRechargeStatus platformRechargeStatus = PlatformRechargeStatus.getOrderStatus(platformStatusCode);
+
+        if (Objects.isNull(platformRechargeStatus)){
+            logger.warn("processDadaOrderOfBrand platformRechargeStatus null, {}", rechargeOrderBo);
+            return;
+        }
+        switch (platformRechargeStatus){
+            case TRYING: {
+                prepayToDada(rechargeOrderBo);
+                break;
+            }
+            case FINISH:{
+                confirmPaid(rechargeOrderBo);
+                break;
+            }
+        }
+    }
+
+    public void prepayToDada(RechargeOrderBo rechargeOrderBo){
+        logger.info("prepayToDada {}", rechargeOrderBo);
+        PlatformRechargeStatus tprs = PlatformRechargeStatus.TRYING;
+        doUpdatePlatformStatus(rechargeOrderBo, tprs, "prepayToDada");
+    }
+
     public void confirmPaid(RechargeOrderBo rechargeOrderBo){
+        logger.info("confirmPaid {}", rechargeOrderBo);
+        PlatformRechargeStatus tprs = PlatformRechargeStatus.FINISH;
+        doUpdatePlatformStatus(rechargeOrderBo, tprs, "confirmPaid");
+    }
+
+    private int doUpdatePlatformStatus(RechargeOrderBo rechargeOrderBo,
+                                       PlatformRechargeStatus tprs,
+                                       String bizCase){
         Integer id;
         if (Objects.isNull(id=rechargeOrderBo.getId())||id<=0){
             throw new ServiceException(401,"ID参数错误");
         }
         RechargeOrder pro = rechargeOrderMapper.selectByPrimaryKey(rechargeOrderBo.getId());
         if (Objects.isNull(pro)){
-            logger.warn("confirmPaid fail, id {}",id);
+            logger.warn("{} fail, id {}", bizCase, id);
             throw new ServiceException(401,"订单不存在");
         }
         RechargeOrderStatus exceptROS = RechargeOrderStatus.PAID;
         if (pro.getStatus() == null || exceptROS.getCode() != pro.getStatus().intValue()){
-            logger.warn("confirmPaid fail, id {}",id);
+            logger.warn("{} fail, id {}", bizCase, id);
             throw new ServiceException(401,String.format("充值订单[%s]商户还没有支付",pro.getOrderCode()));
         }
-
         RechargeOrder rouc = new RechargeOrder();
         rouc.setId(id);
-        rouc.setPlatformStatus(exceptROS.getCode());
+        rouc.setPlatformStatus(tprs.getCode());
         int rows = rechargeOrderMapper.updateByPrimaryKeySelective(rouc);
-        logger.info("confirmPaid finish, req {} update result {}", rechargeOrderBo, rows);
+        logger.info("{} finish, req {} update result {}", bizCase, rechargeOrderBo, rows);
+        return rows;
     }
-
 }
