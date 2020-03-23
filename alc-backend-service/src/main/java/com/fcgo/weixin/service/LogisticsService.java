@@ -186,7 +186,7 @@ public class LogisticsService {
         checkCallBackSign(req);
         //local data check
         String orderCode = req.getOrderId();
-        String dadaOrderCode = req.getClientId();
+        String dadaOrderId = req.getClientId();
         OrderDelivery condition = OrderDelivery.builder()
                 .orderCode(orderCode)
                 .build();
@@ -216,7 +216,9 @@ public class LogisticsService {
         int oduRows = orderDeliveryMapper.updateByPrimaryKeySelective(oduc);
         logger.info("processCallBack req {} rows {}", req, oduRows);
         OrderDeliveryTrace odtc = OrderDeliveryTrace.builder()
-                .orderCode(orderCode).deliveryNum(dadaOrderCode)
+                .orderCode(orderCode)
+                .clientId(dadaOrderId)
+                .deliveryNum(orderDelivery.getDeliveryNum())
                 .status(req.getOrderStatus())
                 .dadaUpdateTime(req.getUpdateTime())
                 .cancelFrom(req.getCancelFrom())

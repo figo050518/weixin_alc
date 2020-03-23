@@ -12,6 +12,10 @@ public class OrderDeliveryTrace {
     private Integer id;
 
     private String orderCode;
+    /**
+     * 达达运单号，默认为空
+     */
+    private String clientId;
 
     private String deliveryNum;
 
