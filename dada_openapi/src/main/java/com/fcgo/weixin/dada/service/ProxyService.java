@@ -48,8 +48,7 @@ public class ProxyService {
     private AppConfig appConfig;
 
     public boolean checkSign(Map<String,String> params,String sign){
-        DadaRequestClient dadaClient = new DadaRequestClient(null, appConfig);
-        String signInLocal = dadaClient.getSign(params);
+        String signInLocal = DadaRequestClient.getMD5(params);
         logger.info("check sign, sign from In-param {},sign by calculate in time {} ", sign, signInLocal);
         return StringUtils.isNotBlank(sign) && StringUtils.isNotBlank(signInLocal) && sign.equals(signInLocal);
     }

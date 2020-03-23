@@ -84,5 +84,32 @@ public class DadaRequestClient {
         return sign.toUpperCase();
     }
 
+    public static String getMD5(Map<String, String> requestParams) {
+        //请求参数键值升序排序
+        Set<String> sortedParams = new TreeSet<String>(requestParams.values());
 
+        //拼参数字符串。
+        StringBuilder signStr = new StringBuilder();
+        for (String value : sortedParams) {
+            signStr.append(value);
+        }
+
+        //MD5签名并校验
+        String toSign = signStr.toString();
+        String sign = EncryptUtil.encrypt(toSign);
+        return sign;
+    }
+
+    public static void main(String[] args) {
+        //clientId=977435735918887799, orderId=20200323230340069462848,
+        // orderStatus=2, cancelReason=, cancelFrom=0, updateTime=1584978954,
+        // signature=0a009675e7477aeded494fc8b3c9ded7
+        Map<String,String> params = new HashMap<>(3);
+        params.put("12", "977435735918887799");
+        params.put("22", "20200323230340069462848");
+        params.put("32", "1584978954");
+        String md5Result;
+        System.out.println(md5Result=getMD5(params));
+        System.out.println("0a009675e7477aeded494fc8b3c9ded7".equals(md5Result));
+    }
 }

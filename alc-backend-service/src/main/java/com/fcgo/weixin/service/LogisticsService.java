@@ -178,6 +178,7 @@ public class LogisticsService {
             logger.warn("checkCallBackSign checkResult fail, req {}",checkResult, req);
             throw new ServiceException(401, "非法签名");
         }
+
     }
 
     public void processCallBack(OrderCallBackReq req){
