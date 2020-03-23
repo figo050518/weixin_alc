@@ -28,8 +28,9 @@ public class DadaLogisticsController {
     @Autowired
     private LogisticsService logisticsService;
 
-    @IgnoreSession
+
     @RequestMapping("/" + OrderConstant.CALL_BACK_API)
+    @IgnoreSession
     public ApiResponse dadaCallBack(@RequestBody OrderCallBackReq req){
         logger.info("in dadaCallBack, {}", req);
         logisticsService.processCallBack(req);
