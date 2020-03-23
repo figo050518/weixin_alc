@@ -1,5 +1,6 @@
 package com.fcgo.weixin.controller.order;
 
+import com.fcgo.weixin.common.annotation.IgnoreSession;
 import com.fcgo.weixin.common.exception.SessionExpireException;
 import com.fcgo.weixin.dada.domain.req.DeliverFeeReq;
 import com.fcgo.weixin.dada.domain.req.OrderCancelReq;
@@ -27,6 +28,7 @@ public class DadaLogisticsController {
     @Autowired
     private LogisticsService logisticsService;
 
+    @IgnoreSession
     @RequestMapping("/" + OrderConstant.CALL_BACK_API)
     public ApiResponse dadaCallBack(@RequestBody OrderCallBackReq req){
         logger.info("in dadaCallBack, {}", req);
