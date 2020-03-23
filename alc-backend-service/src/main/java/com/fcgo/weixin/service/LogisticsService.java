@@ -189,9 +189,8 @@ public class LogisticsService {
         String dadaOrderCode = req.getClientId();
         OrderDelivery condition = OrderDelivery.builder()
                 .orderCode(orderCode)
-                .deliveryNum(dadaOrderCode)
                 .build();
-        OrderDelivery orderDelivery = orderDeliveryMapper.selectByOrderCodeDeliverNum(condition);
+        OrderDelivery orderDelivery = orderDeliveryMapper.selectByOrderCode(condition);
         if (Objects.isNull(orderDelivery)){
             logger.warn("create dada order fail, now create one {}",req);
             //todo add
