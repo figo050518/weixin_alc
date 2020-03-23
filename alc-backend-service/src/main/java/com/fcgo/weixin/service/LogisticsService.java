@@ -160,7 +160,7 @@ public class LogisticsService {
     }
 
     public String buildOrderCallBackUrl(){
-        return ORDER_CALLBACK_URL + "/" + OrderConstant.CALL_BACK_API;
+        return ORDER_CALLBACK_URL+ "/logistics/dada/" + OrderConstant.CALL_BACK_API;
     }
 
 
