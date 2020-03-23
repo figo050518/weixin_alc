@@ -29,6 +29,7 @@ import com.fcgo.weixin.dada.service.order.OrderAddContext;
 import com.fcgo.weixin.dada.service.order.OrderCancelContext;
 import com.fcgo.weixin.dada.service.order.PreQueryDeliverFeeContext;
 import com.fcgo.weixin.dada.utils.JSONUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +46,13 @@ public class ProxyService {
 
     @Autowired
     private AppConfig appConfig;
+
+    public boolean checkSign(Map<String,String> params,String sign){
+        DadaRequestClient dadaClient = new DadaRequestClient(null, appConfig);
+        String signInLocal = dadaClient.getSign(params);
+        logger.info("check sign, sign from In-param {},sign by calculate in time {} ", sign, signInLocal);
+        return StringUtils.isNotBlank(sign) && StringUtils.isNotBlank(signInLocal) && sign.equals(signInLocal);
+    }
 
     public DadaApiResponse callAndGetFullResp(BaseServiceContext service){
         logger.info("ProxyService.callAndGetFullResp, api service {},appConfig {}", service, appConfig);

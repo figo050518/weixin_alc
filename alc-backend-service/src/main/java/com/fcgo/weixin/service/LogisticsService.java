@@ -33,7 +33,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -163,10 +165,24 @@ public class LogisticsService {
         return ORDER_CALLBACK_URL+ "/logistics/dada/" + OrderConstant.CALL_BACK_API;
     }
 
-
+    private void checkCallBackSign(OrderCallBackReq req){
+        //对client_id, order_id, update_time的值进行字符串升序排列，再连接字符串，取md5值
+        Map<String,String> params = new HashMap<>(3);
+        params.put("client_id", req.getClientId());
+        params.put("order_id", req.getOrderId());
+        params.put("update_time", Objects.nonNull(req.getUpdateTime()) ? String.valueOf(req.getUpdateTime()) : "");
+        boolean checkResult = proxyService.checkSign(params, req.getSignature());
+        logger.info("checkCallBackSign checkResult {}, req {}",checkResult, req);
+        if (!checkResult){
+            logger.warn("checkCallBackSign checkResult fail, req {}",checkResult, req);
+            throw new ServiceException(401, "非法签名");
+        }
+    }
 
     public void processCallBack(OrderCallBackReq req){
-        //TODO check sign
+        //check sign
+        checkCallBackSign(req);
+        //local data check
         String orderCode = req.getOrderId();
         String dadaOrderCode = req.getClientId();
         OrderDelivery condition = OrderDelivery.builder()
@@ -180,7 +196,7 @@ public class LogisticsService {
         }
         DadaOrderStatus orderStatus = DadaOrderStatus.getDadaOrderStatus(req.getOrderStatus());
         if (Objects.isNull(orderStatus)){
-            logger.warn("process dada order CallBack fail,{}",req);
+            logger.warn("process dada order CallBack fail,DadaOrderStatus is null,{}",req);
             return;
         }
         boolean delivryFail = false;
@@ -192,8 +208,12 @@ public class LogisticsService {
             case RECALL_FINISH_DELIVERED_FAIL:
                 delivryFail = true;
                 break;
-
         }
+        int cdt = DateUtil.getCurrentTimeSeconds();
+        OrderDelivery oduc = OrderDelivery.builder().id(orderDelivery.getId())
+                .status(orderStatus.getCode()).updateTime(cdt).build();
+        int oduRows = orderDeliveryMapper.updateByPrimaryKeySelective(oduc);
+        logger.info("processCallBack req {} rows {}", req, oduRows);
         OrderDeliveryTrace odtc = OrderDeliveryTrace.builder()
                 .orderCode(orderCode).deliveryNum(dadaOrderCode)
                 .status(req.getOrderStatus())
@@ -271,19 +291,12 @@ public class LogisticsService {
             BigDecimal left = BigDecimalHelper.sub(deliveryFee, deductFeeBD=new BigDecimal(deductFee));
             logger.info("cancelDeliverByBrand req {} ,deductFee {} deliveryFee {} left {}",
                     cancelReq, deductFee, deliveryFee, left);
-            walletService.plus(orderCode, brandId, left, BillsInOutType.REFUND_OUT);
+            walletService.plus(orderCode, brandId, deliveryFee, BillsInOutType.REFUND_OUT);
             //record deductFee
-            BrandWalletBills bwbc = BrandWalletBills.builder()
-                    .orderCode(orderCode)
-                    .amount(deductFeeBD)
-                    .inOut(BillsInOutType.PENALTY.getCode())
-                    .bizType(1)
-                    .createTime(cdt)
-                    .brandId(brandId)
-                    .build();
+            walletService.substract(orderCode,brandId,deductFeeBD,BillsInOutType.PENALTY);
         }
         //reset deliver type of order
-        cancelInnorOrder(orderCode);
+        //cancelInnorOrder(orderCode);
     }
 
     private void cancelInnorOrder(String orderCode){

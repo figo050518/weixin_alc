@@ -67,7 +67,7 @@ public class DadaRequestClient {
         return JSONUtil.toJson(requestParams);
     }
 
-    private String getSign(Map<String, String> requestParams) {
+    public String getSign(Map<String, String> requestParams) {
         //请求参数键值升序排序
         Map<String, String> sortedParams = new TreeMap<String, String>(requestParams);
         Set<Map.Entry<String, String>> entrySets = sortedParams.entrySet();
