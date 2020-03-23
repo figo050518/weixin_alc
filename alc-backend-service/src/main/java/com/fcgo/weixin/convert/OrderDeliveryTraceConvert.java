@@ -13,6 +13,7 @@ public class OrderDeliveryTraceConvert extends BaseConvert{
         OrderDeliveryTraceBo bo = new OrderDeliveryTraceBo();
         String[] ignoreProps = {"createTime","dadaUpdateTime"};
         BeanUtils.copyProperties(odt, bo, ignoreProps);
+        bo.setDeliveryNum(odt.getClientId());
         DadaOrderStatus dos = DadaOrderStatus.getDadaOrderStatus(odt.getStatus());
         bo.setStatusDesc(Objects.isNull(dos)? null : dos.getDesc());
         bo.setCreateTime(fmtDateFromUnixtime(odt.getCreateTime()));

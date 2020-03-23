@@ -14,6 +14,11 @@ public class OrderDeliveryTraceBo {
 
     private String orderCode;
 
+    /**
+     * 达达运单号，默认为空
+     */
+    private String clientId;
+
     private String deliveryNum;
 
     private Integer status;
