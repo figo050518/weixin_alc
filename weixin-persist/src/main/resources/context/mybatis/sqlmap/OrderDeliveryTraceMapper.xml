@@ -31,6 +31,7 @@
     select <include refid="Base_Column_List" /> from order_delivery_trace
     where order_code = #{orderCode,jdbcType=VARCHAR}
     and delivery_num = #{deliveryNum,jdbcType=VARCHAR}
+    order by dada_update_time desc
   </select>
 
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.fcgo.weixin.persist.model.OrderDeliveryTrace" useGeneratedKeys="true">
