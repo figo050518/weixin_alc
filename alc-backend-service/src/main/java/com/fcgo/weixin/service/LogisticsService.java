@@ -21,6 +21,7 @@ import com.fcgo.weixin.model.backend.resp.LoginUserResp;
 import com.fcgo.weixin.model.constant.BillsInOutType;
 import com.fcgo.weixin.model.constant.OrderDeliverType;
 import com.fcgo.weixin.model.constant.OrderPayStatus;
+import com.fcgo.weixin.model.constant.OrderStatus;
 import com.fcgo.weixin.model.third.dada.DadaOrderStatus;
 import com.fcgo.weixin.persist.dao.*;
 import com.fcgo.weixin.persist.model.*;
@@ -229,7 +230,7 @@ public class LogisticsService {
         int rows = orderDeliveryTraceMapper.insertSelective(odtc);
         logger.info("processCallBack finish, req {} rows {}", req, rows);
         if (delivryFail){
-            cancelInnorOrder(orderCode);
+            cancelInnorOrder(orderDelivery);
         }
     }
 
@@ -299,8 +300,16 @@ public class LogisticsService {
         //cancelInnorOrder(orderCode);
     }
 
-    private void cancelInnorOrder(String orderCode){
-        OrderDeliverType shopDeliverType = OrderDeliverType.DELIVER;
-        int updateDeliverType = orderService.updateDeliverType(orderCode, shopDeliverType);
+    private void cancelInnorOrder(OrderDelivery orderDelivery){
+        //OrderDeliverType shopDeliverType = OrderDeliverType.DELIVER;
+        //int updateDeliverType = orderService.updateDeliverType(orderCode, shopDeliverType);
+        String orderCode = orderDelivery.getOrderCode();
+        Order oc = Order.builder().code(orderCode).build();
+        Order po = orderMapper.selectByOrderCode(oc);
+        OrderStatus orderStatus = OrderStatus.getOrderStatus(Integer.valueOf(po.getStatus()));
+        if (OrderStatus.SELLER_PLAY_BUYER.equals(orderStatus)){
+            return;
+        }
+        walletService.plus(orderCode,po.getBrandId(), orderDelivery.getFee(), BillsInOutType.REFUND_OUT);
     }
 }

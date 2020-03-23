@@ -37,7 +37,7 @@ public class WalletService {
                 .bizType(bizType)
                 .build();
         int bwr = brandWalletMapper.updateNegative(bwc);
-
+        logger.info("substract brand wallet condition {},cnt {}", bwc, bwr);
         if (bwr>0){
             BrandWalletBills bwbc = BrandWalletBills.builder()
                     .orderCode(orderCode)
@@ -68,7 +68,7 @@ public class WalletService {
                 .bizType(bizType)
                 .build();
         int bwr = brandWalletMapper.updatePositive(bwc);
-
+        logger.info("plus brand wallet condition {},cnt {}", bwc, bwr);
         if (bwr>0){
             BrandWalletBills bwbc = BrandWalletBills.builder()
                     .orderCode(orderCode)
