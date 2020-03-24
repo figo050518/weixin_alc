@@ -95,16 +95,7 @@ public class BrandController {
         String msg = "getRechargeUrl successful";
         if (result==null){
             code = 400;
-        }else {
-            code = result.getInteger("status");
-            if (code==null){
-                code = 500;
-                msg = "getRechargeUrl fail";
-            }else {
-                if (code != 200){
-                    msg = result.getString("msg");
-                }
-            }
+            msg = "getRechargeUrl fail";
         }
         return new ApiResponse.ApiResponseBuilder()
                 .code(code)
