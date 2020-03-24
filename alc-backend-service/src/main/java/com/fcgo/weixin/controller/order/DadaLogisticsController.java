@@ -79,7 +79,7 @@ public class DadaLogisticsController {
     }
 
     @RequestMapping("/cancelDeliverByBrand")
-    public ApiResponse cancelDeliverByBrand(OrderCancelReq cancelReq) throws SessionExpireException {
+    public ApiResponse cancelDeliverByBrand(@RequestBody OrderCancelReq cancelReq) throws SessionExpireException {
         logger.info("cancelDeliverByBrand in ,req {}", cancelReq);
         logisticsService.cancelDeliverByBrand(cancelReq);
         return new ApiResponse.ApiResponseBuilder()
