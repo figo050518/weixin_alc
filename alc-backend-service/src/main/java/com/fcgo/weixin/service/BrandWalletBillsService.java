@@ -110,6 +110,7 @@ public class BrandWalletBillsService {
             orderCode = orderCode.trim();
             condition.setOrderCode(orderCode);
         }
+        condition.setInOut(Objects.nonNull(req.getInOut()) ? Byte.valueOf(String.valueOf(req.getInOut())) : null);
         return condition;
     }
 

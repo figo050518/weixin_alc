@@ -10,4 +10,6 @@ public class WalletBillsListReq extends PageRequestBO {
     private Integer brandId;
 
     private String orderCode;
+
+    private Integer inOut;
 }

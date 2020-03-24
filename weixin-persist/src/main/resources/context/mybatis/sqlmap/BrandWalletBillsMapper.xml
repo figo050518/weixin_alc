@@ -119,6 +119,9 @@
     <if test="condition.orderCode != null">
       and order_code = #{condition.orderCode,jdbcType=VARCHAR}
     </if>
+    <if test="condition.inOut != null">
+      and in_out = #{condition.inOut,jdbcType=TINYINT}
+    </if>
   </sql>
 
   <select id="selectAll" resultMap="BaseResultMap">
