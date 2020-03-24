@@ -105,7 +105,7 @@ public class BrandController {
     }
 
     @RequestMapping("/queryRechargeResult")
-    public ApiResponse queryRechargeResult(RechargeOrderBo req) throws SessionExpireException {
+    public ApiResponse queryRechargeResult(@RequestBody RechargeOrderBo req) throws SessionExpireException {
         logger.info("queryRechargeResult in, req {}", req);
         RechargeOrderBo resp = shopRechargeService.queryRechargeOrder(req);
         return new ApiResponse.ApiResponseBuilder()
