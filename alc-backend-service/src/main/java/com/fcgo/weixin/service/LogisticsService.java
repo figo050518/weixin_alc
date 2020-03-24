@@ -132,8 +132,8 @@ public class LogisticsService {
         }
         //check amount in wallet whether enough 2 pay
         BrandWallet brandWallet = brandWalletMapper.selectByBrandId(brandId);
-        BigDecimal amountInWallet = brandWallet.getAmount();
-        if (Objects.isNull(amountInWallet)){
+        BigDecimal amountInWallet ;
+        if (Objects.isNull(brandWallet) || Objects.isNull(amountInWallet=brandWallet.getAmount())){
             logger.warn("add dada order brandWallet null, {}", orderCode);
             throw new ServiceException(500, "初次使用,请先完成运费充值");
         }

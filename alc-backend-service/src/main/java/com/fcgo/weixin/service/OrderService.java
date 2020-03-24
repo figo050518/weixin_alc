@@ -277,22 +277,24 @@ public class OrderService {
             throw new ServiceException(401, "订单支付状态异常");
         }
 
-
+        OrderDeliverType orderDeliverType = OrderDeliverType.getDeliverType(order.getDeliverType());
+        boolean isUserFetch = Objects.nonNull(orderDeliverType) && OrderDeliverType.USER_FETCH.equals(orderDeliverType);
         OrderStatus exceptStatus = null;
         switch (targetOrderStatus){
             case RECEIVED:
-                //TODO 是否自提
-
                 exceptStatus = OrderStatus.WAITING_CONFIRM;
                 break;
             case MAKE_SUCCESS:
                 exceptStatus = OrderStatus.RECEIVED;
                 break;
             case DELIVER:
+                if (isUserFetch){
+                    throw new ServiceException(401, "自取不需要配送");
+                }
                 exceptStatus = OrderStatus.MAKE_SUCCESS;
                 break;
             case DONE:
-                exceptStatus = OrderStatus.DELIVER;
+                exceptStatus = isUserFetch? OrderStatus.MAKE_SUCCESS : OrderStatus.DELIVER;
                 break;
             case SELLER_PLAY_BUYER:
                 logger.info("process order is cancel,  exceptStatus {} targetOrderStatus {} req {} login user {}",
@@ -301,8 +303,8 @@ public class OrderService {
             default:
                 throw new ServiceException(401, "订单不支持修改");
         }
-        logger.info("process order exceptStatus {} targetOrderStatus {} req {} login user {}",
-                exceptStatus, targetOrderStatus, req, loginUserResp);
+        logger.info("process order exceptStatus {} targetOrderStatus {} orderDeliverType {} req {} login user {}",
+                exceptStatus, targetOrderStatus, orderDeliverType, req, loginUserResp);
         int cdt = DateUtil.getCurrentTimeSeconds();
         Order updateCondition = Order.builder().code(orderCode)
                 .updateTime(cdt)
@@ -310,7 +312,7 @@ public class OrderService {
                 .status(String.valueOf(targetOrderStatus.getCode()))
                 .build();
         int result = orderMapper.updateOrderStatusByOrderCode(updateCondition);
-        logger.info("process order result {} req {} login user {}", result, req, loginUserResp);
+        logger.info("process order result {} orderDeliverType {} req {} login user {}", result, orderDeliverType, req, loginUserResp);
         boolean isUpdateSucess;
         if ((isUpdateSucess = result>0)){
             processOrderDeliver(order, targetOrderStatus, req);
@@ -379,10 +381,10 @@ public class OrderService {
      */
     public int cancelBySeller(Order order,LoginUserResp loginUserResp){
         logger.info("cancelBySeller {} ,order {}", loginUserResp, order);
-        OrderDeliverType orderDeliverType = OrderDeliverType.getDeliverType(order.getDeliverType());
+        /*OrderDeliverType orderDeliverType = OrderDeliverType.getDeliverType(order.getDeliverType());
         if (Objects.nonNull(orderDeliverType) && OrderDeliverType.DADA_DELIVER.equals(orderDeliverType)) {
             orderDeliverService.checkWhenCancel(order);
-        }
+        }*/
         String url = getCancleOrderUrl();
         Map<String,Object> params = new HashMap<>(2);
         params.put("orderId", order.getId());
