@@ -77,6 +77,9 @@ public class LogisticsService {
     @Autowired
     private WalletService walletService;
 
+    @Autowired
+    private OrderDeliverService orderDeliverService;
+
     public DeliverFeeResp queryDeliverFee(Order order){
         String orderCode = order.getCode();
         OrderAddress orderAddress = orderAddressMapper.selectByOrderCode(orderCode);
@@ -251,26 +254,18 @@ public class LogisticsService {
      */
     public void cancelDeliverByBrand(OrderCancelReq cancelReq) throws SessionExpireException {
         String orderCode = cancelReq.getOrder_id();
-        if (StringUtils.isBlank(orderCode)){
-            throw new ServiceException(401, "没有订单号");
-        }
         LoginUserResp loginUserResp = loginService.getLoginUser();
         if (Objects.isNull(loginUserResp)){
             throw new SessionExpireException();
         }
-        Integer brandId;
-        Order orderCondition = Order.builder().code(orderCode).brandId(brandId=loginUserResp.getBrandId()).build();
-        Order order = orderMapper.selectByOrderCode(orderCondition);
-        if (Objects.isNull(order)){
-            logger.warn("cancelDeliverByBrand fail not find order, req {} user {}", cancelReq, loginUserResp);
-            throw new ServiceException(401, "订单非你所属");
-        }
+        Integer brandId = loginUserResp.getBrandId();
+
         Integer cancel_reason_id;
         if (Objects.isNull(cancel_reason_id=cancelReq.getCancel_reason_id())){
             logger.warn("cancelDeliverByBrand fail at no cancel_reason_id, req {} user {}", cancelReq, loginUserResp);
             throw new ServiceException(401, "需要选择取消原因");
         }
-
+        orderDeliverService.checkWhenCancelDadaOrder(cancelReq, loginUserResp);
         OrderCancelResp cancelRsp = proxyService.cancelOrder(cancelReq);
         Double deductFee;
         if (Objects.nonNull(deductFee=cancelRsp.getDeduct_fee()) && deductFee>0){
