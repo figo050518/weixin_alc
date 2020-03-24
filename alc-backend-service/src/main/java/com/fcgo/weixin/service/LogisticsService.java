@@ -156,6 +156,7 @@ public class LogisticsService {
         //update order shop deliver type
         int updateDeliverType = orderService.updateDeliverType(orderCode, shopDeliverType);
         logger.info("add dada order updateDeliverType [{},{},{}]", orderCode, shopDeliverType, updateDeliverType);
+        walletService.substract(orderCode,brandId,dadaDeliverFee,BillsInOutType.OUT);
     }
 
 
