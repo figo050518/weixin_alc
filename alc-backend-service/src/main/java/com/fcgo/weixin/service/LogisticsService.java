@@ -21,7 +21,6 @@ import com.fcgo.weixin.model.backend.resp.LoginUserResp;
 import com.fcgo.weixin.model.constant.BillsInOutType;
 import com.fcgo.weixin.model.constant.OrderDeliverType;
 import com.fcgo.weixin.model.constant.OrderPayStatus;
-import com.fcgo.weixin.model.constant.OrderStatus;
 import com.fcgo.weixin.model.third.dada.DadaOrderStatus;
 import com.fcgo.weixin.persist.dao.*;
 import com.fcgo.weixin.persist.model.*;
@@ -202,7 +201,7 @@ public class LogisticsService {
         }
         boolean delivryFail = false;
         switch (orderStatus){
-            case CACELED:
+            case CANCELED:
             case EXPIRED:
             case CREATE_FAIL:
             case RECALL_GOODS_DELIVERED_FAIL:
@@ -232,7 +231,7 @@ public class LogisticsService {
         int rows = orderDeliveryTraceMapper.insertSelective(odtc);
         logger.info("processCallBack finish, req {} rows {}", req, rows);
         if (delivryFail){
-            cancelInnorOrder(orderDelivery);
+            cancelInnerOrder(orderDelivery);
         }
     }
 
@@ -281,7 +280,7 @@ public class LogisticsService {
                     .build();
             OrderDelivery orderDelivery = orderDeliveryMapper.selectByOrderCode(odc);
             //update status
-            DadaOrderStatus orderStatus = DadaOrderStatus.CACELED;
+            DadaOrderStatus orderStatus = DadaOrderStatus.BRAND_SELF_CANCELED;
             int cdt = DateUtil.getCurrentTimeSeconds();
             OrderDelivery oduc = OrderDelivery.builder().id(orderDelivery.getId())
                     .status(orderStatus.getCode()).updateTime(cdt).build();
@@ -299,19 +298,21 @@ public class LogisticsService {
             walletService.substract(orderCode,brandId,deductFeeBD,BillsInOutType.PENALTY);
         }
         //reset deliver type of order
-        //cancelInnorOrder(orderCode);
+        //cancelInnerOrder(orderCode);
     }
 
-    private void cancelInnorOrder(OrderDelivery orderDelivery){
+    private void cancelInnerOrder(OrderDelivery orderDelivery){
         //OrderDeliverType shopDeliverType = OrderDeliverType.DELIVER;
         //int updateDeliverType = orderService.updateDeliverType(orderCode, shopDeliverType);
         String orderCode = orderDelivery.getOrderCode();
         Order oc = Order.builder().code(orderCode).build();
-        Order po = orderMapper.selectByOrderCode(oc);
-        OrderStatus orderStatus = OrderStatus.getOrderStatus(Integer.valueOf(po.getStatus()));
-        if (OrderStatus.SELLER_PLAY_BUYER.equals(orderStatus)){
+        //
+        DadaOrderStatus orderStatus = DadaOrderStatus.getDadaOrderStatus(orderDelivery.getStatus());
+        if (DadaOrderStatus.BRAND_SELF_CANCELED.equals(orderStatus)){
+            logger.warn("cancelInnerOrder find orderDelivery status is canceled by brand,{}",orderDelivery);
             return;
         }
+        Order po = orderMapper.selectByOrderCode(oc);
         walletService.plus(orderCode,po.getBrandId(), orderDelivery.getFee(), BillsInOutType.REFUND_OUT);
     }
 }

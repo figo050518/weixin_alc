@@ -47,10 +47,16 @@ public enum DadaOrderStatus {
             return "已完成";
         }
     },
-    CACELED(5){
+    CANCELED(5){
         @Override
         public String getDesc() {
             return "已取消";
+        }
+    },
+    BRAND_SELF_CANCELED(6){
+        @Override
+        public String getDesc() {
+            return "商户取消";
         }
     },
     EXPIRED(7){
