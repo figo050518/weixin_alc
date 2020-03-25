@@ -44,13 +44,22 @@ public class BrandAddressConvert {
                 .cityName(brandAddress.getCityName())
                 .areaName(brandAddress.getAreaName())
                 .stationAddress(brandAddress.getStationAddress())
-                .lat(BigDecimal.valueOf(Double.valueOf(brandAddress.getLat())))
-                .lng(BigDecimal.valueOf(Double.valueOf(brandAddress.getLng())))
+                .lat(cutSpecialLen(brandAddress.getLat(),6))
+                .lng(cutSpecialLen(brandAddress.getLng(),6))
                 .stationName(StringUtils.isBlank(brandAddress.getStationName()) ? brand.getName() : brand.getName())
                 .business(2)
                 .contactName(brandAddress.getContactName())
                 .phone(brandAddress.getMobile())
                 .build();
         return shopAddModel;
+    }
+
+    static BigDecimal cutSpecialLen(String numStr,int len){
+        return new BigDecimal(numStr).setScale(len,BigDecimal.ROUND_FLOOR);
+    }
+
+    public static void main(String[] args) {
+        BigDecimal result = new BigDecimal("118.78649898658985").setScale(6,BigDecimal.ROUND_FLOOR);
+        System.out.println(result);
     }
 }
