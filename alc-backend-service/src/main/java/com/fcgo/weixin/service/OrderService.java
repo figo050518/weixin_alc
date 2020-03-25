@@ -315,10 +315,35 @@ public class OrderService {
         logger.info("process order result {} orderDeliverType {} req {} login user {}", result, orderDeliverType, req, loginUserResp);
         boolean isUpdateSucess;
         if ((isUpdateSucess = result>0)){
-            processOrderDeliver(order, targetOrderStatus, req);
+            try {
+                processOrderDeliver(order, targetOrderStatus, req);
+            }catch (Exception ex){
+                logger.info("in process order,processOrderDeliver fail, do rollback req {}",req);
+                rollbackOrder(orderCode,cdt,  exceptStatus, targetOrderStatus);
+                //throw out
+                throw ex;
+            }
         }
 
         return isUpdateSucess;
+    }
+
+    /**
+     * exceptStatus + targetOrderStatus是原先的,回滚时要做交换
+     * @param orderCode
+     * @param cdt
+     * @param exceptStatus
+     * @param targetOrderStatus
+     */
+    private void rollbackOrder(String orderCode,int cdt, OrderStatus exceptStatus,OrderStatus targetOrderStatus){
+
+        Order updateCondition = Order.builder().code(orderCode)
+                .updateTime(cdt)
+                .exceptStatus(String.valueOf(targetOrderStatus.getCode()))
+                .status(String.valueOf(exceptStatus.getCode()))
+                .build();
+        int result = orderMapper.updateOrderStatusByOrderCode(updateCondition);
+        logger.info("rollbackOrder order result {} updateCondition {}", result, updateCondition);
     }
 
     private void processOrderDeliver(Order order,OrderStatus targetOrderStatus, OrderProcessReq req){
