@@ -57,6 +57,10 @@ public class OrderDeliverService {
         List<OrderDeliveryTrace> odtList = orderDeliveryTraceMapper.selectAllByOrderCodeDeliveryNum(odtc);
         if (CollectionUtils.isNotEmpty(odtList)){
             bo.setOrderDeliveryTraceList(odtList.stream().map(OrderDeliveryTraceConvert::do2Bo).collect(Collectors.toList()));
+            //达达的快递单号来自trace
+            bo.setDeliveryNum(bo.getOrderDeliveryTraceList().get(0).getClientId());
+        }else {
+            bo.setDeliveryNum(null);
         }
         return bo;
     }

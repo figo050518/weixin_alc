@@ -33,6 +33,7 @@ public class OrderDeliveryConvert extends BaseConvert{
         String[] ignoreProps = {"createTime","updateTime"};
         BeanUtils.copyProperties(od, bo, ignoreProps);
         DadaOrderStatus dos = DadaOrderStatus.getDadaOrderStatus(od.getStatus());
+        bo.setDeliverOrderCode(od.getDeliveryNum());
         bo.setStatusDesc(Objects.isNull(dos)? null : dos.getDesc());
         bo.setCreateTime(fmtDateFromUnixtime(od.getCreateTime()));
         bo.setUpdateTime(fmtDateFromUnixtime(od.getUpdateTime()));

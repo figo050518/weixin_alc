@@ -16,6 +16,10 @@ public class OrderDeliveryBo {
     private String orderCode;
 
     private String deliveryNum;
+    /**
+     * 达达生成的订单号
+     */
+    private String deliverOrderCode;
 
     private BigDecimal fee;
 
