@@ -2,6 +2,7 @@ package com.fcgo.weixin.service;
 
 import com.fcgo.weixin.common.exception.ServiceException;
 import com.fcgo.weixin.convert.BrandAddressConvert;
+import com.fcgo.weixin.dada.client.DadaServiceException;
 import com.fcgo.weixin.dada.domain.merchant.ShopModel;
 import com.fcgo.weixin.dada.service.ProxyService;
 import com.fcgo.weixin.model.backend.bo.BrandAddressBo;
@@ -62,7 +63,21 @@ public class BrandAddressService {
         if (brandAddressId>0){
             Brand brand = brandMapper.selectByPrimaryKey(brandId);
             ShopModel shopModel = BrandAddressConvert.convertToShopModel(brandAddress, brand);
-            proxyService.updateShop(shopModel);
+            try {
+                proxyService.updateShop(shopModel);
+            }catch (Exception ex){
+                if (ex instanceof DadaServiceException){
+                    if(((DadaServiceException) ex).getCode() == 2402
+                            || ((DadaServiceException) ex).getErrorMessage().equalsIgnoreCase("门店不存在")){
+                        List<ShopModel> shopModelList = Lists.newArrayList(shopModel);
+                        proxyService.addShop(shopModelList);
+                    }else {
+                        throw ex;
+                    }
+                }else{
+                    throw ex;
+                }
+            }
         }
         return brandAddressId;
     }
