@@ -349,7 +349,7 @@ public class OrderService {
     private void processOrderDeliver(Order order,OrderStatus targetOrderStatus, OrderProcessReq req){
         OrderDeliverType orderDeliverType = OrderDeliverType.getDeliverType(order.getDeliverType());
 
-        if (Objects.nonNull(orderDeliverType) && OrderStatus.RECEIVED.equals(targetOrderStatus)){
+        if (Objects.nonNull(orderDeliverType) && OrderStatus.MAKE_SUCCESS.equals(targetOrderStatus)){
 
             switch (orderDeliverType){
                 case USER_FETCH:{
